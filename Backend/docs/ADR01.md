@@ -48,7 +48,8 @@ src/
  │
  ├─ domain/
  │   └─ entities/
- |   └─ interfaces
+ |   └─ interfaces/
+ |   └─ types/
  │
  ├─ infrastructure/
  |   ├─ prisma/

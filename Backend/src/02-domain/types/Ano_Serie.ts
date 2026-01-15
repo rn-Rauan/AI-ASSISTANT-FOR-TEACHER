@@ -1,0 +1,1 @@
+export type ano_serie = string;

@@ -1,0 +1,1 @@
+export type discplina_codigo = string;
