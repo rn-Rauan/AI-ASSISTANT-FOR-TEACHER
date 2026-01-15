@@ -58,8 +58,9 @@ src/
  │   │   └─ controllers/
  │   ├─ db/
  │   │   └─ repositories/
+ │   ├─ service/
  │   └─ ia/
- │
+ |
  ├─ data/
  |    ├─ bncc.json
  |    └─ diretrizes_mec.json

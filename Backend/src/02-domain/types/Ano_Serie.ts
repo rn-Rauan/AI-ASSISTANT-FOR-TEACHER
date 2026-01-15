@@ -1,1 +1,1 @@
-export type ano_serie = string;
+export type ano_serie = "6_ANO" | "7_ANO" | "8_ANO" | "9_ANO" | "1_SERIE" | "2_SERIE" | "3_SERIE"

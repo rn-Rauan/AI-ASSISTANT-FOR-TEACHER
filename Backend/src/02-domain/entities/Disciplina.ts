@@ -1,19 +1,29 @@
 import { ano_serie } from "../types/Ano_Serie";
-import { discplina_codigo } from "../types/Discplina_codigo";
+import { disciplina_codigo } from "../types/Discplina_codigo";
 
 export class Disciplina {
     private id: string;
-    private disciplina_codigo: discplina_codigo;
+    private disciplina_codigo: disciplina_codigo;
     private ano_serie: ano_serie;
-    constructor(id: string, disciplina_codigo: discplina_codigo, ano_serie: ano_serie){
+    constructor(id: string, disciplina_codigo: disciplina_codigo, ano_serie: ano_serie){
         this.id = id;
-        this.disciplina_codigo = disciplina_codigo;
-        this.ano_serie = ano_serie;
+        this.disciplina_codigo = disciplina_codigo.toLocaleUpperCase() as disciplina_codigo;
+        this.ano_serie = ano_serie.toLocaleUpperCase() as ano_serie;
+        this.validar();
     }
-    get disciplinaCodigo(): discplina_codigo {
+    private validar(): boolean {
+        if (!this.disciplina_codigo || this.disciplina_codigo.trim().length < 2) {
+            throw new Error("Código da disciplina inválido");
+        }
+        if (!this.ano_serie || this.ano_serie.trim().length < 1) {
+            throw new Error("Ano/Série inválido");
+        }
+        return true;
+    }
+    get disciplinaCodigo(): disciplina_codigo {
         return this.disciplina_codigo;
     }
-    get anoSerie(): string {
+    get anoSerie(): ano_serie {
         return this.ano_serie;
     }
 }

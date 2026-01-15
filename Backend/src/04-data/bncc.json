@@ -1,0 +1,779 @@
+[
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Leitura e interpretação de textos narrativos",
+        "habilidades": ["EF67LP28", "EF67LP29"]
+      },
+      {
+        "tema": "Produção de textos descritivos e narrativos",
+        "habilidades": ["EF67LP30", "EF67LP31"]
+      },
+      {
+        "tema": "Análise linguística: classes gramaticais",
+        "habilidades": ["EF06LP04", "EF06LP05"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Gêneros jornalísticos e argumentativos",
+        "habilidades": ["EF67LP01", "EF67LP02"]
+      },
+      {
+        "tema": "Coesão e coerência textual",
+        "habilidades": ["EF67LP36", "EF67LP37"]
+      },
+      {
+        "tema": "Ortografia e pontuação",
+        "habilidades": ["EF07LP01", "EF07LP02"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "Gêneros textuais digitais",
+        "habilidades": ["EF69LP01", "EF69LP02"]
+      },
+      {
+        "tema": "Leitura crítica de mídias digitais",
+        "habilidades": ["EF69LP03", "EF69LP04"]
+      },
+      {
+        "tema": "Variação linguística e preconceito",
+        "habilidades": ["EF69LP55", "EF69LP56"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Textos argumentativos e dissertativos",
+        "habilidades": ["EF89LP01", "EF89LP02"]
+      },
+      {
+        "tema": "Análise de discursos e posicionamento crítico",
+        "habilidades": ["EF89LP03", "EF89LP04"]
+      },
+      {
+        "tema": "Sintaxe: período composto",
+        "habilidades": ["EF09LP05", "EF09LP06"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Números naturais e sistema de numeração decimal",
+        "habilidades": ["EF06MA01", "EF06MA02"]
+      },
+      {
+        "tema": "Operações com frações",
+        "habilidades": ["EF06MA07", "EF06MA08"]
+      },
+      {
+        "tema": "Plano cartesiano e localização",
+        "habilidades": ["EF06MA16", "EF06MA17"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Números inteiros e operações",
+        "habilidades": ["EF07MA03", "EF07MA04"]
+      },
+      {
+        "tema": "Porcentagem e juros simples",
+        "habilidades": ["EF07MA02", "EF07MA05"]
+      },
+      { "tema": "Equações do 1 grau", "habilidades": ["EF07MA18", "EF07MA19"] }
+    ]
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "Potenciação e radiciação",
+        "habilidades": ["EF08MA01", "EF08MA02"]
+      },
+      {
+        "tema": "Equações do 2 grau",
+        "habilidades": ["EF08MA09", "EF08MA10"]
+      },
+      {
+        "tema": "Teorema de Pitágoras",
+        "habilidades": ["EF08MA13", "EF08MA14"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Números reais e irracionais",
+        "habilidades": ["EF09MA01", "EF09MA02"]
+      },
+      {
+        "tema": "Relações métricas no triângulo retângulo",
+        "habilidades": ["EF09MA13", "EF09MA14"]
+      },
+      { "tema": "Funções e gráficos", "habilidades": ["EF09MA06", "EF09MA07"] }
+    ]
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Célula: estrutura e funcionamento",
+        "habilidades": ["EF06CI05", "EF06CI06"]
+      },
+      {
+        "tema": "Misturas e separação de materiais",
+        "habilidades": ["EF06CI01", "EF06CI02"]
+      },
+      {
+        "tema": "Sistema Solar e movimentos terrestres",
+        "habilidades": ["EF06CI13", "EF06CI14"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Máquinas simples e energia mecânica",
+        "habilidades": ["EF07CI01", "EF07CI02"]
+      },
+      {
+        "tema": "Características dos seres vivos",
+        "habilidades": ["EF07CI07", "EF07CI08"]
+      },
+      {
+        "tema": "Ecossistemas brasileiros",
+        "habilidades": ["EF07CI10", "EF07CI11"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "8_ANO",
+    "temas": [
+      { "tema": "Vida e evolução", "habilidades": ["EF08CI07", "EF08CI08"] },
+      { "tema": "Terra e Universo", "habilidades": ["EF08CI13", "EF08CI15"] },
+      {
+        "tema": "Fontes de energia e sustentabilidade",
+        "habilidades": ["EF08CI01", "EF08CI02"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Genética e hereditariedade",
+        "habilidades": ["EF09CI08", "EF09CI09"]
+      },
+      { "tema": "Evolução biológica", "habilidades": ["EF09CI10", "EF09CI11"] },
+      {
+        "tema": "Ondas eletromagnéticas e comunicação",
+        "habilidades": ["EF09CI03", "EF09CI04"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "A invenção do mundo clássico",
+        "habilidades": ["EF06HI09", "EF06HI10"]
+      },
+      {
+        "tema": "Povos da antiguidade: Egito e Mesopotâmia",
+        "habilidades": ["EF06HI07", "EF06HI08"]
+      },
+      {
+        "tema": "História e cultura africana",
+        "habilidades": ["EF06HI13", "EF06HI14"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Idade Média: feudalismo e império bizantino",
+        "habilidades": ["EF07HI04", "EF07HI05"]
+      },
+      {
+        "tema": "Renascimento e humanismo",
+        "habilidades": ["EF07HI08", "EF07HI09"]
+      },
+      {
+        "tema": "Expansão marítima europeia",
+        "habilidades": ["EF07HI10", "EF07HI11"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "Independência do Brasil",
+        "habilidades": ["EF08HI11", "EF08HI12"]
+      },
+      {
+        "tema": "Revolução Industrial",
+        "habilidades": ["EF08HI03", "EF08HI04"]
+      },
+      {
+        "tema": "Escravidão e resistência",
+        "habilidades": ["EF08HI19", "EF08HI20"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Guerra Fria e conflitos mundiais",
+        "habilidades": ["EF09HI28", "EF09HI31"]
+      },
+      {
+        "tema": "Regimes totalitários: nazismo e fascismo",
+        "habilidades": ["EF09HI12", "EF09HI13"]
+      },
+      {
+        "tema": "Ditadura militar no Brasil",
+        "habilidades": ["EF09HI18", "EF09HI19"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Cartografia e representações espaciais",
+        "habilidades": ["EF06GE08", "EF06GE09"]
+      },
+      {
+        "tema": "Transformações das paisagens naturais",
+        "habilidades": ["EF06GE04", "EF06GE05"]
+      },
+      {
+        "tema": "Relevo e formação da Terra",
+        "habilidades": ["EF06GE10", "EF06GE11"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Formação territorial do Brasil",
+        "habilidades": ["EF07GE01", "EF07GE02"]
+      },
+      {
+        "tema": "População brasileira e diversidade",
+        "habilidades": ["EF07GE03", "EF07GE04"]
+      },
+      {
+        "tema": "Biomas e biodiversidade",
+        "habilidades": ["EF07GE11", "EF07GE12"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "América Latina: aspectos físicos e humanos",
+        "habilidades": ["EF08GE07", "EF08GE08"]
+      },
+      {
+        "tema": "Globalização e ordem mundial",
+        "habilidades": ["EF08GE01", "EF08GE02"]
+      },
+      {
+        "tema": "África: colonização e descolonização",
+        "habilidades": ["EF08GE18", "EF08GE19"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Europa: aspectos geopolíticos",
+        "habilidades": ["EF09GE05", "EF09GE06"]
+      },
+      {
+        "tema": "Ásia: diversidade e transformações",
+        "habilidades": ["EF09GE09", "EF09GE10"]
+      },
+      {
+        "tema": "Questões ambientais globais",
+        "habilidades": ["EF09GE13", "EF09GE14"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Elementos da linguagem visual",
+        "habilidades": ["EF69AR01", "EF69AR02"]
+      },
+      {
+        "tema": "Arte rupestre e pré-história",
+        "habilidades": ["EF69AR31", "EF69AR32"]
+      },
+      {
+        "tema": "Manifestações culturais brasileiras",
+        "habilidades": ["EF69AR33", "EF69AR34"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Arte medieval e renascentista",
+        "habilidades": ["EF69AR03", "EF69AR04"]
+      },
+      {
+        "tema": "Música: elementos e notação",
+        "habilidades": ["EF69AR16", "EF69AR17"]
+      },
+      {
+        "tema": "Teatro e expressão corporal",
+        "habilidades": ["EF69AR24", "EF69AR25"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "Arte moderna e contemporânea",
+        "habilidades": ["EF69AR05", "EF69AR06"]
+      },
+      {
+        "tema": "Dança e cultura popular",
+        "habilidades": ["EF69AR09", "EF69AR10"]
+      },
+      {
+        "tema": "Artes visuais e tecnologia",
+        "habilidades": ["EF69AR07", "EF69AR08"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Arte e identidade cultural",
+        "habilidades": ["EF69AR31", "EF69AR32"]
+      },
+      {
+        "tema": "Processos de criação em Artes Visuais",
+        "habilidades": ["EF69AR06", "EF69AR07"]
+      },
+      {
+        "tema": "Performance e arte urbana",
+        "habilidades": ["EF69AR26", "EF69AR27"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Jogos e brincadeiras populares",
+        "habilidades": ["EF67EF01", "EF67EF02"]
+      },
+      {
+        "tema": "Ginástica geral e capacidades físicas",
+        "habilidades": ["EF67EF07", "EF67EF08"]
+      },
+      {
+        "tema": "Esportes de marca e precisão",
+        "habilidades": ["EF67EF03", "EF67EF04"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Esportes coletivos: regras e táticas",
+        "habilidades": ["EF67EF05", "EF67EF06"]
+      },
+      {
+        "tema": "Lutas do Brasil e do mundo",
+        "habilidades": ["EF67EF14", "EF67EF15"]
+      },
+      {
+        "tema": "Danças urbanas e contemporâneas",
+        "habilidades": ["EF67EF11", "EF67EF12"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "Esportes de invasão: basquete e handebol",
+        "habilidades": ["EF89EF01", "EF89EF02"]
+      },
+      {
+        "tema": "Práticas corporais de aventura",
+        "habilidades": ["EF89EF19", "EF89EF20"]
+      },
+      {
+        "tema": "Ginástica de condicionamento físico",
+        "habilidades": ["EF89EF07", "EF89EF08"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Esportes de rede e campo",
+        "habilidades": ["EF89EF03", "EF89EF04"]
+      },
+      {
+        "tema": "Saúde, nutrição e exercício físico",
+        "habilidades": ["EF89EF09", "EF89EF10"]
+      },
+      {
+        "tema": "Práticas corporais e sociedade",
+        "habilidades": ["EF89EF11", "EF89EF12"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "6_ANO",
+    "temas": [
+      {
+        "tema": "Construção de repertório lexical",
+        "habilidades": ["EF06LI08", "EF06LI09"]
+      },
+      {
+        "tema": "Compreensão de textos orais e escritos",
+        "habilidades": ["EF06LI01", "EF06LI02"]
+      },
+      {
+        "tema": "Produção de textos simples em inglês",
+        "habilidades": ["EF06LI13", "EF06LI14"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "7_ANO",
+    "temas": [
+      {
+        "tema": "Práticas de leitura e interpretação",
+        "habilidades": ["EF07LI06", "EF07LI07"]
+      },
+      {
+        "tema": "Recursos de argumentação",
+        "habilidades": ["EF07LI10", "EF07LI11"]
+      },
+      {
+        "tema": "Estratégias de compreensão oral",
+        "habilidades": ["EF07LI03", "EF07LI04"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "8_ANO",
+    "temas": [
+      {
+        "tema": "Recursos linguísticos e multissemióticos",
+        "habilidades": ["EF08LI05", "EF08LI06"]
+      },
+      {
+        "tema": "Produção de textos multimídia",
+        "habilidades": ["EF08LI11", "EF08LI12"]
+      },
+      {
+        "tema": "Reflexão sobre língua e cultura",
+        "habilidades": ["EF08LI17", "EF08LI18"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "9_ANO",
+    "temas": [
+      {
+        "tema": "Comunicação intercultural",
+        "habilidades": ["EF09LI01", "EF09LI02"]
+      },
+      {
+        "tema": "Análise crítica de textos diversos",
+        "habilidades": ["EF09LI07", "EF09LI08"]
+      },
+      {
+        "tema": "Produção de textos argumentativos",
+        "habilidades": ["EF09LI12", "EF09LI13"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "LPP",
+    "ano_serie": "1_SERIE",
+    "temas": [
+      {
+        "tema": "Análise de textos literários brasileiros",
+        "habilidades": ["EM13LP01", "EM13LP02"]
+      },
+      {
+        "tema": "Produção de textos dissertativos-argumentativos",
+        "habilidades": ["EM13LP05", "EM13LP06"]
+      },
+      {
+        "tema": "Linguagem, mídia e tecnologia digital",
+        "habilidades": ["EM13LP14", "EM13LP15"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "LPP",
+    "ano_serie": "2_SERIE",
+    "temas": [
+      {
+        "tema": "Literatura: movimentos literários brasileiros",
+        "habilidades": ["EM13LP46", "EM13LP47"]
+      },
+      {
+        "tema": "Análise crítica de discursos e ideologias",
+        "habilidades": ["EM13LP16", "EM13LP17"]
+      },
+      {
+        "tema": "Gêneros acadêmicos e científicos",
+        "habilidades": ["EM13LP26", "EM13LP27"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "LPP",
+    "ano_serie": "3_SERIE",
+    "temas": [
+      {
+        "tema": "Literatura contemporânea e diversidade cultural",
+        "habilidades": ["EM13LP48", "EM13LP49"]
+      },
+      {
+        "tema": "Projeto de vida e comunicação profissional",
+        "habilidades": ["EM13LP34", "EM13LP35"]
+      },
+      {
+        "tema": "Retórica e argumentação avançada",
+        "habilidades": ["EM13LP18", "EM13LP19"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "MAT",
+    "ano_serie": "1_SERIE",
+    "temas": [
+      {
+        "tema": "Conjuntos numéricos e funções",
+        "habilidades": ["EM13MAT101", "EM13MAT501"]
+      },
+      {
+        "tema": "Progressões aritméticas e geométricas",
+        "habilidades": ["EM13MAT507", "EM13MAT508"]
+      },
+      {
+        "tema": "Geometria plana: áreas e perímetros",
+        "habilidades": ["EM13MAT301", "EM13MAT302"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "MAT",
+    "ano_serie": "2_SERIE",
+    "temas": [
+      {
+        "tema": "Trigonometria no triângulo e no círculo",
+        "habilidades": ["EM13MAT306", "EM13MAT308"]
+      },
+      {
+        "tema": "Matrizes e sistemas lineares",
+        "habilidades": ["EM13MAT502", "EM13MAT503"]
+      },
+      {
+        "tema": "Análise combinatória e probabilidade",
+        "habilidades": ["EM13MAT311", "EM13MAT312"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "MAT",
+    "ano_serie": "3_SERIE",
+    "temas": [
+      {
+        "tema": "Geometria analítica e cônicas",
+        "habilidades": ["EM13MAT504", "EM13MAT505"]
+      },
+      {
+        "tema": "Estatística e análise de dados",
+        "habilidades": ["EM13MAT401", "EM13MAT402"]
+      },
+      {
+        "tema": "Geometria espacial: volumes e áreas",
+        "habilidades": ["EM13MAT304", "EM13MAT309"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CHS",
+    "ano_serie": "1_SERIE",
+    "temas": [
+      {
+        "tema": "Formação territorial e identidade brasileira",
+        "habilidades": ["EM13CHS101", "EM13CHS102"]
+      },
+      {
+        "tema": "Democracia, cidadania e direitos humanos",
+        "habilidades": ["EM13CHS502", "EM13CHS503"]
+      },
+      {
+        "tema": "Revolução Industrial e capitalismo",
+        "habilidades": ["EM13CHS401", "EM13CHS402"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CHS",
+    "ano_serie": "2_SERIE",
+    "temas": [
+      {
+        "tema": "Imperialismo e neocolonialismo",
+        "habilidades": ["EM13CHS201", "EM13CHS204"]
+      },
+      {
+        "tema": "Movimentos sociais e transformações políticas",
+        "habilidades": ["EM13CHS601", "EM13CHS602"]
+      },
+      {
+        "tema": "Globalização e diversidade cultural",
+        "habilidades": ["EM13CHS103", "EM13CHS104"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CHS",
+    "ano_serie": "3_SERIE",
+    "temas": [
+      {
+        "tema": "Geopolítica contemporânea e conflitos",
+        "habilidades": ["EM13CHS202", "EM13CHS206"]
+      },
+      {
+        "tema": "Questões socioambientais e sustentabilidade",
+        "habilidades": ["EM13CHS301", "EM13CHS303"]
+      },
+      {
+        "tema": "Trabalho, economia e desigualdade social",
+        "habilidades": ["EM13CHS403", "EM13CHS404"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CNT",
+    "ano_serie": "1_SERIE",
+    "temas": [
+      {
+        "tema": "Cinemática e dinâmica: leis de Newton",
+        "habilidades": ["EM13CNT101", "EM13CNT102"]
+      },
+      {
+        "tema": "Composição e estrutura da matéria",
+        "habilidades": ["EM13CNT201", "EM13CNT202"]
+      },
+      {
+        "tema": "Citologia e metabolismo celular",
+        "habilidades": ["EM13CNT208", "EM13CNT302"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CNT",
+    "ano_serie": "2_SERIE",
+    "temas": [
+      {
+        "tema": "Termodinâmica e transformações de energia",
+        "habilidades": ["EM13CNT106", "EM13CNT107"]
+      },
+      {
+        "tema": "Reações químicas e estequiometria",
+        "habilidades": ["EM13CNT204", "EM13CNT205"]
+      },
+      {
+        "tema": "Genética e biotecnologia",
+        "habilidades": ["EM13CNT303", "EM13CNT304"]
+      }
+    ]
+  },
+  {
+    "disciplina_codigo": "CNT",
+    "ano_serie": "3_SERIE",
+    "temas": [
+      {
+        "tema": "Eletromagnetismo e ondas",
+        "habilidades": ["EM13CNT103", "EM13CNT308"]
+      },
+      {
+        "tema": "Química orgânica e meio ambiente",
+        "habilidades": ["EM13CNT301", "EM13CNT307"]
+      },
+      {
+        "tema": "Ecologia e preservação ambiental",
+        "habilidades": ["EM13CNT203", "EM13CNT206"]
+      }
+    ]
+  }
+]

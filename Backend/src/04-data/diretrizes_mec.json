@@ -1,0 +1,26 @@
+{
+  "competencia_geral_5": {
+    "descricao": "Compreender, utilizar e criar tecnologias digitais de informação e comunicação de forma crítica, significativa, reflexiva e ética nas diversas práticas sociais.",
+
+    "principios": [
+      "Uso crítico e ético das tecnologias digitais",
+      "Promoção do protagonismo e autoria do estudante",
+      "Desenvolvimento do pensamento crítico",
+      "Resolução de problemas com apoio de tecnologias"
+    ],
+
+    "praticas_pedagogicas": [
+      "Uso de ferramentas digitais acessíveis ao contexto escolar",
+      "Atividades colaborativas em ambientes digitais",
+      "Exploração de recursos multimídia",
+      "Produção de conteúdos digitais pelos estudantes"
+    ],
+
+    "orientacoes_para_ia": [
+      "Evitar abordagens puramente expositivas",
+      "Contextualizar o conteúdo em situações do cotidiano digital",
+      "Adaptar linguagem à faixa etária",
+      "Sugerir tecnologias simples e acessíveis"
+    ]
+  }
+}
