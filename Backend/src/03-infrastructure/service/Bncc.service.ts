@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { DisciplinaBncc, Tema } from "../../02-domain/interfaces/Bncc";
-import { disciplina_codigo } from "../../02-domain/types/Discplina_codigo";
+import { disciplina_codigo } from "../../02-domain/types/Disciplina_codigo";
 import { ano_serie } from "../../02-domain/types/Ano_Serie";
 import { IBnccService } from "../../02-domain/interfaces/IBnccService";
 

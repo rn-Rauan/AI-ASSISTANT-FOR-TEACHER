@@ -17,10 +17,11 @@ app.get("/", async () => {
     return { message: "API iniciada" };
 });
 
+app.register(disciplinaRoutes);
+
 //Iniciando Servidor
 app.listen({ port: PORT }, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 })
 
-app.register(disciplinaRoutes);
 

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { Disciplina } from "../../../02-domain/entities/Disciplina";
-import { disciplina_codigo } from "../../../02-domain/types/Discplina_codigo";
+import { disciplina_codigo } from "../../../02-domain/types/Disciplina_codigo";
 import { ano_serie } from "../../../02-domain/types/Ano_Serie";
 
 export class PrismaDisciplinaRepository implements IDisciplinaRepository {

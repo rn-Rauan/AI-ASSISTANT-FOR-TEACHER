@@ -1,5 +1,5 @@
 import { ano_serie } from "../../02-domain/types/Ano_Serie";
-import { disciplina_codigo } from "../../02-domain/types/Discplina_codigo";
+import { disciplina_codigo } from "../../02-domain/types/Disciplina_codigo";
 
 /**
  * Data Transfer Object para Disciplina

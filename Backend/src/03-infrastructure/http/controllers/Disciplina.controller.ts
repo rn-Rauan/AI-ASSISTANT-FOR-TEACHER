@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CriarDisciplinaUseCase } from "../../../01-application/usecases/CriarDiciplinaUseCase";
+import { CriarDisciplinaUseCase } from "../../../01-application/usecases/CriarDisciplinaUseCase";
 import { DisciplinaDTO } from "../../../01-application/dtos/DisciplinaDTO";
-import { ListarDisciplinaUseCase } from "../../../01-application/usecases/ListarDiciplinaUsecase";
+import { ListarDisciplinaUseCase } from "../../../01-application/usecases/ListarDisciplinaUsecase";
 import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DeleteDisciplinaUseCase";
-
 
 // PADRÕES DE RESPOSTA DO SISTEMA:
 // --- ERROS DO CLIENTE (4XX) ---
@@ -27,18 +26,25 @@ import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/Delete
 // - Use 409 para violações de banco que não são culpa do formato dos dados (ex: duplicidade).
 // - Use 500 apenas se você não souber o que aconteceu (o "último recurso").
 
-
 export class DisciplinaController {
-    
   /**
    * Controlador para operações relacionadas a Disciplina
    * @param criarDisciplinaUseCase Caso de uso para criar disciplina
    */
-  constructor(private criarDisciplinaUseCase: CriarDisciplinaUseCase, private listarDisciplinaUseCase: ListarDisciplinaUseCase, private deleteDisciplinaUseCase: DeleteDisciplinaUseCase) {}
+  constructor(
+    private criarDisciplinaUseCase: CriarDisciplinaUseCase,
+    private listarDisciplinaUseCase: ListarDisciplinaUseCase,
+    private deleteDisciplinaUseCase: DeleteDisciplinaUseCase
+  ) {}
 
   async criarDisciplina(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { disciplina_codigo, ano_serie } = req.body as DisciplinaDTO;
+      if (!disciplina_codigo || !ano_serie) {
+        reply.status(400).send({
+          error: "Campos disciplina_codigo e ano_serie são obrigatórios.",
+        });
+      }
       const disciplinaCriada = await this.criarDisciplinaUseCase.execute({
         disciplina_codigo,
         ano_serie,
@@ -59,9 +65,12 @@ export class DisciplinaController {
   async deletarDisciplina(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { id } = req.params as { id: string };
+      if (!id) {
+        reply.status(400).send({ error: "ID da disciplina é obrigatório." });
+      }
       await this.deleteDisciplinaUseCase.execute(id);
       reply.status(200).send({ message: "Disciplina deletada com sucesso" });
-    }catch(error: any) {
+    } catch (error: any) {
       reply.status(500).send({ error: error.message });
     }
   }

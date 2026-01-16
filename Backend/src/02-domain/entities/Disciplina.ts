@@ -1,5 +1,5 @@
 import { ano_serie } from "../types/Ano_Serie";
-import { disciplina_codigo } from "../types/Discplina_codigo";
+import { disciplina_codigo } from "../types/Disciplina_codigo";
 
 export class Disciplina {
     private id: string;
