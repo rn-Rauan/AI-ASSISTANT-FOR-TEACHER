@@ -8,5 +8,7 @@ export async function disciplinaRoutes(fastify: FastifyInstance) {
     fastify.post("/disciplinas", disciplinaController.criarDisciplina.bind(disciplinaController));
     //deletar disciplina
     fastify.delete("/disciplinas/:id", disciplinaController.deletarDisciplina.bind(disciplinaController));
+    //obter disciplina por id
+    fastify.get("/disciplinas/:id", disciplinaController.obterDisciplinaPorID.bind(disciplinaController));
 
 }

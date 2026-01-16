@@ -9,26 +9,19 @@ import { CriarUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/C
 import { UnidadeController } from "../03-infrastructure/http/controllers/Unidade.controller";
 import { PrismaUnidadeRepository } from "../03-infrastructure/db/repositories/Unidade.Repository";
 import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase/ListarUnidadesUseCase";
+import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
 
-/**
- * Container de Injeção de Dependências
- * 
- * Este arquivo contém a configuração do container de injeção de dependências para a aplicação.
- * Ele define os repositórios, serviços e use cases necessários para a execução da aplicação.
- * 
- * @module container
- * */
+//Container de Injeção de Dependências
+
+//Este arquivo contém a configuração do container de injeção de dependências para a aplicação.
+//Ele define os repositórios, serviços e use cases necessários para a execução da aplicação.
 
 /**
  * @RepositoriesServices
  * */
 //Disciplina repository
-const disciplinaRepository = new PrismaDisciplinaRepository(
-  prismaClient
-);
-const unidadeRepository = new PrismaUnidadeRepository(
-  prismaClient
-);
+const disciplinaRepository = new PrismaDisciplinaRepository(prismaClient);
+const unidadeRepository = new PrismaUnidadeRepository(prismaClient);
 //BNCC Service (chama os services que acessam o arquivo JSON da BNCC)
 const bnccService = new BnccService();
 
@@ -46,6 +39,10 @@ const listarDisciplinaUseCase = new ListarDisciplinaUseCase(
 const deletarDisciplinaUseCase = new DeleteDisciplinaUseCase(
   disciplinaRepository
 );
+const listarDisciplinaPorIDUseCase = new ListarDisciplinaPorIDUseCase(
+  disciplinaRepository
+);
+
 //Unidade Use Cases
 const criarUnidadeUseCase = new CriarUnidadeUseCase(
   unidadeRepository,
@@ -55,7 +52,7 @@ const criarUnidadeUseCase = new CriarUnidadeUseCase(
 const listarUnidadesUseCase = new ListarUnidadesUseCase(
   unidadeRepository,
   disciplinaRepository
-)
+);
 
 /**
  * @Controllers
@@ -64,8 +61,10 @@ const listarUnidadesUseCase = new ListarUnidadesUseCase(
 export const disciplinaController = new DisciplinaController(
   criarDisciplinaUseCase,
   listarDisciplinaUseCase,
-  deletarDisciplinaUseCase
+  deletarDisciplinaUseCase,
+  listarDisciplinaPorIDUseCase
 );
+
 //Unidade Controller
 export const unidadeController = new UnidadeController(
   criarUnidadeUseCase,

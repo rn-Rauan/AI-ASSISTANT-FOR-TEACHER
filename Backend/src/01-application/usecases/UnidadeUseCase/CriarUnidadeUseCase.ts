@@ -28,15 +28,17 @@ export class CriarUnidadeUseCase {
       .trim()
       .toLocaleUpperCase() as origem_tema;
 
-    if (origemTemaFormatado == "BNCC") {
-      const temaValido = await this.bnccService.validarTemaBncc(temaFormatado);
-      if (!temaValido) {
-        throw new Error("Tema inválido conforme a BNCC: " + temaFormatado);
-      }
+    const disciplina = await this.disciplinaRepository.findByID(unidadeDTO.disciplina_id);
+
+    if (!disciplina) {
+      throw new Error("Disciplina não encontrada");
     }
 
-    if (!await this.disciplinaRepository.findByID(unidadeDTO.disciplina_id)) {
-      throw new Error("Disciplina não encontrada");
+    if (origemTemaFormatado == "BNCC") {
+      const temaValido = this.bnccService.temaValidoParaDisciplina(disciplina.disciplinaCodigo, disciplina.anoSerie, temaFormatado);
+      if (!temaValido) {
+        throw new Error(`Tema inválido conforme a BNCC para a disciplina ${disciplina.disciplinaCodigo} - ${disciplina.anoSerie}: ${temaFormatado}`);
+      }
     }
 
     const unidade = new Unidade(

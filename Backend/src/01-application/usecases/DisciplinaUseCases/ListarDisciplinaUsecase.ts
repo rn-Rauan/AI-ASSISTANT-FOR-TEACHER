@@ -1,5 +1,7 @@
-import { Disciplina } from "../../../02-domain/entities/Disciplina";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
+import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
+import { obterNomeDisciplina } from "../../../02-domain/mappings/Disciplina_nome";
+import { DisciplinaResponseDTO } from "../../dtos/DisciplinaResponseDTO";
 
 export class ListarDisciplinaUseCase {
 
@@ -13,7 +15,15 @@ export class ListarDisciplinaUseCase {
    * Executa o caso de uso para listar todas as disciplinas
    * @returns Lista de disciplinas
    */
-  async execute(): Promise<Disciplina[]> {
-    return await this.disciplinaRepository.listar();
+  async execute(): Promise<DisciplinaResponseDTO[]> {
+    const disciplinas = await this.disciplinaRepository.listar();
+    const diciplinasComNomes = disciplinas.map((disciplina) => ({
+      id: disciplina.DisciplinaID,
+      disciplinaCodigo: disciplina.disciplinaCodigo,
+      nome: obterNomeDisciplina(disciplina.disciplinaCodigo),
+      anoSerie: disciplina.anoSerie,
+      anoSerieNome: obterNomeAnoSerie(disciplina.anoSerie),
+    }));
+    return diciplinasComNomes;
   }
 }

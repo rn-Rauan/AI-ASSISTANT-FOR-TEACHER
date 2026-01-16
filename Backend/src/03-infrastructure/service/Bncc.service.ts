@@ -28,10 +28,10 @@ export class BnccService implements IBnccService {
    * @param ano_serie Ano e série da disciplina
    * @returns Boolean indicando se a disciplina e série são válidas na BNCC
    */
-  async disciplinaValida(
+  disciplinaValida(
     disciplina_codigo: disciplina_codigo,
     ano_serie: ano_serie
-  ) {
+  ): boolean {
     const disciplinaEncontrada = this.bnccJson.some(
       (disciplina) =>
         disciplina.disciplina_codigo.trim() == disciplina_codigo.trim() &&
@@ -44,10 +44,10 @@ export class BnccService implements IBnccService {
    * @param ano_serie Ano e série da disciplina
    * @returns Lista de temas da disciplina e série informadas
    */
-  async getTemasPorDisciplinaESerie (
+  getTemasPorDisciplinaESerie(
     disciplina_codigo: disciplina_codigo,
     ano_serie: ano_serie
-  ): Promise<Tema[]> {
+  ): Tema[] {
     const disciplina = this.bnccJson.find(
       (disciplina) =>
         disciplina.disciplina_codigo == disciplina_codigo &&
@@ -59,16 +59,43 @@ export class BnccService implements IBnccService {
     return disciplina.temas;
   }
   /**
+   * @param disciplina_codigo Código da disciplina
+   * @param ano_serie Ano e série da disciplina
+   * @param tema Tema a ser validado
+   * @returns Boolean indicando se o tema é válido na BNCC para a disciplina e série informadas
+   */
+  temaValidoParaDisciplina(
+    disciplina_codigo: disciplina_codigo,
+    ano_serie: ano_serie,
+    tema: string
+  ): boolean {
+    const temasDaDisciplina = this.getTemasPorDisciplinaESerie(
+      disciplina_codigo,
+      ano_serie
+    );
+    if (!temasDaDisciplina) {
+      return false;
+    }
+    const temaFormatado = tema.trim().toLocaleUpperCase();
+    const temaValido = temasDaDisciplina.some(
+      (tema) => tema.tema.trim().toLocaleUpperCase() == temaFormatado
+    );
+    return temaValido;
+  }
+  /**
    * Valida se o tema existe na BNCC
    * @param tema Tema a ser validado
    * @returns Boolean indicando se o tema é válido na BNCC
    */
-  async validarTemaBncc(tema: string){
+  validarTemaBncc(tema: string): boolean {
     const temaFormatado = tema.trim().toLocaleUpperCase();
 
-    for (let i: number = 0; i< this.bnccJson.length; i++) {
+    for (let i: number = 0; i < this.bnccJson.length; i++) {
       for (let j: number = 0; j < this.bnccJson[i].temas.length; j++) {
-        if (this.bnccJson[i].temas[j].tema.trim().toLocaleUpperCase() == temaFormatado) {
+        if (
+          this.bnccJson[i].temas[j].tema.trim().toLocaleUpperCase() ==
+          temaFormatado
+        ) {
           return true;
         }
       }

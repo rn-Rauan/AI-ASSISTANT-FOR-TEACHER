@@ -14,7 +14,7 @@ export class UnidadeController {
         return reply
           .status(400)
           .send({
-            message: "Campos obrigatórios: tema, origem_tema, disciplina_id",
+            message: "Campos obrigatórios: disciplina_id, tema, origem_tema",
           });
       }
 
