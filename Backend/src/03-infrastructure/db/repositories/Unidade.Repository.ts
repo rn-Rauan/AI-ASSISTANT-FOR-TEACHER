@@ -21,8 +21,33 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
       unidadeCriada.origem_tema as origem_tema
     );
   }
-  async listar(): Promise<Unidade[]> {
-    throw new Error("Method not implemented.");
+  async listar(disciplina_id?: string): Promise<Unidade[]> {
+    if (!disciplina_id) {
+      const unidadesData = await this.prisma.unidades.findMany();
+      const unidadesListadas = unidadesData.map((unidadeData) => {
+        return new Unidade(
+          unidadeData.id,
+          unidadeData.disciplina_id,
+          unidadeData.tema,
+          unidadeData.origem_tema as origem_tema
+        );
+      });
+      return unidadesListadas;
+    }
+    const unidadesData = await this.prisma.unidades.findMany({
+      where: {
+        disciplina_id: disciplina_id,
+      },
+    });
+    const unidadesPorDisciplina = unidadesData.map((unidadeData) => {
+      return new Unidade(
+        unidadeData.id,
+        unidadeData.disciplina_id,
+        unidadeData.tema,
+        unidadeData.origem_tema as origem_tema
+      );
+    });
+    return unidadesPorDisciplina;
   }
   async findByID(id: string): Promise<Unidade | null> {
     throw new Error("Method not implemented.");

@@ -8,6 +8,7 @@ import { DisciplinaController } from "../03-infrastructure/http/controllers/Disc
 import { CriarUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/CriarUnidadeUseCase";
 import { UnidadeController } from "../03-infrastructure/http/controllers/Unidade.controller";
 import { PrismaUnidadeRepository } from "../03-infrastructure/db/repositories/Unidade.Repository";
+import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase/ListarUnidadesUseCase";
 
 /**
  * Container de Injeção de Dependências
@@ -22,10 +23,10 @@ import { PrismaUnidadeRepository } from "../03-infrastructure/db/repositories/Un
  * @RepositoriesServices
  * */
 //Disciplina repository
-export const disciplinaRepository = new PrismaDisciplinaRepository(
+const disciplinaRepository = new PrismaDisciplinaRepository(
   prismaClient
 );
-export const unidadeRepository = new PrismaUnidadeRepository(
+const unidadeRepository = new PrismaUnidadeRepository(
   prismaClient
 );
 //BNCC Service (chama os services que acessam o arquivo JSON da BNCC)
@@ -46,10 +47,15 @@ const deletarDisciplinaUseCase = new DeleteDisciplinaUseCase(
   disciplinaRepository
 );
 //Unidade Use Cases
-export const criarUnidadeUseCase = new CriarUnidadeUseCase(
+const criarUnidadeUseCase = new CriarUnidadeUseCase(
   unidadeRepository,
+  disciplinaRepository,
   bnccService
 );
+const listarUnidadesUseCase = new ListarUnidadesUseCase(
+  unidadeRepository,
+  disciplinaRepository
+)
 
 /**
  * @Controllers
@@ -62,5 +68,6 @@ export const disciplinaController = new DisciplinaController(
 );
 //Unidade Controller
 export const unidadeController = new UnidadeController(
-  criarUnidadeUseCase
+  criarUnidadeUseCase,
+  listarUnidadesUseCase
 );

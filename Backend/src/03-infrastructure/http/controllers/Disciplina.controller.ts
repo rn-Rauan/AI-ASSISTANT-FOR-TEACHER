@@ -51,7 +51,7 @@ export class DisciplinaController {
       });
       reply.status(201).send(disciplinaCriada);
     } catch (erro: any) {
-      reply.status(500).send({ error: erro.message });
+      reply.status(500).send({message: "Erro ao criar disciplina", error: erro.message });
     }
   }
   async listarDisciplinas(_req: FastifyRequest, reply: FastifyReply) {
@@ -59,7 +59,7 @@ export class DisciplinaController {
       const disciplinas = await this.listarDisciplinaUseCase.execute();
       reply.status(200).send(disciplinas);
     } catch (erro: any) {
-      reply.status(500).send({ error: erro.message });
+      reply.status(500).send({message: "Erro ao listar disciplinas", error: erro.message });
     }
   }
   async deletarDisciplina(req: FastifyRequest, reply: FastifyReply) {
@@ -71,7 +71,7 @@ export class DisciplinaController {
       await this.deleteDisciplinaUseCase.execute(id);
       reply.status(200).send({ message: "Disciplina deletada com sucesso" });
     } catch (error: any) {
-      reply.status(500).send({ error: error.message });
+      reply.status(500).send({message: "Erro ao deletar disciplina", error: error.message });
     }
   }
 }

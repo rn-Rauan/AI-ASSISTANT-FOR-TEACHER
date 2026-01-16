@@ -17,7 +17,7 @@ export class CriarDisciplinaUseCase {
    * @param disciplinaDTO Dados da disciplina a ser criada
    * @returns Disciplina criada
    */
-  async execute(disciplinaDTO: DisciplinaDTO) {
+  async execute(disciplinaDTO: DisciplinaDTO) : Promise<Disciplina> {
 
     const codigoFormatado =  disciplinaDTO.disciplina_codigo.trim().toUpperCase() as disciplina_codigo;
     const anoSerieFormatado = disciplinaDTO.ano_serie.trim().toUpperCase() as ano_serie;

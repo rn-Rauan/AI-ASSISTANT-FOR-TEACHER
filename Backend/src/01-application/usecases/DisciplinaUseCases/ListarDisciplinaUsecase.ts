@@ -1,3 +1,4 @@
+import { Disciplina } from "../../../02-domain/entities/Disciplina";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 
 export class ListarDisciplinaUseCase {
@@ -12,7 +13,7 @@ export class ListarDisciplinaUseCase {
    * Executa o caso de uso para listar todas as disciplinas
    * @returns Lista de disciplinas
    */
-  async execute() {
+  async execute(): Promise<Disciplina[]> {
     return await this.disciplinaRepository.listar();
   }
 }

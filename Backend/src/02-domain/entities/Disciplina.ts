@@ -20,6 +20,9 @@ export class Disciplina {
         }
         return true;
     }
+    get DisciplinaID(): string {
+        return this.id;
+    }
     get disciplinaCodigo(): disciplina_codigo {
         return this.disciplina_codigo;
     }
