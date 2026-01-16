@@ -1,0 +1,1 @@
+export type origem_tema = "BNCC" | "MANUAL"

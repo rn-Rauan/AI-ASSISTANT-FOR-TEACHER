@@ -1,9 +1,9 @@
-import { Disciplina } from "../../02-domain/entities/Disciplina";
-import { IBnccService } from "../../02-domain/interfaces/IBnccService";
-import { IDisciplinaRepository } from "../../02-domain/interfaces/IDisciplinaRepository";
-import { ano_serie } from "../../02-domain/types/Ano_Serie";
-import { disciplina_codigo } from "../../02-domain/types/Disciplina_codigo";
-import { DisciplinaDTO } from "../dtos/DisciplinaDTO";
+import { Disciplina } from "../../../02-domain/entities/Disciplina";
+import { IBnccService } from "../../../02-domain/interfaces/IBnccService";
+import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
+import { ano_serie } from "../../../02-domain/types/Ano_Serie";
+import { disciplina_codigo } from "../../../02-domain/types/Disciplina_codigo";
+import { DisciplinaDTO } from "../../dtos/DisciplinaDTO";
 
 export class CriarDisciplinaUseCase {
   /**
@@ -13,6 +13,7 @@ export class CriarDisciplinaUseCase {
   constructor(private disciplinaRepository: IDisciplinaRepository, private bnccService: IBnccService) {}
 
   /**
+   * Executa o caso de uso para criar uma nova disciplina
    * @param disciplinaDTO Dados da disciplina a ser criada
    * @returns Disciplina criada
    */

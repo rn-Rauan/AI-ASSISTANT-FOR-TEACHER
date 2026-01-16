@@ -43,12 +43,14 @@ Prisma/
 src/
  |
  ├─ application/
- │   ├─ usecases/
- │   └─ dtos/
- │
+ │   ├─ dtos/
+ │   └─ usecases/
+ │       ├─ DisciplinaUseCases/
+ |       └─ UnidadeUseCase/
+ |
  ├─ domain/
- │   └─ entities/
- |   └─ interfaces/
+ │   ├─ entities/
+ |   ├─ interfaces/
  |   └─ types/
  │
  ├─ infrastructure/
@@ -64,6 +66,9 @@ src/
  ├─ data/
  |    ├─ bncc.json
  |    └─ diretrizes_mec.json
+ |
+ ├─ DI/
+ |  └─container.ts
  |
  └─ server.ts 
 ```
@@ -113,6 +118,9 @@ Todas as validações de negócio são realizadas nesta camada, evitando abstra�
 
 Controllers apenas recebem dados da requisição, chamam os casos de uso e retornam a resposta, sem conter regras de negócio.
 
+## Injeção de Dependências
+A injeção de dependências é realizada manualmente em um container simples (`DI/container.ts`). Cada camada depende apenas das abstrações necessárias, promovendo baixo acoplamento.
+
 ## Uso de Dados Normativos (BNCC e MEC)
 
 Os documentos da BNCC e as Diretrizes do MEC são armazenados em arquivos JSON estáticos no backend. Esses arquivos são utilizados exclusivamente como fonte de referência para validações e sugestões automáticas no processo de geração de unidades e conteúdos didáticos.
@@ -127,7 +135,7 @@ Essa abordagem reduz a complexidade do banco de dados e facilita a manutenção 
 
 ### Positivas
 
-* Arquitetura clara e fácil de explicar
+* Arquitetura clara e objetiva
 * Separação adequada de responsabilidades
 * Baixo custo cognitivo para desenvolvimento
 * Facilidade de testes nos casos de uso

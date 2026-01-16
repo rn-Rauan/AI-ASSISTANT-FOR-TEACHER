@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CriarDisciplinaUseCase } from "../../../01-application/usecases/CriarDisciplinaUseCase";
+import { CriarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DisciplinaDTO } from "../../../01-application/dtos/DisciplinaDTO";
-import { ListarDisciplinaUseCase } from "../../../01-application/usecases/ListarDisciplinaUsecase";
-import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DeleteDisciplinaUseCase";
+import { ListarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUsecase";
+import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 
 // PADRÕES DE RESPOSTA DO SISTEMA:
 // --- ERROS DO CLIENTE (4XX) ---
