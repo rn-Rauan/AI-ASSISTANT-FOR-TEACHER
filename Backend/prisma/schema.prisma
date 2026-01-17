@@ -16,7 +16,6 @@ datasource db {
 model Disciplinas  {
   id                     String    @id @default(uuid())
   disciplina_codigo      String
-  nome                   String
   ano_serie              String
   created_at             DateTime  @default(now())
 
