@@ -73,6 +73,10 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
     );
   }
   async excluir(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.prisma.unidades.delete({
+      where: {
+        id: id,
+      },
+    });
   }
 }

@@ -13,6 +13,9 @@ export class DeleteDisciplinaUseCase {
    * @returns Retorna true se a exclusão for bem-sucedida
    */
   async execute(id: string): Promise<boolean> {
+    if(!id || id.trim() == "") {
+      throw new Error("ID da disciplina é obrigatório.");
+    }
     const disciplinaExistente = await this.disciplinaRepository.findByID(id);
     if (!disciplinaExistente) {
       throw new Error("Disciplina não encontrada");

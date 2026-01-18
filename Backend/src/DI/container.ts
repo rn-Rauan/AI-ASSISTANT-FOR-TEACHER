@@ -11,6 +11,7 @@ import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase
 import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
 import { BuscarUnidadePorIDUseCase } from "../01-application/usecases/UnidadeUseCase/BuscarUnidadePorIDUseCase";
 import { ListarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
+import { DeleteUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/DeleteUnidadeUseCase";
 
 //Container de Injeção de Dependências
 
@@ -57,6 +58,9 @@ const listarUnidadesUseCase = new ListarUnidadesUseCase(
 const listarUnidadesPorIdUseCase = new BuscarUnidadePorIDUseCase(
   unidadeRepository
 )
+const deletarUnidadeUseCase = new DeleteUnidadeUseCase(
+  unidadeRepository
+)
 
 /**
  * @Controllers
@@ -73,5 +77,6 @@ export const disciplinaController = new DisciplinaController(
 export const unidadeController = new UnidadeController(
   criarUnidadeUseCase,
   listarUnidadesUseCase,
-  listarUnidadesPorIdUseCase
+  listarUnidadesPorIdUseCase,
+  deletarUnidadeUseCase
 );
