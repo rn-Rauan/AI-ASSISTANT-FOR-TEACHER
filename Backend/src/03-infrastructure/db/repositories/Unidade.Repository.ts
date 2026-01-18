@@ -7,6 +7,9 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
   constructor(private prisma: PrismaClient) {}
 
   async criar(unidade: Unidade): Promise<Unidade> {
+    if (!unidade) {
+      throw new Error("Unidade inválida.");
+    }
     const unidadeCriada = await this.prisma.unidades.create({
       data: {
         tema: unidade.Tema,
@@ -18,7 +21,8 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
       unidadeCriada.id,
       unidadeCriada.disciplina_id,
       unidadeCriada.tema,
-      unidadeCriada.origem_tema as origem_tema
+      unidadeCriada.origem_tema as origem_tema,
+      unidadeCriada.created_at
     );
   }
   async listar(disciplina_id?: string): Promise<Unidade[]> {
@@ -29,7 +33,8 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
           unidadeData.id,
           unidadeData.disciplina_id,
           unidadeData.tema,
-          unidadeData.origem_tema as origem_tema
+          unidadeData.origem_tema as origem_tema,
+          unidadeData.created_at
         );
       });
       return unidadesListadas;
@@ -44,13 +49,28 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
         unidadeData.id,
         unidadeData.disciplina_id,
         unidadeData.tema,
-        unidadeData.origem_tema as origem_tema
+        unidadeData.origem_tema as origem_tema,
+        unidadeData.created_at
       );
     });
     return unidadesPorDisciplina;
   }
   async findByID(id: string): Promise<Unidade | null> {
-    throw new Error("Method not implemented.");
+    const unidadeData = await this.prisma.unidades.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (!unidadeData) {
+      return null;
+    }
+    return new Unidade(
+      unidadeData.id,
+      unidadeData.disciplina_id,
+      unidadeData.tema,
+      unidadeData.origem_tema as origem_tema,
+      unidadeData.created_at
+    );
   }
   async excluir(id: string): Promise<void> {
     throw new Error("Method not implemented.");

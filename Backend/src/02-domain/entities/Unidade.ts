@@ -8,6 +8,7 @@ export class Unidade {
     private disciplina_id: string;
     private tema: string; 
     private origem_tema: origem_tema;
+    private criadoEm: Date | null
 
     /**
      * @param id ID da unidade
@@ -15,11 +16,12 @@ export class Unidade {
      * @param tema Tema da unidade
      * @param origem_tema Origem do tema da unidade
      */
-    constructor(id: string, disciplina_id: string, tema: string, origem_tema: origem_tema){
+    constructor(id: string, disciplina_id: string, tema: string, origem_tema: origem_tema, criadoEm?: Date | null) {
         this.id = id;
         this.disciplina_id = disciplina_id;
         this.tema = tema;
         this.origem_tema = origem_tema.toLocaleUpperCase() as origem_tema;
+        this.criadoEm = criadoEm || null;
         this.validar();
     }
 
@@ -47,5 +49,11 @@ export class Unidade {
     }
     get OrigemTema(): origem_tema {
         return this.origem_tema;
+    }
+    get CriadoEm(): Date {
+        if (!this.criadoEm) {
+            throw new Error("A data de criação da unidade é obrigatória.");
+        }
+        return this.criadoEm;
     }
 }

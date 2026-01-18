@@ -1,3 +1,4 @@
+import { promises } from "node:dns";
 import { Unidade } from "../../../02-domain/entities/Unidade";
 import { IBnccService } from "../../../02-domain/interfaces/IBnccService";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
@@ -22,7 +23,7 @@ export class CriarUnidadeUseCase {
    * @param unidadeDTO Dados da unidade a ser criada
    * @returns Unidade criada
    */
-  async execute(unidadeDTO: UnidadeDTO) {
+  async execute(unidadeDTO: UnidadeDTO) : Promise<Unidade> {
     const temaFormatado = unidadeDTO.tema.trim().toLocaleUpperCase();
     const origemTemaFormatado = unidadeDTO.origem_tema
       .trim()
@@ -45,7 +46,8 @@ export class CriarUnidadeUseCase {
       "", //id gerado no banco
       unidadeDTO.disciplina_id,
       temaFormatado,
-      origemTemaFormatado
+      origemTemaFormatado,
+      null //data de criação gerada no banco
     );
     return this.unidadeRepository.criar(unidade);
   }

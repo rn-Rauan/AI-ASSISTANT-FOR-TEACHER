@@ -3,13 +3,14 @@ import { PrismaDisciplinaRepository } from "../03-infrastructure/db/repositories
 import { BnccService } from "../03-infrastructure/service/Bncc.service";
 import { CriarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DeleteDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
-import { ListarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUsecase";
 import { DisciplinaController } from "../03-infrastructure/http/controllers/Disciplina.controller";
 import { CriarUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/CriarUnidadeUseCase";
 import { UnidadeController } from "../03-infrastructure/http/controllers/Unidade.controller";
 import { PrismaUnidadeRepository } from "../03-infrastructure/db/repositories/Unidade.Repository";
 import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase/ListarUnidadesUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
+import { BuscarUnidadePorIDUseCase } from "../01-application/usecases/UnidadeUseCase/BuscarUnidadePorIDUseCase";
+import { ListarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
 
 //Container de Injeção de Dependências
 
@@ -53,6 +54,9 @@ const listarUnidadesUseCase = new ListarUnidadesUseCase(
   unidadeRepository,
   disciplinaRepository
 );
+const listarUnidadesPorIdUseCase = new BuscarUnidadePorIDUseCase(
+  unidadeRepository
+)
 
 /**
  * @Controllers
@@ -68,5 +72,6 @@ export const disciplinaController = new DisciplinaController(
 //Unidade Controller
 export const unidadeController = new UnidadeController(
   criarUnidadeUseCase,
-  listarUnidadesUseCase
+  listarUnidadesUseCase,
+  listarUnidadesPorIdUseCase
 );

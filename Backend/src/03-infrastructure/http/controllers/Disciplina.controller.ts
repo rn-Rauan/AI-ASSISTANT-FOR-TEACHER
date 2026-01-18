@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CriarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DisciplinaDTO } from "../../../01-application/dtos/DisciplinaDTO";
-import { ListarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUsecase";
 import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
+import { ListarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
 
 // PADRÕES DE RESPOSTA DO SISTEMA:
 // --- ERROS DO CLIENTE (4XX) ---
@@ -37,7 +37,7 @@ export class DisciplinaController {
     private listarDisciplinaUseCase: ListarDisciplinaUseCase,
     private deleteDisciplinaUseCase: DeleteDisciplinaUseCase,
     private listarDisciplinaPorIDUseCase: ListarDisciplinaPorIDUseCase
-  ) {}
+  ) { }
 
   async criarDisciplina(req: FastifyRequest, reply: FastifyReply) {
     try {
@@ -53,7 +53,7 @@ export class DisciplinaController {
       });
       reply.status(201).send(disciplinaCriada);
     } catch (erro: any) {
-      reply.status(500).send({message: "Erro ao criar disciplina", error: erro.message });
+      reply.status(500).send({ message: "Erro ao criar disciplina", error: erro.message });
     }
   }
   async listarDisciplinas(_req: FastifyRequest, reply: FastifyReply) {
@@ -61,7 +61,7 @@ export class DisciplinaController {
       const disciplinas = await this.listarDisciplinaUseCase.execute();
       reply.status(200).send(disciplinas);
     } catch (erro: any) {
-      reply.status(500).send({message: "Erro ao listar disciplinas", error: erro.message });
+      reply.status(500).send({ message: "Erro ao listar disciplinas", error: erro.message });
     }
   }
   async deletarDisciplina(req: FastifyRequest, reply: FastifyReply) {
@@ -73,19 +73,19 @@ export class DisciplinaController {
       await this.deleteDisciplinaUseCase.execute(id);
       reply.status(200).send({ message: "Disciplina deletada com sucesso" });
     } catch (error: any) {
-      reply.status(500).send({message: "Erro ao deletar disciplina", error: error.message });
+      reply.status(500).send({ message: "Erro ao deletar disciplina", error: error.message });
     }
   }
   async obterDisciplinaPorID(req: FastifyRequest, reply: FastifyReply) {
-    const { id } = req.params as { id: string };
     try {
+      const { id } = req.params as { id: string };
       if (!id) {
         reply.status(400).send({ error: "ID da disciplina é obrigatório." });
       }
       const disciplina = await this.listarDisciplinaPorIDUseCase.execute(id);
       reply.status(200).send(disciplina);
     } catch (error: any) {
-      reply.status(500).send({message: "Erro ao obter disciplina por ID", error: error.message });
+      reply.status(500).send({ message: "Erro ao obter disciplina por ID", error: error.message });
     }
   }
 }
