@@ -7,24 +7,27 @@ import { DeleteUnidadeUseCase } from "../../../01-application/usecases/UnidadeUs
 
 export class UnidadeController {
   constructor(private criarUnidadeUseCase: CriarUnidadeUseCase, private listarUnidadeUseCase: ListarUnidadesUseCase, private buscarUnidadePorIDUseCase: BuscarUnidadePorIDUseCase, private deleteUnidadeUseCase: DeleteUnidadeUseCase) { }
-
+  /**
+   * 
+   * @param req Requisição HTTP contendo os dados da unidade
+   * @param reply Resposta HTTP com a unidade criada 
+   */
   async criarUnidade(req: FastifyRequest, reply: FastifyReply) {
 
-    try { 
-      const { disciplina_id, tema, origem_tema } = req.body as UnidadeDTO;
+    try {
+      const { disciplina_id, tema } = req.body as UnidadeDTO;
 
-      if (!tema || !origem_tema || !disciplina_id) {
+      if (!tema || !disciplina_id) {
         return reply
           .status(400)
           .send({
-            message: "Campos obrigatórios: disciplina_id, tema, origem_tema",
+            message: "Campos obrigatórios: disciplina_id, tema",
           });
       }
 
       const unidadeCriada = await this.criarUnidadeUseCase.execute({
         disciplina_id,
         tema,
-        origem_tema,
       });
 
       return reply.status(201).send(unidadeCriada);
@@ -35,6 +38,11 @@ export class UnidadeController {
         .send({ message: "Erro ao criar unidade", error: error.message });
     }
   }
+  /**
+   * 
+   * @param req Requisição HTTP contendo o ID da disciplina
+   * @param reply Resposta HTTP com a lista de unidades
+   */
   async listarUnidades(req: FastifyRequest, reply: FastifyReply) {
     try {
 
@@ -58,6 +66,11 @@ export class UnidadeController {
         .send({ message: "Erro ao listar unidades", error: error.message });
     }
   }
+  /**
+   * 
+   * @param req Requisição HTTP contendo o ID da unidade
+   * @param reply Resposta HTTP com a unidade encontrada
+   */
   async buscarUnidadePorID(req: FastifyRequest, reply: FastifyReply) {
 
     try {
@@ -80,6 +93,11 @@ export class UnidadeController {
         .send({ message: "Erro ao buscar unidade por ID", error: error.message });
     }
   }
+  /**
+   * 
+   * @param req Requisição HTTP contendo o ID da unidade
+   * @param reply Resposta HTTP com a mensagem de sucesso
+   */
   async deleteUnidade(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { id } = req.params as { id: string };

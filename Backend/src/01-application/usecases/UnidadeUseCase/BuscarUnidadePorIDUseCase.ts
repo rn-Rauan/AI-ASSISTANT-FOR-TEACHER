@@ -28,7 +28,6 @@ export class BuscarUnidadePorIDUseCase {
             id: unidade.UnidadeID,
             disciplinaID: unidade.DisciplinaID,
             tema: unidade.Tema,
-            origem: unidade.OrigemTema,
             criadoEm: unidade.CriadoEm,
         }
     }

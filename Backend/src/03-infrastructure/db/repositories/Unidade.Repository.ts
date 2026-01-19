@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
 import { Unidade } from "../../../02-domain/entities/Unidade";
-import { origem_tema } from "../../../02-domain/types/Origem_Tema";
 
 export class PrismaUnidadeRepository implements IUnidadeRepository {
   constructor(private prisma: PrismaClient) {}
@@ -13,7 +12,6 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
     const unidadeCriada = await this.prisma.unidades.create({
       data: {
         tema: unidade.Tema,
-        origem_tema: unidade.OrigemTema as origem_tema,
         disciplina_id: unidade.DisciplinaID,
       },
     });
@@ -21,7 +19,6 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
       unidadeCriada.id,
       unidadeCriada.disciplina_id,
       unidadeCriada.tema,
-      unidadeCriada.origem_tema as origem_tema,
       unidadeCriada.created_at
     );
   }
@@ -33,7 +30,6 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
           unidadeData.id,
           unidadeData.disciplina_id,
           unidadeData.tema,
-          unidadeData.origem_tema as origem_tema,
           unidadeData.created_at
         );
       });
@@ -49,7 +45,6 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
         unidadeData.id,
         unidadeData.disciplina_id,
         unidadeData.tema,
-        unidadeData.origem_tema as origem_tema,
         unidadeData.created_at
       );
     });
@@ -68,7 +63,6 @@ export class PrismaUnidadeRepository implements IUnidadeRepository {
       unidadeData.id,
       unidadeData.disciplina_id,
       unidadeData.tema,
-      unidadeData.origem_tema as origem_tema,
       unidadeData.created_at
     );
   }

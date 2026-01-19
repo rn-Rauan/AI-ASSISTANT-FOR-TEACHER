@@ -4,6 +4,7 @@ import { DisciplinaDTO } from "../../../01-application/dtos/DisciplinaDTO";
 import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 import { ListarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
+import { SugerirTemasUseCase } from "../../../01-application/usecases/TemasUseCase/SugerirTemasUseCase";
 
 
 // PADRÕES DE RESPOSTA DO SISTEMA:
@@ -33,13 +34,18 @@ export class DisciplinaController {
    * Controlador para operações relacionadas a Disciplina
    * @param criarDisciplinaUseCase Caso de uso para criar disciplina
   */
- constructor(
-   private criarDisciplinaUseCase: CriarDisciplinaUseCase,
-   private listarDisciplinaUseCase: ListarDisciplinaUseCase,
-   private deleteDisciplinaUseCase: DeleteDisciplinaUseCase,
-   private listarDisciplinaPorIDUseCase: ListarDisciplinaPorIDUseCase
+  constructor(
+    private criarDisciplinaUseCase: CriarDisciplinaUseCase,
+    private listarDisciplinaUseCase: ListarDisciplinaUseCase,
+    private deleteDisciplinaUseCase: DeleteDisciplinaUseCase,
+    private listarDisciplinaPorIDUseCase: ListarDisciplinaPorIDUseCase,
+    private sugerirTemasUseCase: SugerirTemasUseCase
   ) { }
-  
+  /**
+   * 
+   * @param req Requisição HTTP contendo os dados da disciplina
+   * @param reply Resposta HTTP com a disciplina criada
+   */
   async criarDisciplina(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { disciplina_codigo, ano_serie } = req.body as DisciplinaDTO;
@@ -56,7 +62,11 @@ export class DisciplinaController {
     } catch (erro: any) {
       reply.status(500).send({ message: "Erro ao criar disciplina", error: erro.message });
     }
-  }
+  }/**
+   * 
+   * @param _req Requisição HTTP vazia
+   * @param reply Resposta HTTP com a lista de disciplinas
+   */
   async listarDisciplinas(_req: FastifyRequest, reply: FastifyReply) {
     try {
       const disciplinas = await this.listarDisciplinaUseCase.execute();
@@ -65,6 +75,11 @@ export class DisciplinaController {
       reply.status(500).send({ message: "Erro ao listar disciplinas", error: erro.message });
     }
   }
+  /**
+   * 
+   * @param req Requisição HTTP contendo o ID da disciplina
+   * @param reply Resposta HTTP com a mensagem de sucesso
+   */
   async deletarDisciplina(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { id } = req.params as { id: string };
@@ -77,6 +92,11 @@ export class DisciplinaController {
       reply.status(500).send({ message: "Erro ao deletar disciplina", error: error.message });
     }
   }
+  /**
+   * 
+   * @param req Requisição HTTP contendo o ID da disciplina
+   * @param reply Resposta HTTP com a disciplina encontrada
+   */
   async obterDisciplinaPorID(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { id } = req.params as { id: string };

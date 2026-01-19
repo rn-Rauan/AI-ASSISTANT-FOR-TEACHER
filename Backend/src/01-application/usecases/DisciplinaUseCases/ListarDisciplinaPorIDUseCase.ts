@@ -1,3 +1,4 @@
+import { error } from "node:console";
 import { Disciplina } from "../../../02-domain/entities/Disciplina";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
@@ -12,7 +13,7 @@ export class ListarDisciplinaPorIDUseCase {
      * @param id ID da disciplina a ser buscada
      * @returns Disciplina encontrada ou null se não existir
      */
-    async execute(id: string): Promise<DisciplinaResponseDTO | null> {
+    async execute(id: string): Promise<DisciplinaResponseDTO> {
         if (!id || id.trim() == "") {
             throw new Error("O ID da disciplina é obrigatório.");
         }
@@ -20,7 +21,7 @@ export class ListarDisciplinaPorIDUseCase {
         const disciplina = await this.disciplinaRepository.findByID(id);
 
         if (!disciplina) {
-            return null;
+            throw new Error("Disciplina não encontrada");
         }
         return {
             id: disciplina.DisciplinaID,

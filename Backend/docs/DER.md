@@ -37,7 +37,6 @@ Representa os temas ou tópicos de estudo pertencentes a uma disciplina.
 | id           | UUID     | PK, Unique             | Identificador único da unidade           |
 | disciplina_id| UUID     | FK → disciplinas.id    | Disciplina à qual a unidade pertence     |
 | tema         | String   | Not Null               | Tema ou título da unidade                |
-| origem_tema  | String   | bncc | manual          | Indica tema BNCC ou tema manual          |
 | created_at   | DateTime | Default: now()         | Data de criação do registro              |
 
 ---
@@ -61,9 +60,6 @@ Armazena os materiais didáticos produzidos pela Inteligência Artificial.
 - **Integridade Referencial**  
   Ao excluir uma disciplina, todas as unidades e conteúdos gerados associados devem ser removidos automaticamente (Cascade Delete).
 
-- **Validação de Tipos**  
-  Apesar de `origem_tema` e `tipo` serem armazenados como `String`, a camada de Application é responsável por validar os valores permitidos, evitando inconsistências.
-
 - **Persistência de Conteúdo Gerado por IA**  
   O campo `conteudo` deve suportar textos extensos, pois armazena planos de aula completos, atividades avaliativas detalhadas e possíveis materiais complementares.
 
@@ -71,5 +67,5 @@ Armazena os materiais didáticos produzidos pela Inteligência Artificial.
 
 ## 4. Observações Arquiteturais
 
-- Dados normativos como BNCC e Diretrizes do MEC **não são persistidos neste modelo**, sendo mantidos em arquivos JSON estáticos versionados no código-fonte.
+- Dados normativos como BNCC e Diretrizes do MEC **não são persistidos neste modelo**, são consultados através da API RAG externa.
 - O modelo foi projetado para um sistema de usuário único, conforme especificado no edital.

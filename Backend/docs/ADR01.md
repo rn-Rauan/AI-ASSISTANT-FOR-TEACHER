@@ -60,9 +60,9 @@ src/
  │   │   └─ controllers/
  │   ├─ db/
  │   │   └─ repositories/
- │   ├─ service/
- │   └─ ia/
- |
+ │   └─ service/
+ │       └─ AI.service.ts
+ | 
  ├─ data/
  |    ├─ bncc.json
  |    └─ diretrizes_mec.json

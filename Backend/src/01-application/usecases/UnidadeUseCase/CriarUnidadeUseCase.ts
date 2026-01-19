@@ -1,9 +1,6 @@
-import { promises } from "node:dns";
 import { Unidade } from "../../../02-domain/entities/Unidade";
-import { IBnccService } from "../../../02-domain/interfaces/IBnccService";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
-import { origem_tema } from "../../../02-domain/types/Origem_Tema";
 import { UnidadeDTO } from "../../dtos/UnidadeDTO";
 
 export class CriarUnidadeUseCase {
@@ -11,12 +8,10 @@ export class CriarUnidadeUseCase {
    * Caso de uso para criar uma nova unidade
    * @param unidadeRepository injeção do repositório de unidades
    * @param disciplinaRepository injeção do repositório de disciplinas
-   * @param bnccService injeção do serviço de validação de tema BNCC
    */
   constructor(
     private unidadeRepository: IUnidadeRepository,
-    private disciplinaRepository: IDisciplinaRepository,
-    private bnccService: IBnccService
+    private disciplinaRepository: IDisciplinaRepository
   ) {}
   /**
    *
@@ -25,9 +20,6 @@ export class CriarUnidadeUseCase {
    */
   async execute(unidadeDTO: UnidadeDTO) : Promise<Unidade> {
     const temaFormatado = unidadeDTO.tema.trim().toLocaleUpperCase();
-    const origemTemaFormatado = unidadeDTO.origem_tema
-      .trim()
-      .toLocaleUpperCase() as origem_tema;
 
     const disciplina = await this.disciplinaRepository.findByID(unidadeDTO.disciplina_id);
 
@@ -35,18 +27,10 @@ export class CriarUnidadeUseCase {
       throw new Error("Disciplina não encontrada");
     }
 
-    if (origemTemaFormatado == "BNCC") {
-      const temaValido = this.bnccService.temaValidoParaDisciplina(disciplina.disciplinaCodigo, disciplina.anoSerie, temaFormatado);
-      if (!temaValido) {
-        throw new Error(`Tema inválido conforme a BNCC para a disciplina ${disciplina.disciplinaCodigo} - ${disciplina.anoSerie}: ${temaFormatado}`);
-      }
-    }
-
     const unidade = new Unidade(
       "", //id gerado no banco
       unidadeDTO.disciplina_id,
       temaFormatado,
-      origemTemaFormatado,
       null //data de criação gerada no banco
     );
     return this.unidadeRepository.criar(unidade);

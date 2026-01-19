@@ -39,7 +39,6 @@ export class ListarUnidadesUseCase {
       id: unidades.UnidadeID,
       disciplinaID: unidades.DisciplinaID,
       tema: unidades.Tema,
-      origem: unidades.OrigemTema,
       criadoEm: unidades.CriadoEm,
     }));
   }

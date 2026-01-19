@@ -13,6 +13,9 @@ import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/Discipl
 import { BuscarUnidadePorIDUseCase } from "../01-application/usecases/UnidadeUseCase/BuscarUnidadePorIDUseCase";
 import { ListarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
 import { DeleteUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/DeleteUnidadeUseCase";
+import { SugerirTemasUseCase } from "../01-application/usecases/TemasUseCase/SugerirTemasUseCase";
+import { OpenAIService } from "../03-infrastructure/service/AI.service";
+import { TemasController } from "../03-infrastructure/http/controllers/Temas.controller";
 
 //Container de Injeção de Dependências
 
@@ -33,6 +36,8 @@ const unidadeRepository = new PrismaUnidadeRepository(prismaClient);
 const bnccService = new BnccService();
 //RAG Service (consulta API de RAG)
 export const ragBnccService = new RagBnccService("http://192.168.1.6:3001");
+//OpenAI Service
+const openAIService = new OpenAIService(process.env.OPENAI_API_KEY || "");
 
 /**
  * @UseCases
@@ -55,8 +60,7 @@ const listarDisciplinaPorIDUseCase = new ListarDisciplinaPorIDUseCase(
 //Unidade Use Cases
 const criarUnidadeUseCase = new CriarUnidadeUseCase(
   unidadeRepository,
-  disciplinaRepository,
-  bnccService
+  disciplinaRepository
 );
 const listarUnidadesUseCase = new ListarUnidadesUseCase(
   unidadeRepository,
@@ -67,7 +71,13 @@ const listarUnidadesPorIdUseCase = new BuscarUnidadePorIDUseCase(
 )
 const deletarUnidadeUseCase = new DeleteUnidadeUseCase(
   unidadeRepository
-)
+);
+
+//Temas Use Cases
+const sugerirTemasUseCase = new SugerirTemasUseCase(
+  disciplinaRepository,
+  openAIService
+);
 
 /**
  * @Controllers
@@ -78,6 +88,7 @@ export const disciplinaController = new DisciplinaController(
   listarDisciplinaUseCase,
   deletarDisciplinaUseCase,
   listarDisciplinaPorIDUseCase,
+  sugerirTemasUseCase
 );
 
 //Unidade Controller
@@ -86,4 +97,9 @@ export const unidadeController = new UnidadeController(
   listarUnidadesUseCase,
   listarUnidadesPorIdUseCase,
   deletarUnidadeUseCase
+);
+
+//Temas Controller
+export const temasController = new TemasController(
+  sugerirTemasUseCase
 );

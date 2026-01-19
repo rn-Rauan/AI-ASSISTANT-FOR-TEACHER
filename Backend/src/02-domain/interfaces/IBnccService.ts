@@ -1,19 +1,15 @@
 import { disciplina_codigo } from "../types/Disciplina_codigo";
 import { ano_serie } from "../types/Ano_Serie";
-import { Tema } from "../interfaces/Bncc";
+
+
+export interface DisciplinaBnccSimples {
+  disciplina_codigo: string;
+  ano_serie: string;
+}
+
 export interface IBnccService {
   disciplinaValida(
     disciplina_codigo: disciplina_codigo,
     ano_serie: ano_serie
   ): boolean;
-  getTemasPorDisciplinaESerie(
-    disciplina_codigo: disciplina_codigo,
-    ano_serie: ano_serie
-  ): Tema[];
-  temaValidoParaDisciplina(
-    disciplina_codigo: disciplina_codigo,
-    ano_serie: ano_serie,
-    tema: string
-  ): boolean;
-  validarTemaBncc(tema: string): boolean;
 }
