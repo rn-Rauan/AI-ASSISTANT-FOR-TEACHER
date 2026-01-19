@@ -2,8 +2,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { CriarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DisciplinaDTO } from "../../../01-application/dtos/DisciplinaDTO";
 import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
-import { ListarDisciplinaPorIDUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
 import { ListarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
+import { ListarDisciplinaPorIDUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
+
 
 // PADRÕES DE RESPOSTA DO SISTEMA:
 // --- ERROS DO CLIENTE (4XX) ---
@@ -31,14 +32,14 @@ export class DisciplinaController {
   /**
    * Controlador para operações relacionadas a Disciplina
    * @param criarDisciplinaUseCase Caso de uso para criar disciplina
-   */
-  constructor(
-    private criarDisciplinaUseCase: CriarDisciplinaUseCase,
-    private listarDisciplinaUseCase: ListarDisciplinaUseCase,
-    private deleteDisciplinaUseCase: DeleteDisciplinaUseCase,
-    private listarDisciplinaPorIDUseCase: ListarDisciplinaPorIDUseCase
+  */
+ constructor(
+   private criarDisciplinaUseCase: CriarDisciplinaUseCase,
+   private listarDisciplinaUseCase: ListarDisciplinaUseCase,
+   private deleteDisciplinaUseCase: DeleteDisciplinaUseCase,
+   private listarDisciplinaPorIDUseCase: ListarDisciplinaPorIDUseCase
   ) { }
-
+  
   async criarDisciplina(req: FastifyRequest, reply: FastifyReply) {
     try {
       const { disciplina_codigo, ano_serie } = req.body as DisciplinaDTO;

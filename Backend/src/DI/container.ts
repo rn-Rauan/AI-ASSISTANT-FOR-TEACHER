@@ -1,6 +1,7 @@
 import { prismaClient } from "../03-infrastructure/prisma/client";
 import { PrismaDisciplinaRepository } from "../03-infrastructure/db/repositories/Disciplina.Repository";
 import { BnccService } from "../03-infrastructure/service/Bncc.service";
+import { RagBnccService } from "../03-infrastructure/service/RAG_Bncc.service";
 import { CriarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DeleteDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 import { DisciplinaController } from "../03-infrastructure/http/controllers/Disciplina.controller";
@@ -19,13 +20,19 @@ import { DeleteUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/
 //Ele define os repositórios, serviços e use cases necessários para a execução da aplicação.
 
 /**
- * @RepositoriesServices
+ * @Repositories
  * */
 //Disciplina repository
 const disciplinaRepository = new PrismaDisciplinaRepository(prismaClient);
 const unidadeRepository = new PrismaUnidadeRepository(prismaClient);
-//BNCC Service (chama os services que acessam o arquivo JSON da BNCC)
+
+/**
+ * @Services
+ */
+//BNCC Service (chama os services que acessam o arquivo JSON da BNCC para sugerir conteúdos e fazer validações)
 const bnccService = new BnccService();
+//RAG Service (consulta API de RAG)
+export const ragBnccService = new RagBnccService("http://192.168.1.6:3001");
 
 /**
  * @UseCases
@@ -70,7 +77,7 @@ export const disciplinaController = new DisciplinaController(
   criarDisciplinaUseCase,
   listarDisciplinaUseCase,
   deletarDisciplinaUseCase,
-  listarDisciplinaPorIDUseCase
+  listarDisciplinaPorIDUseCase,
 );
 
 //Unidade Controller
