@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Disciplinas  {
+  id                     String    @id @default(uuid())
+  disciplina_codigo      String
+  ano_serie              String
+  created_at             DateTime  @default(now())
+
+  //Relacionamento
+  unidades               Unidades[]
+  @@map("disciplinas")
+}
+model Unidades {
+  id                     String    @id @default(uuid())
+  disciplina_id          String
+  tema                   String
+  created_at             DateTime  @default(now())
+  
+  //Relacionamento
+  disciplinas            Disciplinas @relation(fields: [disciplina_id], references: [id], onDelete: Cascade)
+  conteudos              ConteudosGerados[]
+  @@map("unidades")
+}
+model ConteudosGerados {
+  id                     String    @id @default(uuid())
+  unidade_id             String
+  tipo                   String    // plano_de_aula | atividade | slide
+  conteudo               String
+  created_at             DateTime  @default(now())
+
+  //Relacionamento
+  unidades               Unidades @relation(fields: [unidade_id], references: [id], onDelete: Cascade)
+  @@map("conteudos_gerados")
+}

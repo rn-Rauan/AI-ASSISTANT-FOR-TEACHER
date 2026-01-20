@@ -1,0 +1,1 @@
+export type disciplina_codigo = "LP" | "MA" | "CI" | "HI" | "GE" | "AR" | "EF" | "IN" | "LPP" | "MAT" | "CHS" | "CNT"

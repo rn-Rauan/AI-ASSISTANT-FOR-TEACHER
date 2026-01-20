@@ -1,0 +1,178 @@
+[
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "LP",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "MA",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "CI",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "HIS",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "GEO",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "AR",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "EF",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "6_ANO"
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "7_ANO"
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "8_ANO"
+  },
+  {
+    "disciplina_codigo": "IN",
+    "ano_serie": "9_ANO"
+  },
+  {
+    "disciplina_codigo": "LPP",
+    "ano_serie": "1_SERIE"
+  },
+  {
+    "disciplina_codigo": "LPP",
+    "ano_serie": "2_SERIE"
+  },
+  {
+    "disciplina_codigo": "LPP",
+    "ano_serie": "3_SERIE"
+  },
+  {
+    "disciplina_codigo": "MAT",
+    "ano_serie": "1_SERIE"
+  },
+  {
+    "disciplina_codigo": "MAT",
+    "ano_serie": "2_SERIE"
+  },
+  {
+    "disciplina_codigo": "MAT",
+    "ano_serie": "3_SERIE"
+  },
+  {
+    "disciplina_codigo": "CHS",
+    "ano_serie": "1_SERIE"
+  },
+  {
+    "disciplina_codigo": "CHS",
+    "ano_serie": "2_SERIE"
+  },
+  {
+    "disciplina_codigo": "CHS",
+    "ano_serie": "3_SERIE"
+  },
+  {
+    "disciplina_codigo": "CNT",
+    "ano_serie": "1_SERIE"
+  },
+  {
+    "disciplina_codigo": "CNT",
+    "ano_serie": "2_SERIE"
+  },
+  {
+    "disciplina_codigo": "CNT",
+    "ano_serie": "3_SERIE"
+  }
+]
