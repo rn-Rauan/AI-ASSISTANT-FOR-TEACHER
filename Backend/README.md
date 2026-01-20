@@ -691,6 +691,6 @@ Para dúvidas sobre a API ou arquitetura do projeto:
 
 **Feito para professores transformarem a educação com tecnologia**
 
-[⬆ Voltar ao topo](#-ai-assistant-for-teacher---backend)
+[⬆ Voltar ao topo](#ai-assistant-for-teacher---backend)
 
 </div>
