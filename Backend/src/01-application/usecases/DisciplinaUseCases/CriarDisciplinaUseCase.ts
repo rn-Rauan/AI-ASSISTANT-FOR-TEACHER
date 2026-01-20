@@ -5,8 +5,8 @@ import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
 import { obterNomeDisciplina } from "../../../02-domain/mappings/Disciplina_nome";
 import { ano_serie } from "../../../02-domain/types/Ano_Serie";
 import { disciplina_codigo } from "../../../02-domain/types/Disciplina_codigo";
-import { DisciplinaDTO } from "../../dtos/DisciplinaDTO";
-import { DisciplinaResponseDTO } from "../../dtos/DisciplinaResponseDTO";
+import { DisciplinaDTO } from "../../dtos/DisciplinaDTOs/DisciplinaDTO";
+import { DisciplinaResponseDTO } from "../../dtos/DisciplinaDTOs/DisciplinaResponseDTO";
 
 export class CriarDisciplinaUseCase {
   /**
@@ -38,8 +38,8 @@ export class CriarDisciplinaUseCase {
 
     if (!disciplinaValida) {
       throw new Error(
-        "Disciplina ou série inválida conforme a BNCC" +
-          ` ${codigoFormatado} - ${anoSerieFormatado}`
+        "Disciplina ou série inválida conforme o \"mapDisciplinaAnoSerie.json\"" +
+          ` ${codigoFormatado} - ${anoSerieFormatado}` + " Verifique a documentação em /docs/API_DOCS.md"
       );
     }
 

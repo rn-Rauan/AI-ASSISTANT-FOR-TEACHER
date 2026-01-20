@@ -1,5 +1,5 @@
-import { ano_serie } from "../../02-domain/types/Ano_Serie";
-import { disciplina_codigo } from "../../02-domain/types/Disciplina_codigo";
+import { ano_serie } from "../../../02-domain/types/Ano_Serie";
+import { disciplina_codigo } from "../../../02-domain/types/Disciplina_codigo";
 
 /**
  * DTO de resposta para a entidade Disciplina

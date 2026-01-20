@@ -8,7 +8,7 @@ Este documento fornece uma visão geral e concisa dos endpoints da API, focando 
 
 ## Endpoints
 
-### 📚 Disciplinas
+###  Disciplinas
 
 - **`GET /disciplinas`**
   - **Descrição:** Lista todas as disciplinas cadastradas.
@@ -55,7 +55,7 @@ Este documento fornece uma visão geral e concisa dos endpoints da API, focando 
 
 ---
 
-### 📖 Unidades
+###  Unidades
 
 - **`GET /unidades`**
   - **Descrição:** Lista as unidades de uma disciplina.
@@ -82,7 +82,7 @@ Este documento fornece uma visão geral e concisa dos endpoints da API, focando 
 
 ---
 
-## 📝 Tipos e Enumerações Essenciais
+##  Tipos e Enumerações Essenciais
 
 ### Códigos de Disciplina (`disciplina_codigo`)
 ```typescript
@@ -115,7 +115,7 @@ type ano_serie =
 
 ---
 
-## ⚠️ Notas Rápidas
+##  Notas Rápidas
 
 1.  Todos os IDs são **UUIDs**.
 2.  O formato de data é **ISO 8601** (`YYYY-MM-DDTHH:mm:ss.sssZ`).

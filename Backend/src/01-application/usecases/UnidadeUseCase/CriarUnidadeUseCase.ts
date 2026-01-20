@@ -1,7 +1,7 @@
 import { Unidade } from "../../../02-domain/entities/Unidade";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
-import { UnidadeDTO } from "../../dtos/UnidadeDTO";
+import { UnidadeDTO } from "../../dtos/UnidadeDTOs/UnidadeDTO";
 
 export class CriarUnidadeUseCase {
   /**

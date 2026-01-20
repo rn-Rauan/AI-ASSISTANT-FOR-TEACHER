@@ -3,7 +3,7 @@ import { Disciplina } from "../../../02-domain/entities/Disciplina";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
 import { obterNomeDisciplina } from "../../../02-domain/mappings/Disciplina_nome";
-import { DisciplinaResponseDTO } from "../../dtos/DisciplinaResponseDTO";
+import { DisciplinaResponseDTO } from "../../dtos/DisciplinaDTOs/DisciplinaResponseDTO";
 
 export class ListarDisciplinaPorIDUseCase {
     constructor(private disciplinaRepository: IDisciplinaRepository) { }

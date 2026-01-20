@@ -6,6 +6,7 @@ export class Unidade {
     private disciplina_id: string;
     private tema: string;
     private criadoEm: Date | null
+    
 
     /**
      * @param id ID da unidade

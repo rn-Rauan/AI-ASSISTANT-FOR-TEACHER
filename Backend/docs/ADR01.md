@@ -45,12 +45,11 @@ src/
  ├─ application/
  │   ├─ dtos/
  │   └─ usecases/
- │       ├─ DisciplinaUseCases/
- |       └─ UnidadeUseCase/
  |
  ├─ domain/
  │   ├─ entities/
  |   ├─ interfaces/
+ |   ├─ mappings/
  |   └─ types/
  │
  ├─ infrastructure/
@@ -61,7 +60,8 @@ src/
  │   ├─ db/
  │   │   └─ repositories/
  │   └─ service/
- │       └─ AI.service.ts
+ │       ├─ AI.service.ts
+ │       └─ RAG_Bncc.service.ts
  | 
  ├─ data/
  |    ├─ bncc.json
