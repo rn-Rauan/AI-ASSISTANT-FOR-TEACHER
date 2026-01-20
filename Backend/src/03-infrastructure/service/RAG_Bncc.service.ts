@@ -1,9 +1,9 @@
 import axios from "axios";
 import { IRagBnccService } from "../../02-domain/interfaces/IRagBnccService";
-import { ConsultarRAG } from "../../01-application/dtos/ConsultarRAG";
-import { ano_serie_map, obterNomeAnoSerie } from "../../02-domain/mappings/Ano_Serie_nome";
+import { ConsultarRagDTO } from "../../01-application/dtos/RagDTOs/ConsultarRagDTO";
+import { obterNomeAnoSerie } from "../../02-domain/mappings/Ano_Serie_nome";
 import { obterNomeDisciplina } from "../../02-domain/mappings/Disciplina_nome";
-import { RagApiResponseDTO } from "../../01-application/dtos/RagApiResponseDTO";
+import { RagApiResponseDTO } from "../../01-application/dtos/RagDTOs/RagApiResponseDTO";
 
 /**
  * Serviço simples para consultar a API de RAG
@@ -14,7 +14,7 @@ export class RagBnccService implements IRagBnccService {
         this.apiUrl = apiUrl;
     }
 
-    async consultarBNCC(consulta: ConsultarRAG): Promise<string> {
+    async consultarBNCC(consulta: ConsultarRagDTO): Promise<string> {
         const consultaFormatada = {
             tema: consulta.tema,
             disciplina: obterNomeDisciplina(consulta.disciplina_codigo),

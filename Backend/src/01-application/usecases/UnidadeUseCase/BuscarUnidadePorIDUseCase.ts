@@ -1,5 +1,5 @@
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
-import { UnidadeResponseDTO } from "../../dtos/UnidadeResponseDTO";
+import { UnidadeResponseDTO } from "../../dtos/UnidadeDTOs/UnidadeResponseDTO";
 
 export class BuscarUnidadePorIDUseCase {
     /**

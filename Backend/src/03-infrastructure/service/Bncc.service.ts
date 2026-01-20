@@ -12,12 +12,12 @@ export class BnccService implements IBnccService {
   private bnccJson: DisciplinaBnccSimples[];
 
   constructor() {
-    const caminho = path.resolve(__dirname, "../../04-data/bncc.json");
+    const caminho = path.resolve(__dirname, "../../04-data/mapDisciplinaAnoSerie.json");
     try {
       const data = fs.readFileSync(caminho, "utf-8");
       this.bnccJson = JSON.parse(data);
     } catch (error) {
-      throw new Error("Erro ao carregar BNCC JSON: " + error);
+      throw new Error("Erro ao carregar mapa de disciplina e ano/serie JSON: " + error);
     }
   }
 

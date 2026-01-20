@@ -4,6 +4,11 @@ import cors from "@fastify/cors";
 import { disciplinaRoutes } from "./03-infrastructure/http/routes/Disciplina.routes";
 import { unidadeRoutes } from "./03-infrastructure/http/routes/Unidade.routes";
 import { sugerirTemasRoutes } from "./03-infrastructure/http/routes/Temas.routes";
+import { gerarRoutes } from "./03-infrastructure/http/routes/Gerar.routes";
+
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("OPENAI_API_KEY não configurada!");
+}
 
 const app = fastify({ logger: true });
 
@@ -24,11 +29,13 @@ app.register(disciplinaRoutes);
 
 app.register(unidadeRoutes);
 
-app.register(sugerirTemasRoutes)
+app.register(sugerirTemasRoutes);
 
-//Iniciando Servidor
+app.register(gerarRoutes);
+
+// Inicia o servidor
 app.listen({ port: PORT }, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-})
+});
 
 

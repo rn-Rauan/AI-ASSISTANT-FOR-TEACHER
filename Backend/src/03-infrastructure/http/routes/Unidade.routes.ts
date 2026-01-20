@@ -2,13 +2,15 @@ import { FastifyInstance } from "fastify"
 import { unidadeController } from "../../../DI/container";
 
 export function unidadeRoutes(fastify: FastifyInstance) {
-    //criar unidade
-    fastify.post("/unidades", unidadeController.criarUnidade.bind(unidadeController));
-    //listar unidades
+    // Listar unidades de uma disciplina
     fastify.get("/unidades", unidadeController.listarUnidades.bind(unidadeController));
-    //obter unidade por id
+    
+    // Obter unidade por ID
     fastify.get("/unidades/:id", unidadeController.buscarUnidadePorID.bind(unidadeController));
-    //deletar unidade
+    
+    // Deletar unidade
     fastify.delete("/unidades/:id", unidadeController.deleteUnidade.bind(unidadeController));
     
+    // Use  /gerar/conteudos para criar unidade + conteúdos de uma vez (Gerar.routes.ts)
+    //fastify.post("/unidades", unidadeController.criarUnidade.bind(unidadeController));
 }

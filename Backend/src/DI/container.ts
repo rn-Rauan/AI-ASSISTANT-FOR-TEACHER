@@ -1,5 +1,7 @@
 import { prismaClient } from "../03-infrastructure/prisma/client";
 import { PrismaDisciplinaRepository } from "../03-infrastructure/db/repositories/Disciplina.Repository";
+import { PrismaUnidadeRepository } from "../03-infrastructure/db/repositories/Unidade.Repository";
+import { PrismaConteudoGeradoRepository } from "../03-infrastructure/db/repositories/ConteudoGerado.Repository";
 import { BnccService } from "../03-infrastructure/service/Bncc.service";
 import { RagBnccService } from "../03-infrastructure/service/RAG_Bncc.service";
 import { CriarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
@@ -7,7 +9,6 @@ import { DeleteDisciplinaUseCase } from "../01-application/usecases/DisciplinaUs
 import { DisciplinaController } from "../03-infrastructure/http/controllers/Disciplina.controller";
 import { CriarUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/CriarUnidadeUseCase";
 import { UnidadeController } from "../03-infrastructure/http/controllers/Unidade.controller";
-import { PrismaUnidadeRepository } from "../03-infrastructure/db/repositories/Unidade.Repository";
 import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase/ListarUnidadesUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
 import { BuscarUnidadePorIDUseCase } from "../01-application/usecases/UnidadeUseCase/BuscarUnidadePorIDUseCase";
@@ -16,6 +17,9 @@ import { DeleteUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/
 import { SugerirTemasUseCase } from "../01-application/usecases/TemasUseCase/SugerirTemasUseCase";
 import { OpenAIService } from "../03-infrastructure/service/AI.service";
 import { TemasController } from "../03-infrastructure/http/controllers/Temas.controller";
+import { GerarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/GerarConteudosUseCase";
+import { ListarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
+import { GerarController } from "../03-infrastructure/http/controllers/Gerar.controller";
 
 //Container de Injeção de Dependências
 
@@ -27,7 +31,10 @@ import { TemasController } from "../03-infrastructure/http/controllers/Temas.con
  * */
 //Disciplina repository
 const disciplinaRepository = new PrismaDisciplinaRepository(prismaClient);
+//Unidade repository
 const unidadeRepository = new PrismaUnidadeRepository(prismaClient);
+//ConteudoGerado repository
+const conteudoGeradoRepository = new PrismaConteudoGeradoRepository(prismaClient);
 
 /**
  * @Services
@@ -79,6 +86,20 @@ const sugerirTemasUseCase = new SugerirTemasUseCase(
   openAIService
 );
 
+
+const gerarConteudosUseCase = new GerarConteudosUseCase(
+  openAIService,
+  unidadeRepository,
+  disciplinaRepository,
+  ragBnccService,
+  conteudoGeradoRepository
+);
+
+//Conteudo Use Cases
+const listarConteudosUseCase = new ListarConteudosUseCase(
+  conteudoGeradoRepository
+);
+
 /**
  * @Controllers
  * */
@@ -93,7 +114,6 @@ export const disciplinaController = new DisciplinaController(
 
 //Unidade Controller
 export const unidadeController = new UnidadeController(
-  criarUnidadeUseCase,
   listarUnidadesUseCase,
   listarUnidadesPorIdUseCase,
   deletarUnidadeUseCase
@@ -103,3 +123,8 @@ export const unidadeController = new UnidadeController(
 export const temasController = new TemasController(
   sugerirTemasUseCase
 );
+//Gerar Controller
+export const gerarController = new GerarController(
+  gerarConteudosUseCase,
+  listarConteudosUseCase
+);  

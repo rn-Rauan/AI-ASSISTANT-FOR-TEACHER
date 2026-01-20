@@ -1,4 +1,4 @@
-import { ConsultarRAG } from "../../01-application/dtos/ConsultarRAG";
+import { ConsultarRAG } from "../../01-application/dtos/RagDTOs/ConsultarRagDTO";
 
 /**
  * Interface simples para o serviço de RAG

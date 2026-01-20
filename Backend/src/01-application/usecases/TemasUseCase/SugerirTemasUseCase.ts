@@ -14,7 +14,7 @@ import { OpenAIService } from "../../../03-infrastructure/service/AI.service";
 export class SugerirTemasUseCase {
   constructor(
     private disciplinaRepository: IDisciplinaRepository,
-    private iaService: OpenAIService
+    private AIService: OpenAIService
   ) {}
 
   async execute(disciplina_id: string): Promise<{ sugestoes: string[] }> {
@@ -24,7 +24,7 @@ export class SugerirTemasUseCase {
       throw new Error("Disciplina não encontrada");
     }
 
-    const temas = await this.iaService.sugerirTemasCulturaDigital(
+    const temas = await this.AIService.sugerirTemasCulturaDigital(
       obterNomeDisciplina(disciplina.disciplinaCodigo),
       obterNomeAnoSerie(disciplina.anoSerie)
     );
