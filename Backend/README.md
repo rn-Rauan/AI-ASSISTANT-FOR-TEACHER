@@ -629,8 +629,7 @@ npm install
 -  [ADR01 - Arquitetura do Backend](docs/ADR01.md)
 -  [ADR02 - Arquitetura RAG com LlamaIndex](docs/ADR02.md)
 -  [Modelo de Dados (DER)](docs/DER.md)
--  [Documentação Completa da API](docs/API_DOCUMENTATION.md)
--  [Integração com API RAG](docs/API_RAG.md)
+-  [Documentação Completa da API](docs/API_DOCS.md)
 -  [Edital do Projeto](docs/hackathon.md)
 
 ---
