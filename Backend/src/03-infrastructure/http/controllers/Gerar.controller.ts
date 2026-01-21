@@ -1,15 +1,15 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { GerarConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/GerarConteudosUseCase";
+import { GerarUnidadeEConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/GerarUnidadeEConteudosUseCase";
 import { ListarConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
 
 export class GerarController {
   /**
    * Controlador para operações de geração de conteúdo
-   * @param gerarConteudosUseCase Caso de uso para criar unidade + gerar conteúdos 
+   * @param gerarUnidadeEConteudosUseCase Caso de uso para criar unidade + gerar conteúdos 
    * @param listarConteudosUseCase Caso de uso para listar conteúdos de uma unidade
    */
   constructor(
-    private gerarConteudosUseCase: GerarConteudosUseCase,
+    private gerarUnidadeEConteudosUseCase: GerarUnidadeEConteudosUseCase,
     private listarConteudosUseCase: ListarConteudosUseCase
   ) { }
 
@@ -46,7 +46,7 @@ export class GerarController {
         });
       }
 
-      const resultado = await this.gerarConteudosUseCase.execute(
+      const resultado = await this.gerarUnidadeEConteudosUseCase.execute(
         disciplina_id,
         tema,
         tipos,
@@ -57,10 +57,11 @@ export class GerarController {
         message: `Unidade criada com ${resultado.conteudos.length} conteúdo(s)`,
         ...resultado,
       });
-    } catch (error: any) {
-        return reply.status(500).send({
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
+      return reply.status(500).send({
         message: "Erro ao gerar conteúdos",
-        error: error.message,
+        error: message,
       });
     }
   }
@@ -83,10 +84,11 @@ export class GerarController {
       const conteudos = await this.listarConteudosUseCase.execute(unidade_id);
 
       return reply.status(200).send(conteudos);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
       return reply.status(500).send({
         message: "Erro ao listar conteúdos",
-        error: error.message,
+        error: message,
       });
     }
   }

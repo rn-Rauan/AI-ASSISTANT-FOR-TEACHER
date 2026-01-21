@@ -15,7 +15,7 @@ import { Unidade } from "../../../02-domain/entities/Unidade";
  * Otimizado para fazer apenas UMA chamada ao RAG
  * Este é o FLUXO PRINCIPAL de criação de unidades
  */
-export class GerarConteudosUseCase {
+export class GerarUnidadeEConteudosUseCase {
     /**
      * 
      * @param AIService Serviço de IA para geração de conteúdo
