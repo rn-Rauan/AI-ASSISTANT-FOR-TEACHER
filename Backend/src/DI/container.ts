@@ -17,7 +17,7 @@ import { DeleteUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/
 import { SugerirTemasUseCase } from "../01-application/usecases/TemasUseCase/SugerirTemasUseCase";
 import { OpenAIService } from "../03-infrastructure/service/AI.service";
 import { TemasController } from "../03-infrastructure/http/controllers/Temas.controller";
-import { GerarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/GerarConteudosUseCase";
+import { GerarUnidadeEConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/GerarUnidadeEConteudosUseCase";
 import { ListarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
 import { GerarController } from "../03-infrastructure/http/controllers/Gerar.controller";
 
@@ -42,7 +42,7 @@ const conteudoGeradoRepository = new PrismaConteudoGeradoRepository(prismaClient
 //BNCC Service (chama os services que acessam o arquivo JSON da BNCC para sugerir conteúdos e fazer validações)
 const bnccService = new BnccService();
 //RAG Service (consulta API de RAG)
-export const ragBnccService = new RagBnccService("http://192.168.1.6:3001");
+const ragBnccService = new RagBnccService(process.env.RAG_API_URL || "http://localhost:3001");
 //OpenAI Service
 const openAIService = new OpenAIService(process.env.OPENAI_API_KEY || "");
 
@@ -65,10 +65,6 @@ const listarDisciplinaPorIDUseCase = new ListarDisciplinaPorIDUseCase(
 );
 
 //Unidade Use Cases
-const criarUnidadeUseCase = new CriarUnidadeUseCase(
-  unidadeRepository,
-  disciplinaRepository
-);
 const listarUnidadesUseCase = new ListarUnidadesUseCase(
   unidadeRepository,
   disciplinaRepository
@@ -86,8 +82,8 @@ const sugerirTemasUseCase = new SugerirTemasUseCase(
   openAIService
 );
 
-
-const gerarConteudosUseCase = new GerarConteudosUseCase(
+//Gerar Use Cases
+const gerarUnidadeEConteudosUseCase = new GerarUnidadeEConteudosUseCase(
   openAIService,
   unidadeRepository,
   disciplinaRepository,
@@ -125,6 +121,6 @@ export const temasController = new TemasController(
 );
 //Gerar Controller
 export const gerarController = new GerarController(
-  gerarConteudosUseCase,
+  gerarUnidadeEConteudosUseCase,
   listarConteudosUseCase
 );  

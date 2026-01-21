@@ -16,14 +16,15 @@ export class TemasController {
         try {
             const { id } = req.params as { id: string };
             if (!id) {
-                reply.status(400).send({ error: "ID da disciplina é obrigatório." });
+                return reply.status(400).send({ message: "ID da disciplina é obrigatório." });
             }
 
             const sugestoes = await this.sugerirTemasUseCase.execute(id);
 
-            reply.send(sugestoes);
-        } catch (error: any) {
-            reply.status(500).send({ message: "Erro ao sugerir temas", error: error.message });
+            return reply.status(200).send(sugestoes);
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Erro desconhecido";
+            return reply.status(500).send({ message: "Erro ao sugerir temas", error: message });
         }
     }
 }

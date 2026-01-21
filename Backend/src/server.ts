@@ -1,5 +1,6 @@
 import "dotenv/config";
 import fastify from "fastify";
+import rateLimit from "@fastify/rate-limit";
 import cors from "@fastify/cors";
 import { disciplinaRoutes } from "./03-infrastructure/http/routes/Disciplina.routes";
 import { unidadeRoutes } from "./03-infrastructure/http/routes/Unidade.routes";
@@ -17,8 +18,14 @@ const PORT = 3131;
 
 //CORS
 app.register(cors,{
-    origin: true,
+    origin: process.env.FRONTEND_URL || "***",
 });
+
+//Rate Limiting
+app.register(rateLimit, {
+    max: 20,
+    timeWindow: "1 minute",
+} )
 
 //rota raiz
 app.get("/", async () => {

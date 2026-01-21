@@ -27,17 +27,18 @@ export class DisciplinaController {
     try {
       const { disciplina_codigo, ano_serie } = req.body as DisciplinaDTO;
       if (!disciplina_codigo || !ano_serie) {
-        reply.status(400).send({
-          error: "Campos disciplina_codigo e ano_serie são obrigatórios.",
+        return reply.status(400).send({
+          message: "Campos disciplina_codigo e ano_serie são obrigatórios.",
         });
       }
       const disciplinaCriada = await this.criarDisciplinaUseCase.execute({
         disciplina_codigo,
         ano_serie,
       });
-      reply.status(201).send(disciplinaCriada);
-    } catch (erro: any) {
-      reply.status(500).send({ message: "Erro ao criar disciplina", error: erro.message });
+      return reply.status(201).send(disciplinaCriada);
+    } catch (erro: unknown) {
+      const message = erro instanceof Error ? erro.message : "Erro desconhecido";
+      return reply.status(500).send({ message: "Erro ao criar disciplina", error: message });
     }
   }/**
    * 
@@ -47,9 +48,10 @@ export class DisciplinaController {
   async listarDisciplinas(_req: FastifyRequest, reply: FastifyReply) {
     try {
       const disciplinas = await this.listarDisciplinaUseCase.execute();
-      reply.status(200).send(disciplinas);
-    } catch (erro: any) {
-      reply.status(500).send({ message: "Erro ao listar disciplinas", error: erro.message });
+      return reply.status(200).send(disciplinas);
+    } catch (erro: unknown) {
+      const message = erro instanceof Error ? erro.message : "Erro desconhecido";
+      return reply.status(500).send({ message: "Erro ao listar disciplinas", error: message });
     }
   }
   /**
@@ -61,12 +63,13 @@ export class DisciplinaController {
     try {
       const { id } = req.params as { id: string };
       if (!id) {
-        reply.status(400).send({ error: "ID da disciplina é obrigatório." });
+        return reply.status(400).send({ message: "ID da disciplina é obrigatório." });
       }
       await this.deleteDisciplinaUseCase.execute(id);
-      reply.status(200).send({ message: "Disciplina deletada com sucesso" });
-    } catch (error: any) {
-      reply.status(500).send({ message: "Erro ao deletar disciplina", error: error.message });
+      return reply.status(200).send({ message: "Disciplina deletada com sucesso" });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
+      return reply.status(500).send({ message: "Erro ao deletar disciplina", error: message });
     }
   }
   /**
@@ -78,12 +81,16 @@ export class DisciplinaController {
     try {
       const { id } = req.params as { id: string };
       if (!id) {
-        reply.status(400).send({ error: "ID da disciplina é obrigatório." });
+        return reply.status(400).send({ message: "ID da disciplina é obrigatório." });
       }
       const disciplina = await this.listarDisciplinaPorIDUseCase.execute(id);
-      reply.status(200).send(disciplina);
-    } catch (error: any) {
-      reply.status(500).send({ message: "Erro ao obter disciplina por ID", error: error.message });
+      if (!disciplina) {
+        return reply.status(404).send({ message: "Disciplina não encontrada." });
+      }
+      return reply.status(200).send(disciplina);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Erro desconhecido";
+      return reply.status(500).send({ message: "Erro ao obter disciplina por ID", error: message });
     }
   }
 }
