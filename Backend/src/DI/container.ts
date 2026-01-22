@@ -7,7 +7,6 @@ import { RagBnccService } from "../03-infrastructure/service/RAG_Bncc.service";
 import { CriarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DeleteDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 import { DisciplinaController } from "../03-infrastructure/http/controllers/Disciplina.controller";
-import { CriarUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/CriarUnidadeUseCase";
 import { UnidadeController } from "../03-infrastructure/http/controllers/Unidade.controller";
 import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase/ListarUnidadesUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
