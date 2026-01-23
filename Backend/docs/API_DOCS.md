@@ -389,29 +389,6 @@ Remove uma unidade do sistema.
 
 ---
 
-##  Códigos de Status HTTP
-
-### Sucessos (2xx)
-- `200 OK`: Requisição bem-sucedida
-- `201 Created`: Recurso criado com sucesso
-
-### Erros do Cliente (4xx)
-- `400 Bad Request`: Dados inválidos ou campos obrigatórios ausentes
-- `404 Not Found`: Recurso não encontrado
-- `405 Method Not Allowed`: Método HTTP não permitido
-- `408 Request Timeout`: Timeout do cliente
-- `409 Conflict`: Conflito de regra de negócio
-- `422 Unprocessable Entity`: Erro de semântica nos dados
-- `429 Too Many Requests`: Limite de requisições excedido
-
-### Erros do Servidor (5xx)
-- `500 Internal Server Error`: Erro interno inesperado
-- `502 Bad Gateway`: Resposta inválida do banco ou API externa
-- `503 Service Unavailable`: Servidor em manutenção ou sobrecarregado
-- `504 Gateway Timeout`: Timeout do banco ou API externa
-
----
-
 ##  Tipos e Enumerações
 
 ### Códigos de Disciplina
