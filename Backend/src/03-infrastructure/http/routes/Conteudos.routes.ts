@@ -6,6 +6,9 @@ export async function gerarRoutes(fastify: FastifyInstance) {
     fastify.post("/gerar/conteudos", gerarController.gerarConteudos.bind(gerarController));
     
     // Listar conteúdos de uma unidade
-    fastify.get("/conteudos", gerarController.listarConteudos.bind(gerarController));
+    fastify.get("/conteudos/:id", gerarController.listarConteudos.bind(gerarController));
+
+    // Atualizar conteúdo gerado
+    fastify.put("/conteudos/:id", gerarController.atualizarConteudo.bind(gerarController));
     
 }

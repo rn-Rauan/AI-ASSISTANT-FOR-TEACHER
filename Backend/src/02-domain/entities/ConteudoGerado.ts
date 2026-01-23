@@ -60,6 +60,13 @@ export class ConteudoGerado {
         return this.conteudo;
     }
 
+    set Conteudo(novoConteudo: string) {
+        if (!novoConteudo || novoConteudo.trim().length < 10) {
+            throw new Error("O novo conteúdo deve ter pelo menos 10 caracteres.");
+        }
+        this.conteudo = novoConteudo;
+    }
+
     get CriadoEm(): Date {
         if (!this.criadoEm) {
             throw new Error("A data de criação do conteúdo é obrigatória.");

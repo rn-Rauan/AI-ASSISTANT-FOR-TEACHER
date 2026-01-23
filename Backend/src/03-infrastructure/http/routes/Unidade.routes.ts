@@ -11,6 +11,6 @@ export function unidadeRoutes(fastify: FastifyInstance) {
     // Deletar unidade
     fastify.delete("/unidades/:id", unidadeController.deleteUnidade.bind(unidadeController));
     
-    // Use  /gerar/conteudos para criar unidade + conteúdos de uma vez (Gerar.routes.ts)
-    //fastify.post("/unidades", unidadeController.criarUnidade.bind(unidadeController));
+    // METODO SUBSTITUÍDO PELO GERAR/CONTEUDOS (CRIAR UNIDADE + CONTEÚDOS) 
+    //fastify.post("/unidades", unidadeController.criarUnidade.bind(unidadeController));  METODO SUBSTITUÍDO PELO GERAR/CONTEUDOS (CRIAR UNIDADE + CONTEÚDOS)
 }

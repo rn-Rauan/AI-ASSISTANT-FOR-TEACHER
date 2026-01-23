@@ -18,7 +18,8 @@ import { OpenAIService } from "../03-infrastructure/service/AI.service";
 import { TemasController } from "../03-infrastructure/http/controllers/Temas.controller";
 import { GerarUnidadeEConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/GerarUnidadeEConteudosUseCase";
 import { ListarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
-import { GerarController } from "../03-infrastructure/http/controllers/Gerar.controller";
+import { GerarController } from "../03-infrastructure/http/controllers/Conteudos.controller";
+import { AtualizarConteudoUseCase } from "../01-application/usecases/ConteudoUseCase/AtualizarConteudoUseCase";
 
 //Container de Injeção de Dependências
 
@@ -81,7 +82,7 @@ const sugerirTemasUseCase = new SugerirTemasUseCase(
   openAIService
 );
 
-//Gerar Use Cases
+//Conteúdo Use Cases
 const gerarUnidadeEConteudosUseCase = new GerarUnidadeEConteudosUseCase(
   openAIService,
   unidadeRepository,
@@ -89,11 +90,12 @@ const gerarUnidadeEConteudosUseCase = new GerarUnidadeEConteudosUseCase(
   ragBnccService,
   conteudoGeradoRepository
 );
-
-//Conteudo Use Cases
 const listarConteudosUseCase = new ListarConteudosUseCase(
   conteudoGeradoRepository
 );
+const atualizarConteudoUseCase = new AtualizarConteudoUseCase(
+  conteudoGeradoRepository
+)
 
 /**
  * @Controllers
@@ -104,7 +106,6 @@ export const disciplinaController = new DisciplinaController(
   listarDisciplinaUseCase,
   deletarDisciplinaUseCase,
   listarDisciplinaPorIDUseCase,
-  sugerirTemasUseCase
 );
 
 //Unidade Controller
@@ -121,5 +122,6 @@ export const temasController = new TemasController(
 //Gerar Controller
 export const gerarController = new GerarController(
   gerarUnidadeEConteudosUseCase,
-  listarConteudosUseCase
+  listarConteudosUseCase,
+  atualizarConteudoUseCase
 );  

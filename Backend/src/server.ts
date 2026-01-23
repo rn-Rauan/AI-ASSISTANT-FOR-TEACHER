@@ -5,7 +5,7 @@ import cors from "@fastify/cors";
 import { disciplinaRoutes } from "./03-infrastructure/http/routes/Disciplina.routes";
 import { unidadeRoutes } from "./03-infrastructure/http/routes/Unidade.routes";
 import { sugerirTemasRoutes } from "./03-infrastructure/http/routes/Temas.routes";
-import { gerarRoutes } from "./03-infrastructure/http/routes/Gerar.routes";
+import { gerarRoutes } from "./03-infrastructure/http/routes/Conteudos.routes";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY não configurada!");

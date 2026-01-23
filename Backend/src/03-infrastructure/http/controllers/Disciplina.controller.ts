@@ -4,7 +4,7 @@ import { DisciplinaDTO } from "../../../01-application/dtos/DisciplinaDTOs/Disci
 import { DeleteDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 import { ListarDisciplinaUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../../../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
-import { SugerirTemasUseCase } from "../../../01-application/usecases/TemasUseCase/SugerirTemasUseCase";
+
 
 export class DisciplinaController {
   /**
@@ -16,7 +16,6 @@ export class DisciplinaController {
     private listarDisciplinaUseCase: ListarDisciplinaUseCase,
     private deleteDisciplinaUseCase: DeleteDisciplinaUseCase,
     private listarDisciplinaPorIDUseCase: ListarDisciplinaPorIDUseCase,
-    private sugerirTemasUseCase: SugerirTemasUseCase
   ) { }
   /**
    * 
