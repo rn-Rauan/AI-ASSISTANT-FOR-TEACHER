@@ -210,16 +210,16 @@ Gera sugestões de temas baseados na disciplina, utilizando IA e a BNCC.
 ---
 
 ### 7. Listar Conteúdos de uma Unidade
-**GET** `/conteudos?unidade_id={id}`
+**GET** `/conteudos/:id`
 
 Lista todos os conteúdos gerados para uma unidade específica (planos de aula, atividades, slides).
 
-**Parâmetros de Query:**
-- `unidade_id` (string, obrigatório): ID da unidade
+**Parâmetros de URL:**
+- `id` (string, obrigatório): ID da unidade
 
 **Exemplo:**
 ```
-GET /conteudos?unidade_id=123e4567-e89b-12d3-a456-426614174000
+GET /conteudos/123e4567-e89b-12d3-a456-426614174000
 ```
 
 **Resposta de Sucesso (200):**
@@ -265,7 +265,46 @@ GET /conteudos?unidade_id=123e4567-e89b-12d3-a456-426614174000
 - Alternativas para alunos sem tecnologia
 
 **Erros:**
-- `400`: Campo unidade_id não foi fornecido
+- `400`: Campo id não foi fornecido
+- `500`: Erro interno do servidor
+
+---
+
+### 8. Atualizar Conteúdo
+**PUT** `/conteudos/:id`
+
+Atualiza o conteúdo de um conteúdo gerado específico.
+
+**Parâmetros de URL:**
+- `id` (string, obrigatório): ID do conteúdo
+
+**Body (JSON):**
+```json
+{
+  "conteudo": "# PLANO DE AULA ATUALIZADO: Gêneros Textuais\n..."
+}
+```
+
+**Campos:**
+- `conteudo` (string, obrigatório): Novo conteúdo em formato Markdown
+
+**Resposta de Sucesso (200):**
+```json
+{
+  "message": "Conteúdo atualizado com sucesso",
+  "conteudoAtualizado": {
+    "id": "uuid",
+    "unidadeID": "uuid",
+    "tipo": "plano_de_aula",
+    "conteudo": "# PLANO DE AULA ATUALIZADO: Gêneros Textuais\n...",
+    "criadoEm": "2026-01-20T00:00:00.000Z"
+  }
+}
+```
+
+**Erros:**
+- `400`: Campos obrigatórios não fornecidos (id e conteudo)
+- `404`: Conteúdo não encontrado
 - `500`: Erro interno do servidor
 
 ---
@@ -303,7 +342,7 @@ GET /unidades?disciplina_id=123e4567-e89b-12d3-a456-426614174000
 
 ---
 
-### 9. Obter Unidade por ID
+### 10. Obter Unidade por ID
 **GET** `/unidades/:id`
 
 Retorna os dados de uma unidade específica.
@@ -328,7 +367,7 @@ Retorna os dados de uma unidade específica.
 
 ---
 
-### 10. Deletar Unidade
+### 11. Deletar Unidade
 **DELETE** `/unidades/:id`
 
 Remove uma unidade do sistema.
@@ -463,11 +502,17 @@ type ano_serie =
 
 5. **Visualizar Conteúdos de uma Unidade**
    ```
-   GET /conteudos?unidade_id={id}
+   GET /conteudos/:id
    ```
-   Lista todos os conteúdos (plano, atividade, slides) da unidade
+   Lista todos os conteúdos (plano, atividade, slides) da unidade (onde :id é o ID da unidade)
 
-6. **Gerenciar Recursos**
+6. **Atualizar Conteúdo (Opcional)**
+   ```
+   PUT /conteudos/:id
+   ```
+   Permite editar manualmente um conteúdo gerado (onde :id é o ID do conteúdo)
+
+7. **Gerenciar Recursos**
    - Consultar disciplina: `GET /disciplinas/{id}`
    - Consultar unidade: `GET /unidades/{id}`
    - Deletar unidade: `DELETE /unidades/{id}` (remove também os conteúdos)
@@ -509,8 +554,11 @@ curl -X POST http://localhost:3000/gerar/conteudos \
 curl http://localhost:3000/unidades?disciplina_id=uuid-da-disciplina
 
 # Listar conteúdos de uma unidade específica
-curl http://localhost:3000/conteudos?unidade_id=uuid-da-unidade
-```
+curl http://localhost:3000/conteudos/uuid-da-unidade
+# Atualizar um conteúdo
+curl -X PUT http://localhost:3000/conteudos/uuid-do-conteudo \
+  -H "Content-Type: application/json" \
+  -d '{"conteudo": "# Conteúdo atualizado...\n"}'```
 
 ### Exemplo 5: Fluxo Completo
 ```bash
@@ -560,7 +608,8 @@ UNI**IDs:** Todos os IDs são UUIDs no formato `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 | GET                | `/disciplinas/:id/sugerir-temas` | Sugere temas com IA              |
 |    **Conteúdos**   |                                  |                                  |
 | POST               | `/gerar/conteudos`               | Cria unidade + gera conteúdos    |
-| GET                | `/conteudos`                     | Lista conteúdos de uma unidade   |
+| GET                | `/conteudos/:id`                 | Lista conteúdos de uma unidade   |
+| PUT                | `/conteudos/:id`                 | Atualiza um conteúdo existente   |
 |    **Unidades**    |                                  |                                  |
 | GET                | `/unidades`                      | Lista unidades de uma disciplina |
 | GET                | `/unidades/:id`                  | Busca unidade por ID             |

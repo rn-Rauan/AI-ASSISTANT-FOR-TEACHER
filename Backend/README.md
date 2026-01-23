@@ -297,7 +297,8 @@ npm run api  # Deve rodar em http://localhost:3001
 | Método | Endpoint                     | Descrição                                         |
 |--------|------------------------------|---------------------------------------------------|
 | `POST` | `/gerar/conteudos`           | **Cria unidade + gera conteúdos** (1 chamada RAG) |
-| `GET`  | `/conteudos?unidade_id=<id>` | Lista conteúdos de uma unidade                    |
+| `GET`  | `/conteudos/:id`             | Lista conteúdos de uma unidade                    |
+| `PUT`  | `/conteudos/:id`             | Atualiza um conteúdo existente                    |
 
 ### Exemplo: Gerar Conteúdos
 
