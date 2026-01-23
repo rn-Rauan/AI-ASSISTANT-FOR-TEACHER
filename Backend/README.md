@@ -12,11 +12,11 @@
 
 ##  Índice
 
-- [Sobre o Projeto](#sobre-o-projeto)
+- [ Sobre o Projeto](#sobre-o-projeto)
 - [ Visão Geral do Sistema](#visão-geral-do-sistema)
 - [ Principais Funcionalidades](#principais-funcionalidades)
 - [ Arquitetura](#arquitetura)
-- [ Modelo de Dados](#modelo-de-dados)
+- [ Modelo de Dados](#-odelo-de-dados)
 - [ Fluxo de Geração de Conteúdo](#fluxo-de-geração-de-conteúdo)
 - [ Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [ Instalação e Configuração](#instalação-e-configuração)
@@ -231,6 +231,9 @@ export const ragBnccService = new RagBnccService("http://localhost:3001");
 ### 4. Configurar Banco de Dados
 
 ```bash
+# Executar o generate
+npx prisma generate
+
 # Executar migrations
 npx prisma migrate dev
 
@@ -263,8 +266,6 @@ cd my-app
 npm install
 npm run api  # Deve rodar em http://localhost:3001
 
-# Testar chamada a API RAG
-npm run test:rag
 ```
 ---
 
@@ -296,7 +297,8 @@ npm run test:rag
 | Método | Endpoint                     | Descrição                                         |
 |--------|------------------------------|---------------------------------------------------|
 | `POST` | `/gerar/conteudos`           | **Cria unidade + gera conteúdos** (1 chamada RAG) |
-| `GET`  | `/conteudos?unidade_id=<id>` | Lista conteúdos de uma unidade                    |
+| `GET`  | `/conteudos/:id`             | Lista conteúdos de uma unidade                    |
+| `PUT`  | `/conteudos/:id`             | Atualiza um conteúdo existente                    |
 
 ### Exemplo: Gerar Conteúdos
 
@@ -550,7 +552,7 @@ Genérico                →     Específico e contextual
 
 ###  Impacto da IA no Projeto
 
-| Área                          | Sem IA                  | Com IA (Copilot + GPT)    |
+| Área                          | Sem IA                  | Com auxilio de IA         |
 |-------------------------------|-------------------------|---------------------------|
 | **Tempo de desenvolvimento**  | 2-3 semanas             | ~10 dias                  |
 | **Documentação**              | Manual, demorada        | Automática, completa      |
@@ -607,7 +609,6 @@ Certifique-se de ter criado o arquivo `.env` com a chave válida da OpenAI (Nesc
 
 1. Verifique se a API RAG está rodando: `http://localhost:3001`
 2. Altere a URL no arquivo `src/DI/container.ts` se necessário
-3. Execute `npm run test:rag` para testar a conexão
 
 ### Prisma: "Database does not exist"
 
@@ -630,6 +631,7 @@ npm install
 -  [ADR02 - Arquitetura RAG com LlamaIndex](docs/ADR02.md)
 -  [Modelo de Dados (DER)](docs/DER.md)
 -  [Documentação Completa da API](docs/API_DOCS.md)
+-  [Integração com API RAG](docs/API_RAG_RESUMO.md)
 -  [Edital do Projeto](docs/hackathon.md)
 
 ---

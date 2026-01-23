@@ -9,6 +9,7 @@ import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
 import { obterContextoDiretrizesMEC } from "../../../02-domain/mappings/DiretrizesMEC_mapping";
 import { ConteudoGerado } from "../../../02-domain/entities/ConteudoGerado";
 import { Unidade } from "../../../02-domain/entities/Unidade";
+import { IAIService } from "../../../02-domain/interfaces/IAIService";
 
 /**
  * UseCase para criar unidade com múltiplos conteúdos de uma vez
@@ -25,7 +26,7 @@ export class GerarUnidadeEConteudosUseCase {
      * @param conteudoGeradoRepository Repositório para persistência dos conteúdos gerados
      */
   constructor(
-    private AIService: OpenAIService,
+    private AIService: IAIService,
     private unidadeRepository: IUnidadeRepository,
     private disciplinaRepository: IDisciplinaRepository,
     private ragBnccService: IRagBnccService,

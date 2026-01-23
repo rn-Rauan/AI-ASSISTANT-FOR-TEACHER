@@ -92,7 +92,7 @@ Estrutura do plano:
 - 3-5 objetivos específicos alinhados à BNCC
 
 ## 3. HABILIDADES BNCC
-- Habilidades do contexto acima
+- Habilidades do contexto bncc acima com seus respectivos códigos
 
 ## 4. RECURSOS NECESSÁRIOS
 ### Digitais: apps, sites, plataformas

@@ -7,7 +7,6 @@ import { RagBnccService } from "../03-infrastructure/service/RAG_Bncc.service";
 import { CriarDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/CriarDisciplinaUseCase";
 import { DeleteDisciplinaUseCase } from "../01-application/usecases/DisciplinaUseCases/DeleteDisciplinaUseCase";
 import { DisciplinaController } from "../03-infrastructure/http/controllers/Disciplina.controller";
-import { CriarUnidadeUseCase } from "../01-application/usecases/UnidadeUseCase/CriarUnidadeUseCase";
 import { UnidadeController } from "../03-infrastructure/http/controllers/Unidade.controller";
 import { ListarUnidadesUseCase } from "../01-application/usecases/UnidadeUseCase/ListarUnidadesUseCase";
 import { ListarDisciplinaPorIDUseCase } from "../01-application/usecases/DisciplinaUseCases/ListarDisciplinaPorIDUseCase";
@@ -19,7 +18,8 @@ import { OpenAIService } from "../03-infrastructure/service/AI.service";
 import { TemasController } from "../03-infrastructure/http/controllers/Temas.controller";
 import { GerarUnidadeEConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/GerarUnidadeEConteudosUseCase";
 import { ListarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
-import { GerarController } from "../03-infrastructure/http/controllers/Gerar.controller";
+import { GerarController } from "../03-infrastructure/http/controllers/Conteudos.controller";
+import { AtualizarConteudoUseCase } from "../01-application/usecases/ConteudoUseCase/AtualizarConteudoUseCase";
 
 //Container de Injeção de Dependências
 
@@ -82,7 +82,7 @@ const sugerirTemasUseCase = new SugerirTemasUseCase(
   openAIService
 );
 
-//Gerar Use Cases
+//Conteúdo Use Cases
 const gerarUnidadeEConteudosUseCase = new GerarUnidadeEConteudosUseCase(
   openAIService,
   unidadeRepository,
@@ -90,11 +90,12 @@ const gerarUnidadeEConteudosUseCase = new GerarUnidadeEConteudosUseCase(
   ragBnccService,
   conteudoGeradoRepository
 );
-
-//Conteudo Use Cases
 const listarConteudosUseCase = new ListarConteudosUseCase(
   conteudoGeradoRepository
 );
+const atualizarConteudoUseCase = new AtualizarConteudoUseCase(
+  conteudoGeradoRepository
+)
 
 /**
  * @Controllers
@@ -105,7 +106,6 @@ export const disciplinaController = new DisciplinaController(
   listarDisciplinaUseCase,
   deletarDisciplinaUseCase,
   listarDisciplinaPorIDUseCase,
-  sugerirTemasUseCase
 );
 
 //Unidade Controller
@@ -122,5 +122,6 @@ export const temasController = new TemasController(
 //Gerar Controller
 export const gerarController = new GerarController(
   gerarUnidadeEConteudosUseCase,
-  listarConteudosUseCase
+  listarConteudosUseCase,
+  atualizarConteudoUseCase
 );  

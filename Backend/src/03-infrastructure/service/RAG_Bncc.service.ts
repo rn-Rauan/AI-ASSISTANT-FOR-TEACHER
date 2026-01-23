@@ -4,7 +4,6 @@ import { ConsultarRagDTO } from "../../01-application/dtos/RagDTOs/ConsultarRagD
 import { obterNomeAnoSerie } from "../../02-domain/mappings/Ano_Serie_nome";
 import { obterNomeDisciplina } from "../../02-domain/mappings/Disciplina_nome";
 import { RagApiResponseDTO } from "../../01-application/dtos/RagDTOs/RagApiResponseDTO";
-import { clear } from "node:console";
 
 /**
  * Serviço simples para consultar a API de RAG
@@ -23,7 +22,7 @@ export class RagBnccService implements IRagBnccService {
     };
 
     const abortController = new AbortController();
-    const timeout = setTimeout(() => abortController.abort(), 30000);
+    const timeout = setTimeout(() => abortController.abort(), 120000); // 120 segundos
 
     try {
       const response = await axios.post<RagApiResponseDTO>(
@@ -43,21 +42,20 @@ export class RagBnccService implements IRagBnccService {
       );
 
       return `
-            Referência BNCC: ${data.bnccReferencia}
-            Competências: ${contexto.competenciasBNCC ? contexto.competenciasBNCC.join(", ") : "N/A"}
             Habilidades: ${habilidades.join("\n")}
             Contexto Pedagógico: ${contexto.contextoPedagogico.abordagem}
+            estrategias: ${contexto.contextoPedagogico.estrategias.join(", ")}
             Cultura Digital: ${contexto.culturaDigital.relacao}
             Recursos: ${contexto.culturaDigital.recursos.join(", ")}`.trim();
     } catch (error: any) {
-        clearTimeout(timeout);
-        if( axios.isCancel(error)) {
-            throw new Error("A requisição a api RAG exedeu o tempo limite.");
-        }
-        if(error instanceof AxiosError){
-            throw new Error(`Erro ao consultar a API de RAG: ${error.message}`);
-        }
-        throw new Error(`Erro inesperado ao consultar a API de RAG`);
+      clearTimeout(timeout);
+      if (axios.isCancel(error)) {
+        throw new Error("A requisição a api RAG exedeu o tempo limite.");
+      }
+      if (error instanceof AxiosError) {
+        throw new Error(`Erro ao consultar a API de RAG: ${error.message}`);
+      }
+      throw new Error(`Erro inesperado ao consultar a API de RAG`);
     }
   }
 }

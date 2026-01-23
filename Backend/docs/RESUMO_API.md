@@ -82,6 +82,36 @@ Este documento fornece uma visão geral e concisa dos endpoints da API, focando 
 
 ---
 
+###  Conteúdos
+
+- **`POST /gerar/conteudos`**
+  - **Descrição:** Cria uma unidade e gera os conteúdos selecionados (plano de aula, atividade) em uma única operação.
+  - **Body (JSON):**
+    ```json
+    {
+      "disciplina_id": "uuid-da-disciplina",
+      "tema": "Gêneros Textuais",
+      "observacoes": "Opcional",
+      "tipos": ["plano_de_aula", "atividade"]
+    }
+    ```
+
+- **`GET /conteudos/:id`**
+  - **Descrição:** Lista todos os conteúdos de uma unidade.
+  - **Parâmetros:** `id` (ID da unidade na URL).
+
+- **`PUT /conteudos/:id`**
+  - **Descrição:** Atualiza o conteúdo de um conteúdo gerado.
+  - **Parâmetros:** `id` (ID do conteúdo na URL).
+  - **Body (JSON):**
+    ```json
+    {
+      "conteudo": "# Novo conteúdo em Markdown..."
+    }
+    ```
+
+---
+
 ##  Tipos e Enumerações Essenciais
 
 ### Códigos de Disciplina (`disciplina_codigo`)

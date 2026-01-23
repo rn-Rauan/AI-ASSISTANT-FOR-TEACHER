@@ -1,17 +1,20 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { GerarUnidadeEConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/GerarUnidadeEConteudosUseCase";
 import { ListarConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
+import { AtualizarConteudoUseCase } from "../../../01-application/usecases/ConteudoUseCase/AtualizarConteudoUseCase";
 
 export class GerarController {
   /**
    * Controlador para operações de geração de conteúdo
-   * @param gerarUnidadeEConteudosUseCase Caso de uso para criar unidade + gerar conteúdos 
+   * @param gerarUnidadeEConteudosUseCase Caso de uso para criar unidade + gerar conteúdos
    * @param listarConteudosUseCase Caso de uso para listar conteúdos de uma unidade
-   */
+   * @param atualizarConteudoUseCase Caso de uso para atualizar um conteúdo existente
+   * */
   constructor(
     private gerarUnidadeEConteudosUseCase: GerarUnidadeEConteudosUseCase,
-    private listarConteudosUseCase: ListarConteudosUseCase
-  ) { }
+    private listarConteudosUseCase: ListarConteudosUseCase,
+    private atualizarConteudoUseCase: AtualizarConteudoUseCase,
+  ) {}
 
   /**
    * Gera múltiplos conteúdos para uma disciplina e cria a unidade automaticamente
@@ -42,7 +45,8 @@ export class GerarController {
 
       if (!tipos || tipos.length == 0) {
         return reply.status(400).send({
-          message: "Campo obrigatório: tipos (array com ao menos um tipo: plano_de_aula, atividade)",
+          message:
+            "Campo obrigatório: tipos (array com ao menos um tipo: plano_de_aula, atividade)",
         });
       }
 
@@ -50,7 +54,7 @@ export class GerarController {
         disciplina_id,
         tema,
         tipos,
-        observacoes
+        observacoes,
       );
 
       return reply.status(201).send({
@@ -58,7 +62,8 @@ export class GerarController {
         ...resultado,
       });
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Erro desconhecido";
+      const message =
+        error instanceof Error ? error.message : "Erro desconhecido";
       return reply.status(500).send({
         message: "Erro ao gerar conteúdos",
         error: message,
@@ -73,21 +78,57 @@ export class GerarController {
    */
   async listarConteudos(req: FastifyRequest, reply: FastifyReply) {
     try {
-      const { unidade_id } = req.query as { unidade_id: string };
+      const { id } = req.params as { id: string };
 
-      if (!unidade_id) {
+      if (!id) {
         return reply.status(400).send({
-          message: "Campo obrigatório: unidade_id",
+          message: "Campo obrigatório: id",
         });
       }
 
-      const conteudos = await this.listarConteudosUseCase.execute(unidade_id);
+      const conteudos = await this.listarConteudosUseCase.execute(id);
 
       return reply.status(200).send(conteudos);
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Erro desconhecido";
+      const message =
+        error instanceof Error ? error.message : "Erro desconhecido";
       return reply.status(500).send({
         message: "Erro ao listar conteúdos",
+        error: message,
+      });
+    }
+  }
+
+  /**
+   * Atualiza um conteúdo existente
+   * @param req Requisição HTTP contendo o ID do conteúdo e o novo conteúdo
+   * @param reply Resposta HTTP com o conteúdo atualizado
+   */
+  async atualizarConteudo(req: FastifyRequest, reply: FastifyReply) {
+    try {
+      const { id } = req.params as { id: string };
+      const { conteudo } = req.body as { conteudo: string };
+
+      if (!id || !conteudo) {
+        return reply.status(400).send({
+          message: "Campo obrigatório: id e conteudo",
+        });
+      }
+
+      const conteudoAtualizado = await this.atualizarConteudoUseCase.execute(
+        id,
+        conteudo,
+      );
+
+      return reply.status(200).send({
+        message: "Conteúdo atualizado com sucesso",
+        conteudoAtualizado,
+      });
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Erro desconhecido";
+      return reply.status(500).send({
+        message: "Erro ao atualizar conteúdo",
         error: message,
       });
     }

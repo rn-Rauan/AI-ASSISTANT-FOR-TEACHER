@@ -22,7 +22,6 @@ export interface ContextoRAG {
     serie: string; 
     disciplina: string;
     habilidadesBNCC: HabilidadesBNCC[];
-    competenciasBNCC: string[];
     contextoPedagogico: ContextoPedagogico;
     culturaDigital: CulturaDigital;
     sugestoesConteudo: string[];
