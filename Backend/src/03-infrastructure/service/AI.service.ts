@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 import { IAIService } from "../../02-domain/interfaces/IAIService";
+import { Content } from "openai/resources/containers/files/content";
 
 /**
  * Serviço simples de IA usando OpenAI
- * 
+ *
  * FLUXO:
  * 1. sugerirTemas() - IA gera 5 temas de cultura digital
  * 2. gerarPlanoDeAula() - RAG valida + IA gera plano
@@ -21,7 +22,7 @@ export class OpenAIService implements IAIService {
    */
   async sugerirTemasCulturaDigital(
     disciplina: string,
-    anoSerie: string
+    anoSerie: string,
   ): Promise<string[]> {
     const prompt = `Sugira EXATAMENTE 5 temas relacionados com cultura digital para:
 - Disciplina: ${disciplina}
@@ -54,8 +55,11 @@ Retorne APENAS um array JSON de strings (sem explicações):
       });
 
       const text = response.choices[0].message.content || "[]";
-      const jsonText = text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-      
+      const jsonText = text
+        .replace(/```json\n?/g, "")
+        .replace(/```\n?/g, "")
+        .trim();
+
       return JSON.parse(jsonText);
     } catch (error: any) {
       console.error("Erro ao sugerir temas:", error);
@@ -70,7 +74,7 @@ Retorne APENAS um array JSON de strings (sem explicações):
     tema: string,
     contextoBNCC: string,
     disciplina: string,
-    anoSerie: string
+    anoSerie: string,
   ): Promise<string> {
     const prompt = `Crie um PLANO DE AULA completo e detalhado.
 
@@ -118,7 +122,11 @@ Seja DETALHADO e PRÁTICO.`;
       const response = await this.client.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "Você é um professor experiente especializado em BNCC e cultura digital." },
+          {
+            role: "system",
+            content:
+              "Você é um professor experiente especializado em BNCC e cultura digital.",
+          },
           { role: "user", content: prompt },
         ],
         temperature: 0.8,
@@ -139,7 +147,7 @@ Seja DETALHADO e PRÁTICO.`;
     tema: string,
     contextoBNCC: string,
     disciplina: string,
-    anoSerie: string
+    anoSerie: string,
   ): Promise<string> {
     const prompt = `Crie uma ATIVIDADE AVALIATIVA completa.
 
@@ -189,7 +197,11 @@ Seja CLARO e JUSTO.`;
       const response = await this.client.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "Você é um professor experiente especializado em avaliação e BNCC." },
+          {
+            role: "system",
+            content:
+              "Você é um professor experiente especializado em avaliação e BNCC.",
+          },
           { role: "user", content: prompt },
         ],
         temperature: 0.8,
@@ -201,5 +213,48 @@ Seja CLARO e JUSTO.`;
       console.error("Erro ao gerar atividade:", error);
       throw new Error("Erro ao gerar atividade: " + error.message);
     }
+  }
+  async refinarPlanoDeAula(planoDeAula: string, instrucoes: string): Promise<string> {
+    if (!instrucoes || instrucoes.trim() == "") {
+      return Promise.resolve(planoDeAula);
+    }
+    const prompt = `Você é um assistente pedagógico especialista em currículo brasileiro (BNCC) e em refinar planos de aula.
+    Sua tarefa é ajustar o PLANO DE AULA fornecido, seguindo rigorosamente a instrução do professor e uma regra crítica.
+
+    **REGRA CRÍTICA E INEGOCIÁVEL:**
+    - **NÃO ALTERE, NÃO ADICIONE e NÃO REMOVA as HABILIDADES DA BNCC** listadas no plano de aula original. Elas são o alicerce do plano e devem ser mantidas exatamente como estão. Sua tarefa é adaptar o restante do plano em torno delas.
+    **INSTRUÇÃO DO PROFESSOR:**
+    "${instrucoes}"
+    **PLANO DE AULA ATUAL:**
+    ${planoDeAula}
+    **SUA TAREFA:**
+    1.  Leia a "INSTRUÇÃO DO PROFESSOR".
+    2.  Analise o "PLANO DE AULA ATUAL".
+    3.  Reescreva o plano de aula completo, aplicando a instrução do professor.
+    4.  Concentre as modificações nas seções de **Desenvolvimento (Momentos 1, 2, 3)**, **Recursos**, **Avaliação** e **Adaptações**, garantindo que elas se alinhem à instrução.
+    5.  **GARANTA** que a seção "HABILIDADES BNCC" do plano de aula refinado seja **IDÊNTICA** à do plano original.
+    6.  Mantenha o formato e a estrutura do documento.
+    Retorne APENAS o plano de aula completo e refinado, sem adicionar comentários, introduções ou qualquer texto fora do plano.`;
+    try{
+      const response = await this.client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: "Você é um assistente pedagógico especialista em currículo brasileiro (BNCC) e em refinar planos de aula."
+          },
+          { role: "user", content: prompt}
+        ],
+        temperature: 0.5,
+        max_tokens: 4096
+      })
+      return response.choices[0].message.content || "Erro ao refinar plano";
+
+    }catch(error: any){
+      throw new Error("Method not implemented.");
+    }
+  }
+  refinarAtividade(atividade: string, instrucoes: string): Promise<string> {
+    throw new Error("Method not implemented.");
   }
 }
