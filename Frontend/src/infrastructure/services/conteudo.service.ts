@@ -17,9 +17,8 @@ export const conteudoService = {
 
   // Listar conteúdos já gerados de uma unidade
   async listarPorUnidade(unidadeId: string): Promise<Conteudo[]> {
-    const response = await api.get('/conteudos', {
-      params: { unidade_id: unidadeId }
-    });
+    // A rota no backend é GET /conteudos/:id_da_unidade
+    const response = await api.get(`/conteudos/${unidadeId}`);
     return response.data;
   },
 

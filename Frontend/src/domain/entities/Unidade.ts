@@ -1,6 +1,9 @@
+import type{ Conteudo } from './Conteudo';
+
 export interface Unidade {
     id: string;
-    disciplina_id: string;
+    disciplinaID: string;
     tema: string;
-    criadoEm?: string; // No front geralmente recebemos data como string JSON
+    criadoEm?: string;
+    conteudos?: Conteudo[]; // No front geralmente recebemos data como string JSON
 }
