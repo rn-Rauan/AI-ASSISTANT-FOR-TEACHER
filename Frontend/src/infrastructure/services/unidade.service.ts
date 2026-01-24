@@ -17,7 +17,7 @@ export const unidadeService = {
   },
 
   async create(data: CriarUnidadeDTO): Promise<Unidade> {
-    const response = await api.post('/unidades', data);
+    const response = await api.post('/gerar/conteudos', data);
     return response.data;
   },
 
