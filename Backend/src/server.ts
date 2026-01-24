@@ -18,7 +18,8 @@ const PORT = 3131;
 
 //CORS
 app.register(cors,{
-    origin: process.env.FRONTEND_URL || "***",
+    origin: true, // Permite todas as origens - use em desenvolvimento
+    credentials: true
 });
 
 //Rate Limiting
@@ -41,7 +42,7 @@ app.register(sugerirTemasRoutes);
 app.register(gerarRoutes);
 
 // Inicia o servidor
-app.listen({ port: PORT }, () => {
+app.listen({ port: PORT, host: '0.0.0.0'}, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 

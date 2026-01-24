@@ -70,7 +70,8 @@ const listarUnidadesUseCase = new ListarUnidadesUseCase(
   disciplinaRepository
 );
 const listarUnidadesPorIdUseCase = new BuscarUnidadePorIDUseCase(
-  unidadeRepository
+  unidadeRepository,
+  conteudoGeradoRepository
 )
 const deletarUnidadeUseCase = new DeleteUnidadeUseCase(
   unidadeRepository
