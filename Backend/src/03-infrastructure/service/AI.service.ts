@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { IAIService } from "../../02-domain/interfaces/IAIService";
+import { ConteudoEstruturado, IAIService } from "../../02-domain/interfaces/IAIService";
 import { Content } from "openai/resources/containers/files/content";
 
 /**
@@ -75,8 +75,8 @@ Retorne APENAS um array JSON de strings (sem explicações):
     contextoBNCC: string,
     disciplina: string,
     anoSerie: string,
-  ): Promise<string> {
-    const prompt = `Crie um PLANO DE AULA completo e detalhado.
+  ): Promise<ConteudoEstruturado> {
+    const prompt = `Você deve retornar um objeto JSON com EXATAMENTE duas propriedades: "planoDeAula" e "conteudoSlides".
 
 TEMA: ${tema}
 DISCIPLINA: ${disciplina}
@@ -85,7 +85,13 @@ ANO/SÉRIE: ${anoSerie}
 CONTEXTO BNCC (validado pelo RAG):
 ${contextoBNCC}
 
-Estrutura do plano:
+IMPORTANTE: Retorne um JSON válido neste formato:
+{
+  "planoDeAula": "texto markdown completo do plano de aula",
+  "conteudoSlides": "texto markdown completo para os slides"
+}
+
+Para o campo "planoDeAula", crie um plano completo em Markdown seguindo esta estrutura:
 
 # PLANO DE AULA: ${tema}
 
@@ -96,7 +102,8 @@ Estrutura do plano:
 - 3-5 objetivos específicos alinhados à BNCC
 
 ## 3. HABILIDADES BNCC
-- Habilidades do contexto bncc acima com seus respectivos códigos
+- Habilidades do contexto BNCC acima com seus respectivos códigos
+
 
 ## 4. RECURSOS NECESSÁRIOS
 ### Digitais: apps, sites, plataformas
@@ -116,7 +123,48 @@ Como avaliar o aprendizado
 ## 8. ADAPTAÇÕES
 Sugestões para diferentes níveis
 
-Seja DETALHADO e PRÁTICO.`;
+Para o campo "conteudoSlides", crie slides FOCADOS NO ALUNO em Markdown:
+- Use '#' para iniciar cada novo slide
+- Crie 5-8 slides
+- Linguagem SIMPLES e DIRETA para estudantes
+- CONTEÚDO, não estrutura de aula
+- Foque no CONHECIMENTO que o aluno vai aprender
+- Use listas com '-' para informações importantes
+- Inclua exemplos práticos e curiosidades quando possível
+
+NÃO inclua nos slides: objetivos, habilidades BNCC, recursos, avaliação (isso é para o professor)
+INCLUA nos slides: conceitos, explicações, exemplos, fatos importantes, curiosidades, aplicações práticas
+
+Exemplo de estrutura de slides PARA O ALUNO:
+# ${tema}
+Breve contexto histórico ou introdução
+
+# O que foi?
+- Definição simples
+- Quando aconteceu
+- Principais envolvidos
+
+# Por que aconteceu?
+- Causas principais
+- Contexto da época
+
+# Como foi?
+- Eventos importantes
+- Fases ou etapas
+
+# Consequências
+- O que mudou
+- Impactos na época
+
+# Curiosidades
+- Fatos interessantes
+- Exemplos práticos
+
+# Conexão com Hoje
+- Como isso afeta nosso mundo atual
+- Exemplos contemporâneos
+
+RETORNE APENAS O JSON, sem markdown wrappers.`;
 
     try {
       const response = await this.client.chat.completions.create({
@@ -125,15 +173,29 @@ Seja DETALHADO e PRÁTICO.`;
           {
             role: "system",
             content:
-              "Você é um professor experiente especializado em BNCC e cultura digital.",
+              "Você é um professor experiente especializado em BNCC e cultura digital. Retorne APENAS um objeto JSON válido com as propriedades 'planoDeAula' e 'conteudoSlides', ambas contendo texto em formato Markdown.",
           },
           { role: "user", content: prompt },
         ],
+        response_format: { type: "json_object" },
         temperature: 0.8,
-        max_tokens: 3000,
+        max_tokens: 4096,
       });
 
-      return response.choices[0].message.content || "Erro ao gerar plano";
+      const text = response.choices[0].message.content;
+
+      if (!text) {
+        throw new Error("Resposta vazia da IA");
+      }
+
+      const resultado = JSON.parse(text);
+      
+      // Validar que os campos existem e são strings
+      if (!resultado.planoDeAula || !resultado.conteudoSlides) {
+        throw new Error("Resposta da IA está incompleta");
+      }
+
+      return resultado as ConteudoEstruturado;
     } catch (error: any) {
       console.error("Erro ao gerar plano:", error);
       throw new Error("Erro ao gerar plano de aula: " + error.message);
@@ -235,7 +297,7 @@ Seja CLARO e JUSTO.`;
     5.  **GARANTA** que a seção "HABILIDADES BNCC" do plano de aula refinado seja **IDÊNTICA** à do plano original.
     6.  Mantenha o formato e a estrutura do documento.
     Retorne APENAS o plano de aula completo e refinado, sem adicionar comentários, introduções ou qualquer texto fora do plano.`;
-    try{
+    try {
       const response = await this.client.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
@@ -243,18 +305,100 @@ Seja CLARO e JUSTO.`;
             role: "system",
             content: "Você é um assistente pedagógico especialista em currículo brasileiro (BNCC) e em refinar planos de aula."
           },
-          { role: "user", content: prompt}
+          { role: "user", content: prompt }
         ],
         temperature: 0.5,
         max_tokens: 4096
       })
       return response.choices[0].message.content || "Erro ao refinar plano";
 
-    }catch(error: any){
-      throw new Error("Method not implemented.");
+    } catch (error: any) {
+      throw new Error("Erro ao refinar plano de aula: " + error.message);
     }
   }
-  refinarAtividade(atividade: string, instrucoes: string): Promise<string> {
-    throw new Error("Method not implemented.");
+  
+  async refinarAtividade(atividade: string, instrucoes: string): Promise<string> {
+    if (!instrucoes || instrucoes.trim() == "") {
+      return Promise.resolve(atividade);
+    }
+    
+    const prompt = `Você é um assistente pedagógico especialista em refinar atividades avaliativas.
+    
+    **INSTRUÇÃO DO PROFESSOR:**
+    "${instrucoes}"
+    
+    **ATIVIDADE ATUAL:**
+    ${atividade}
+    
+    **SUA TAREFA:**
+    1. Leia a instrução do professor
+    2. Analise a atividade atual
+    3. Reescreva a atividade completa aplicando as melhorias solicitadas
+    4. Mantenha a estrutura e formatação do documento
+    5. Preserve as competências e habilidades BNCC originais
+    
+    Retorne APENAS a atividade refinada, sem comentários adicionais.`;
+    
+    try {
+      const response = await this.client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: "Você é um assistente pedagógico especialista em criar e refinar atividades avaliativas."
+          },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.5,
+        max_tokens: 3000
+      });
+      
+      return response.choices[0].message.content || "Erro ao refinar atividade";
+    } catch (error: any) {
+      throw new Error("Erro ao refinar atividade: " + error.message);
+    }
+  }
+  
+  async refinarSlide(slideMarkdown: string, instrucoes: string): Promise<string> {
+    if (!instrucoes || instrucoes.trim() == "") {
+      return Promise.resolve(slideMarkdown);
+    }
+    
+    const prompt = `Você é um designer educacional especialista em criar apresentações didáticas.
+    
+    **INSTRUÇÃO DO PROFESSOR:**
+    "${instrucoes}"
+    
+    **CONTEÚDO DE SLIDES ATUAL (Markdown):**
+    ${slideMarkdown}
+    
+    **SUA TAREFA:**
+    1. Leia a instrução do professor
+    2. Analise o conteúdo dos slides em Markdown
+    3. Ajuste o conteúdo aplicando as melhorias solicitadas
+    4. Mantenha o formato Markdown (# para títulos, - para listas)
+    5. Seja conciso e visual - slides devem ser objetivos
+    6. Use '#' para cada novo slide
+    
+    Retorne APENAS o conteúdo refinado em Markdown, sem comentários.`;
+    
+    try {
+      const response = await this.client.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: "Você é um designer educacional especialista em apresentações didáticas."
+          },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.5,
+        max_tokens: 2000
+      });
+      
+      return response.choices[0].message.content || "Erro ao refinar slides";
+    } catch (error: any) {
+      throw new Error("Erro ao refinar slides: " + error.message);
+    }
   }
 }

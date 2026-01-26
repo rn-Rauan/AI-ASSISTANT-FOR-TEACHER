@@ -6,6 +6,7 @@ import { disciplinaRoutes } from "./03-infrastructure/http/routes/Disciplina.rou
 import { unidadeRoutes } from "./03-infrastructure/http/routes/Unidade.routes";
 import { sugerirTemasRoutes } from "./03-infrastructure/http/routes/Temas.routes";
 import { gerarRoutes } from "./03-infrastructure/http/routes/Conteudos.routes";
+import { slideRoutes } from "./03-infrastructure/http/routes/Slide.routes";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY não configurada!");
@@ -40,6 +41,8 @@ app.register(unidadeRoutes);
 app.register(sugerirTemasRoutes);
 
 app.register(gerarRoutes);
+
+app.register(slideRoutes);
 
 // Inicia o servidor
 app.listen({ port: PORT, host: '0.0.0.0'}, () => {

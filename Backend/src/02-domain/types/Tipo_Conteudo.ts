@@ -1,0 +1,1 @@
+export type Tipo_Conteudo = "plano_de_aula"|  "atividade" | "slide"

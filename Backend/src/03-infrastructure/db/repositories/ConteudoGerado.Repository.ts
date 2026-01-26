@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { IConteudoGeradoRepository } from "../../../02-domain/interfaces/IConteudoGeradoRepository";
 import { ConteudoGerado } from "../../../02-domain/entities/ConteudoGerado";
+import { Tipo_Conteudo } from "../../../02-domain/types/Tipo_Conteudo";
 
 /**
  * Implementação do repositório de ConteudoGerado usando Prisma
@@ -20,7 +21,7 @@ export class PrismaConteudoGeradoRepository implements IConteudoGeradoRepository
     return new ConteudoGerado(
       conteudoData.id,
       conteudoData.unidade_id,
-      conteudoData.tipo,
+      conteudoData.tipo as Tipo_Conteudo,
       conteudoData.conteudo,
       conteudoData.created_at,
     );
@@ -36,7 +37,7 @@ export class PrismaConteudoGeradoRepository implements IConteudoGeradoRepository
     return new ConteudoGerado(
       conteudoData.id,
       conteudoData.unidade_id,
-      conteudoData.tipo,
+      conteudoData.tipo as Tipo_Conteudo,
       conteudoData.conteudo,
       conteudoData.created_at,
     );
@@ -52,7 +53,7 @@ export class PrismaConteudoGeradoRepository implements IConteudoGeradoRepository
         new ConteudoGerado(
           ConteudoGeradoData.id,
           ConteudoGeradoData.unidade_id,
-          ConteudoGeradoData.tipo,
+          ConteudoGeradoData.tipo as Tipo_Conteudo,
           ConteudoGeradoData.conteudo,
           ConteudoGeradoData.created_at
         ),

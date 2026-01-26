@@ -1,3 +1,5 @@
+import { Tipo_Conteudo } from "../types/Tipo_Conteudo";
+
 /**
  * Entidade ConteudoGerado
  * Representa um conteúdo gerado por IA (plano de aula, atividade, slide)
@@ -19,7 +21,7 @@ export class ConteudoGerado {
     constructor(
         id: string,
         unidade_id: string,
-        tipo: string,
+        tipo: Tipo_Conteudo,
         conteudo: string,
         criadoEm?: Date | null
     ) {

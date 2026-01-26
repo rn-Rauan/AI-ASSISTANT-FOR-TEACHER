@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { GerarUnidadeEConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/GerarUnidadeEConteudosUseCase";
 import { ListarConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
 import { AtualizarConteudoUseCase } from "../../../01-application/usecases/ConteudoUseCase/AtualizarConteudoUseCase";
+import { RefinarConteudoUseCase } from "../../../01-application/usecases/ConteudoUseCase/RefinarConteudoUseCase";
 
 export class GerarController {
   /**
@@ -9,11 +10,13 @@ export class GerarController {
    * @param gerarUnidadeEConteudosUseCase Caso de uso para criar unidade + gerar conteúdos
    * @param listarConteudosUseCase Caso de uso para listar conteúdos de uma unidade
    * @param atualizarConteudoUseCase Caso de uso para atualizar um conteúdo existente
+   * @param refinarConteudoUseCase Caso de uso para refinar conteúdos existentes
    * */
   constructor(
     private gerarUnidadeEConteudosUseCase: GerarUnidadeEConteudosUseCase,
     private listarConteudosUseCase: ListarConteudosUseCase,
     private atualizarConteudoUseCase: AtualizarConteudoUseCase,
+    private refinarConteudoUseCase: RefinarConteudoUseCase,
   ) {}
 
   /**
@@ -129,6 +132,57 @@ export class GerarController {
         error instanceof Error ? error.message : "Erro desconhecido";
       return reply.status(500).send({
         message: "Erro ao atualizar conteúdo",
+        error: message,
+      });
+    }
+  }
+
+  /**
+   * Refina múltiplos conteúdos de uma unidade com base em instrução
+   * @param req Requisição HTTP contendo unidade_id, conteudos_ids e instrucao
+   * @param reply Resposta HTTP com os conteúdos refinados
+   */
+  async refinarConteudo(req: FastifyRequest, reply: FastifyReply) {
+    try {
+      const { unidade_id, conteudos_ids, instrucao } = req.body as {
+        unidade_id: string;
+        conteudos_ids: string[];
+        instrucao: string;
+      };
+
+      if (!unidade_id || unidade_id.trim().length === 0) {
+        return reply.status(400).send({
+          message: "Campo obrigatório: unidade_id",
+        });
+      }
+
+      if (!conteudos_ids || conteudos_ids.length === 0) {
+        return reply.status(400).send({
+          message: "Campo obrigatório: conteudos_ids (array com ao menos um ID de conteúdo)",
+        });
+      }
+
+      if (!instrucao || instrucao.trim().length < 2) {
+        return reply.status(400).send({
+          message: "Campo obrigatório: instrucao (mínimo 2 caracteres)",
+        });
+      }
+
+      const conteudosRefinados = await this.refinarConteudoUseCase.execute(
+        unidade_id,
+        conteudos_ids,
+        instrucao,
+      );
+
+      return reply.status(200).send({
+        message: `${conteudosRefinados.length} conteúdo(s) refinado(s) com sucesso`,
+        conteudos: conteudosRefinados,
+      });
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Erro desconhecido";
+      return reply.status(500).send({
+        message: "Erro ao refinar conteúdos",
         error: message,
       });
     }

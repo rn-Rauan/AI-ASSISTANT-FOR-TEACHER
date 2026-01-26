@@ -20,6 +20,11 @@ import { GerarUnidadeEConteudosUseCase } from "../01-application/usecases/Conteu
 import { ListarConteudosUseCase } from "../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
 import { GerarController } from "../03-infrastructure/http/controllers/Conteudos.controller";
 import { AtualizarConteudoUseCase } from "../01-application/usecases/ConteudoUseCase/AtualizarConteudoUseCase";
+import { RefinarConteudoUseCase } from "../01-application/usecases/ConteudoUseCase/RefinarConteudoUseCase";
+import { SlideService } from "../03-infrastructure/service/Slide.service";
+import { GerarPPTXUseCase } from "../01-application/usecases/SlideUseCase/GerarPPTXUseCase";
+import { BuscarPreviewSlideUseCase } from "../01-application/usecases/SlideUseCase/BuscarPreviewSlideUseCase";
+import { SlideController } from "../03-infrastructure/http/controllers/Slide.controller";
 
 //Container de Injeção de Dependências
 
@@ -42,9 +47,12 @@ const conteudoGeradoRepository = new PrismaConteudoGeradoRepository(prismaClient
 //BNCC Service (chama os services que acessam o arquivo JSON da BNCC para sugerir conteúdos e fazer validações)
 const bnccService = new BnccService();
 //RAG Service (consulta API de RAG)
-const ragBnccService = new RagBnccService(process.env.RAG_API_URL || "http://localhost:3001");
+const ragBnccService = new RagBnccService(process.env.RAG_API_URL || "");
+console.log("RAG API URL:", process.env.RAG_API_URL);
 //OpenAI Service
 const openAIService = new OpenAIService(process.env.OPENAI_API_KEY || "");
+//Slide Service
+const slideService = new SlideService();
 
 /**
  * @UseCases
@@ -97,6 +105,20 @@ const listarConteudosUseCase = new ListarConteudosUseCase(
 const atualizarConteudoUseCase = new AtualizarConteudoUseCase(
   conteudoGeradoRepository
 )
+const refinarConteudoUseCase = new RefinarConteudoUseCase(
+  conteudoGeradoRepository,
+  unidadeRepository,
+  openAIService
+);
+
+//Slide Use Cases
+const gerarPPTXUseCase = new GerarPPTXUseCase(
+  conteudoGeradoRepository,
+  slideService
+);
+const buscarPreviewSlideUseCase = new BuscarPreviewSlideUseCase(
+  conteudoGeradoRepository
+);
 
 /**
  * @Controllers
@@ -124,5 +146,11 @@ export const temasController = new TemasController(
 export const gerarController = new GerarController(
   gerarUnidadeEConteudosUseCase,
   listarConteudosUseCase,
-  atualizarConteudoUseCase
+  atualizarConteudoUseCase,
+  refinarConteudoUseCase
+);
+//Slide Controller
+export const slideController = new SlideController(
+  gerarPPTXUseCase,
+  buscarPreviewSlideUseCase
 );  

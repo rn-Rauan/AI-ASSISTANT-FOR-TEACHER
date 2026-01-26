@@ -96,6 +96,7 @@ API backend desenvolvida para o **Hackathon IFPI Campus Piripiri** que visa apoi
 -  **Geração de Planos de Aula**: Criação automática com alinhamento pedagógico
 -  **Geração de Atividades Avaliativas**: Atividades personalizadas por unidade
 -  **Integração RAG + BNCC**: Busca semântica em documentos oficiais para embasamento pedagógico
+-  **Refinamento Interativo**: Chat para ajustar e refinar conteúdos gerados pela IA
 
 ---
 
@@ -299,6 +300,7 @@ npm run api  # Deve rodar em http://localhost:3001
 | `POST` | `/gerar/conteudos`           | **Cria unidade + gera conteúdos** (1 chamada RAG) |
 | `GET`  | `/conteudos/:id`             | Lista conteúdos de uma unidade                    |
 | `PUT`  | `/conteudos/:id`             | Atualiza um conteúdo existente                    |
+| `POST` | `/conteudos/refinar`         | Refina conteúdos existentes via chat (instrução)  |
 
 ### Exemplo: Gerar Conteúdos
 
@@ -325,6 +327,42 @@ Content-Type: application/json
     "disciplina_id": "uuid-da-disciplina",
     "created_at": "2026-01-20T..."
   },
+  "conteudos": [
+    {
+      "id": "uuid-1",
+      "tipo": "plano_de_aula",
+      "conteudo": "# PLANO DE AULA: Fake News...",
+      "unidade_id": "uuid-da-unidade",
+      "created_at": "2026-01-20T..."
+    },
+    {
+      "id": "uuid-2",
+      "tipo": "atividade",
+      "conteudo": "# ATIVIDADE AVALIATIVA...",
+      "unidade_id": "uuid-da-unidade",
+      "created_at": "2026-01-20T..."
+    }
+  ]
+}
+```
+
+### Exemplo: Refinar Conteúdos
+**Request:**
+```http
+POST /conteudos/refinar
+Content-Type: application/json
+
+{
+  "unidade_id": "uuid-da-unidade",
+  "conteudos_ids": ["uuid-1", "uuid-2"],
+  "instrucao": "Torne o plano de aula mais detalhado para uma aula de 90 minutos e adicione um exemplo prático na atividade."
+}
+```
+
+**Response:**
+```json
+{
+  "message": "2 conteúdo(s) refinado(s) com sucesso",
   "conteudos": [
     {
       "id": "uuid-1",
@@ -693,5 +731,4 @@ Para dúvidas sobre a API ou arquitetura do projeto:
 **Feito para professores transformarem a educação com tecnologia**
 
 [⬆ Voltar ao topo](#ai-assistant-for-teacher---backend)
-
 </div>

@@ -11,4 +11,6 @@ export async function gerarRoutes(fastify: FastifyInstance) {
     // Atualizar conteúdo gerado
     fastify.put("/conteudos/:id", gerarController.atualizarConteudo.bind(gerarController));
     
+    // Refinar conteúdos de uma unidade
+    fastify.post("/conteudos/refinar", gerarController.refinarConteudo.bind(gerarController));
 }

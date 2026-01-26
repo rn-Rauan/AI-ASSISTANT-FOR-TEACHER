@@ -1,4 +1,3 @@
-import { OpenAIService } from "../../../03-infrastructure/service/AI.service";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { IRagBnccService } from "../../../02-domain/interfaces/IRagBnccService";
@@ -9,7 +8,7 @@ import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
 import { obterContextoDiretrizesMEC } from "../../../02-domain/mappings/DiretrizesMEC_mapping";
 import { ConteudoGerado } from "../../../02-domain/entities/ConteudoGerado";
 import { Unidade } from "../../../02-domain/entities/Unidade";
-import { IAIService } from "../../../02-domain/interfaces/IAIService";
+import { ConteudoEstruturado, IAIService } from "../../../02-domain/interfaces/IAIService";
 
 /**
  * UseCase para criar unidade com múltiplos conteúdos de uma vez
@@ -85,8 +84,12 @@ export class GerarUnidadeEConteudosUseCase {
 
     const unidadeCriada = await this.unidadeRepository.criar(novaUnidade);
 
+    // Quando gera plano_de_aula, a IA também retorna o conteúdo para slides
+    // Vamos armazenar para usar depois
+    let conteudoSlidesGerado: string | null = null;
+
     const promessas = tiposFiltrados.map(async (tipo) => {
-      let conteudoTexto: string;
+      let conteudoTexto: string | ConteudoEstruturado;
 
       let contextoCompleto = `${contextoBNCC}\n\n${diretrizesTexto}`;
       if (observacoes) {
@@ -95,12 +98,15 @@ export class GerarUnidadeEConteudosUseCase {
 
       switch (tipo) {
         case "plano_de_aula":
-          conteudoTexto = await this.AIService.gerarPlanoDeAula(
+          const resultado = await this.AIService.gerarPlanoDeAula(
             tema,
             contextoCompleto,
             disciplinaNome,
             anoSerieNome
           );
+          conteudoTexto = resultado.planoDeAula;
+          // Armazena o conteúdo de slides para uso posterior
+          conteudoSlidesGerado = resultado.conteudoSlides;
           break;
 
         case "atividade":
@@ -112,15 +118,36 @@ export class GerarUnidadeEConteudosUseCase {
           );
           break;
 
+        case "slide":
+          // Se já gerou plano de aula, usa o conteúdo de slides dele
+          // Senão, gera um plano só para extrair o conteúdo de slides
+          if (!conteudoSlidesGerado) {
+            const resultadoSlide = await this.AIService.gerarPlanoDeAula(
+              tema,
+              contextoCompleto,
+              disciplinaNome,
+              anoSerieNome
+            );
+            conteudoTexto = resultadoSlide.conteudoSlides;
+          } else {
+            conteudoTexto = conteudoSlidesGerado;
+          }
+          break;
+
         default:
           throw new Error(`Tipo ${tipo} não implementado`);
       }
+
+      // Garantir que conteudoTexto seja sempre uma string
+      const conteudoString = typeof conteudoTexto == 'string' 
+        ? conteudoTexto 
+        : JSON.stringify(conteudoTexto);
 
       const novoConteudo = new ConteudoGerado(
         "",
         unidadeCriada.UnidadeID,
         tipo,
-        conteudoTexto
+        conteudoString
       );
 
       const conteudoSalvo = await this.conteudoGeradoRepository.criar(novoConteudo);
