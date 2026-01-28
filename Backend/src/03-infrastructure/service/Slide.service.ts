@@ -1,5 +1,8 @@
-import * as PptxGenJS from "pptxgenjs";
 import { marked } from "marked";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const PptxGenJS = require("pptxgenjs");
 
 /**
  * Serviço para gerar apresentações de slides a partir de Markdown
@@ -13,7 +16,7 @@ export class SlideService {
    * @returns Buffer do arquivo PPTX gerado
    */
   async gerarPPTX(markdownContent: string, tema: string): Promise<Buffer> {
-    const pptx = new PptxGenJS.default();
+    const pptx = new PptxGenJS();
     
     // Configurações da apresentação
     pptx.author = "AI Assistant for Teacher";
@@ -30,7 +33,7 @@ export class SlideService {
       
       slideTitle.addText(slides[0].titulo, {
         x: 0.5,
-        y: "40%",
+        y: "20%",
         w: "90%",
         h: 1.5,
         fontSize: 44,
@@ -42,7 +45,7 @@ export class SlideService {
       if (slides[0].conteudo) {
         slideTitle.addText(slides[0].conteudo, {
           x: 0.5,
-          y: "60%",
+          y: "40%",
           w: "90%",
           h: 1,
           fontSize: 20,
@@ -92,7 +95,6 @@ export class SlideService {
           fontSize: 18,
           color: "34495E",
           valign: "top",
-          bullet: slideData.temLista,
         });
       }
       
@@ -170,21 +172,5 @@ export class SlideService {
     }
     
     return linhas.join('\n');
-  }
-  
-  /**
-   * Salva o PPTX em um caminho específico (útil para testes)
-   */
-  async salvarPPTX(markdownContent: string, tema: string, caminho: string): Promise<void> {
-    const pptx = new PptxGenJS.default();
-    pptx.author = "AI Assistant for Teacher";
-    pptx.title = tema;
-    
-    const slides = this.dividirMarkdownEmSlides(markdownContent);
-    
-    // Adicionar slides (mesmo código da função gerarPPTX)
-    // ... (implementação similar)
-    
-    await pptx.writeFile({ fileName: caminho });
   }
 }

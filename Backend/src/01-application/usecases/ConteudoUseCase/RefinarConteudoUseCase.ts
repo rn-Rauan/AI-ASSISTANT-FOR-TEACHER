@@ -1,4 +1,3 @@
-import { ConteudoGerado } from "../../../02-domain/entities/ConteudoGerado";
 import { IAIService } from "../../../02-domain/interfaces/IAIService";
 import { IConteudoGeradoRepository } from "../../../02-domain/interfaces/IConteudoGeradoRepository";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
