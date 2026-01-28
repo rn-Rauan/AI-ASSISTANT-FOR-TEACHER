@@ -12,5 +12,4 @@ export interface ConteudoGeradoResponseDTO {
   tipo: string;
   conteudo: string;
   criadoEm: Date;
-  mensagemIA: string;
 }

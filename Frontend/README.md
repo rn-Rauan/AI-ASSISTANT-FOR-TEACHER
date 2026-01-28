@@ -1,12 +1,13 @@
-# Frontend — Cultura Digital
+# Frontend — AI Assistant for Teacher
 
-Este projeto representa o **frontend** da plataforma **Cultura Digital**, responsável por fornecer a interface para professores criarem e visualizarem conteúdos didáticos alinhados à BNCC, consumindo uma API já existente construída com Clean Architecture.
+Este projeto representa o **frontend** da plataforma **AI Assistant for Teacher**, responsável por fornecer a interface para professores criarem e visualizarem conteúdos didáticos alinhados à BNCC, consumindo uma API já existente construída com Clean Architecture.
 
 O frontend foi desenvolvido com foco em:
 - Tipagem forte com TypeScript
-- Separação clara de responsabilidades
+- Separação clara de responsabilidades (Domain, Infrastructure, Presentation)
 - Facilidade de manutenção e evolução
 - Integração limpa com o backend (sem regras de negócio no front)
+- Services prontos para uso nas páginas
 
 ---
 
@@ -14,9 +15,9 @@ O frontend foi desenvolvido com foco em:
 
 O frontend é responsável por:
 
-- Renderizar as telas da aplicação (4 telas principais)
+- Renderizar as telas da aplicação
 - Coletar dados do professor (ano, disciplina, assunto, etc.)
-- Enviar requisições HTTP para o backend
+- Enviar requisições HTTP para o backend via services
 - Exibir os conteúdos gerados pela API
 - Controlar navegação entre telas
 - Gerenciar estado de interface (loading, erro, sucesso)

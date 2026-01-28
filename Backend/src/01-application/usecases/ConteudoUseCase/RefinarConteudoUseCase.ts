@@ -1,8 +1,10 @@
 import { IAIService } from "../../../02-domain/interfaces/IAIService";
 import { IConteudoGeradoRepository } from "../../../02-domain/interfaces/IConteudoGeradoRepository";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
-import { ConteudoGeradoResponseDTO } from "../../dtos/ConteudoDTOs/ConteudoGeradoResponseDTO";
-import { ResponseRefinamento } from "../../dtos/ConteudoDTOs/ConteudoRefinadoResponseDTOS";
+import {
+  ConteudoRefinadoResponseDTO,
+  ResponseRefinamento,
+} from "../../dtos/ConteudoDTOs/ConteudoRefinadoResponseDTO";
 
 /**
  * UseCase para refinar conteúdos gerados
@@ -16,7 +18,7 @@ export class RefinarConteudoUseCase {
      */
     constructor(private conteudoRepository: IConteudoGeradoRepository, private unidadeRepository: IUnidadeRepository, private AIservice: IAIService) { }
 
-    async execute(unidadeID: string, conteudosIDs: string[], instrucao: string): Promise<ConteudoGeradoResponseDTO[]> {
+    async execute(unidadeID: string, conteudosIDs: string[], instrucao: string): Promise<ConteudoRefinadoResponseDTO[]> {
         if (!unidadeID || unidadeID.trim().length == 0) {
             throw new Error("ID da unidade é obrigatório");
         }
@@ -67,6 +69,6 @@ export class RefinarConteudoUseCase {
         });
 
         const conteudosRefinados = await Promise.all(promisasDeRefinamento);
-        return conteudosRefinados.filter(conteudo => conteudo != null) as ConteudoGeradoResponseDTO[];
+        return conteudosRefinados.filter(conteudo => conteudo != null) as ConteudoRefinadoResponseDTO[];
     }
 }

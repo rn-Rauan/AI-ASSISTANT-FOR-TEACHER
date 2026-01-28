@@ -1,4 +1,4 @@
-import { ResponseRefinamento } from "../../01-application/dtos/ConteudoDTOs/ConteudoRefinadoResponseDTOS";
+import { ResponseRefinamento } from "../../01-application/dtos/ConteudoDTOs/ConteudoRefinadoResponseDTO";
 
 export type ConteudoEstruturado = {
   planoDeAula: string;

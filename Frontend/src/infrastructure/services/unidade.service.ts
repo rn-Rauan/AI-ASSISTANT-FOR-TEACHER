@@ -1,6 +1,5 @@
 import api from '../http/api';
 import type { Unidade } from '../../domain/entities/Unidade';
-import type { CriarUnidadeDTO } from '../../domain/dtos/CriarUnidadeDTO';
 
 export const unidadeService = {
   // Listar todas as unidades de uma disciplina específica
@@ -11,16 +10,13 @@ export const unidadeService = {
     return response.data;
   },
 
+  // Obter uma unidade específica por ID
   async getById(id: string): Promise<Unidade> {
     const response = await api.get(`/unidades/${id}`);
     return response.data;
   },
 
-  async create(data: CriarUnidadeDTO): Promise<Unidade> {
-    const response = await api.post('/gerar/conteudos', data);
-    return response.data;
-  },
-
+  // Deletar uma unidade
   async delete(id: string): Promise<void> {
     await api.delete(`/unidades/${id}`);
   }

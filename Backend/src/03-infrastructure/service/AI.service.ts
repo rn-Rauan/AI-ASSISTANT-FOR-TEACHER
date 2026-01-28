@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import { ConteudoEstruturado, IAIService } from "../../02-domain/interfaces/IAIService";
 import { Content } from "openai/resources/containers/files/content";
-import { ResponseRefinamento } from "../../01-application/dtos/ConteudoDTOs/ConteudoRefinadoResponseDTOS";
+import { ResponseRefinamento } from "../../01-application/dtos/ConteudoDTOs/ConteudoRefinadoResponseDTO";
 
 /**
  * Serviço simples de IA usando OpenAI
