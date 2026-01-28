@@ -2,6 +2,7 @@ import { IAIService } from "../../../02-domain/interfaces/IAIService";
 import { IConteudoGeradoRepository } from "../../../02-domain/interfaces/IConteudoGeradoRepository";
 import { IUnidadeRepository } from "../../../02-domain/interfaces/IUnidadeRepository";
 import { ConteudoGeradoResponseDTO } from "../../dtos/ConteudoDTOs/ConteudoGeradoResponseDTO";
+import { ResponseRefinamento } from "../../dtos/ConteudoDTOs/ConteudoRefinadoResponseDTOS";
 
 /**
  * UseCase para refinar conteúdos gerados
@@ -37,22 +38,23 @@ export class RefinarConteudoUseCase {
                 throw new Error(`Conteúdo com ID ${conteudoID} não encontrado`);
             }
 
-            let conteudoRefinadoTexto : string;
+            let respostaRefinamento : ResponseRefinamento;
             switch (conteudoExistente.Tipo) {
                 case "plano_de_aula":
-                    conteudoRefinadoTexto = await this.AIservice.refinarPlanoDeAula(conteudoExistente.Conteudo, instrucao);
+                    respostaRefinamento = await this.AIservice.refinarPlanoDeAula(conteudoExistente.Conteudo, instrucao);
                     break;
                 case "atividade":
-                    conteudoRefinadoTexto = await this.AIservice.refinarAtividade(conteudoExistente.Conteudo, instrucao);
+                    respostaRefinamento = await this.AIservice.refinarAtividade(conteudoExistente.Conteudo, instrucao);
                     break;
                 case "slide":
-                    conteudoRefinadoTexto = await this.AIservice.refinarSlide(conteudoExistente.Conteudo, instrucao);
+                    respostaRefinamento = await this.AIservice.refinarSlide(conteudoExistente.Conteudo, instrucao);
                     break;
                 default:
                     throw new Error(`Tipo ${conteudoExistente.Tipo} não implementado`);
             }
+            
 
-            conteudoExistente.Conteudo = conteudoRefinadoTexto;
+            conteudoExistente.Conteudo = respostaRefinamento.conteudo;
             const conteudoAtualizado = await this.conteudoRepository.update(conteudoExistente);
             return {
                 id: conteudoAtualizado.ConteudoID,
@@ -60,7 +62,8 @@ export class RefinarConteudoUseCase {
                 tipo: conteudoAtualizado.Tipo,
                 conteudo: conteudoAtualizado.Conteudo,
                 criadoEm: conteudoAtualizado.CriadoEm,
-            };
+                mensagemIA: respostaRefinamento.mensagemIA,
+            }
         });
 
         const conteudosRefinados = await Promise.all(promisasDeRefinamento);

@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { ConteudoEstruturado, IAIService } from "../../02-domain/interfaces/IAIService";
 import { Content } from "openai/resources/containers/files/content";
+import { ResponseRefinamento } from "../../01-application/dtos/ConteudoDTOs/ConteudoRefinadoResponseDTOS";
 
 /**
  * Serviço simples de IA usando OpenAI
@@ -276,53 +277,66 @@ Seja CLARO e JUSTO.`;
       throw new Error("Erro ao gerar atividade: " + error.message);
     }
   }
-  async refinarPlanoDeAula(planoDeAula: string, instrucoes: string): Promise<string> {
+  async refinarPlanoDeAula(planoDeAula: string, instrucoes: string): Promise<ResponseRefinamento> {
     if (!instrucoes || instrucoes.trim() == "") {
-      return Promise.resolve(planoDeAula);
+      return {
+        conteudo: planoDeAula,
+        mensagemIA: "Nenhuma instrução fornecida. O plano de aula não foi alterado."
+      };
     }
-    const prompt = `Você é um assistente pedagógico especialista em currículo brasileiro (BNCC) e em refinar planos de aula.
-    Sua tarefa é ajustar o PLANO DE AULA fornecido, seguindo rigorosamente a instrução do professor e uma regra crítica.
+    const prompt = `Você é um assistente pedagógico. Sua tarefa é refinar um plano de aula e gerar uma resposta para o professor.
 
-    **REGRA CRÍTICA E INEGOCIÁVEL:**
-    - **NÃO ALTERE, NÃO ADICIONE e NÃO REMOVA as HABILIDADES DA BNCC** listadas no plano de aula original. Elas são o alicerce do plano e devem ser mantidas exatamente como estão. Sua tarefa é adaptar o restante do plano em torno delas.
     **INSTRUÇÃO DO PROFESSOR:**
     "${instrucoes}"
+    
     **PLANO DE AULA ATUAL:**
     ${planoDeAula}
+    
     **SUA TAREFA:**
-    1.  Leia a "INSTRUÇÃO DO PROFESSOR".
-    2.  Analise o "PLANO DE AULA ATUAL".
-    3.  Reescreva o plano de aula completo, aplicando a instrução do professor.
-    4.  Concentre as modificações nas seções de **Desenvolvimento (Momentos 1, 2, 3)**, **Recursos**, **Avaliação** e **Adaptações**, garantindo que elas se alinhem à instrução.
-    5.  **GARANTA** que a seção "HABILIDADES BNCC" do plano de aula refinado seja **IDÊNTICA** à do plano original.
-    6.  Mantenha o formato e a estrutura do documento.
-    Retorne APENAS o plano de aula completo e refinado, sem adicionar comentários, introduções ou qualquer texto fora do plano.`;
+    1.  Reescreva o plano de aula aplicando a instrução do professor. **NÃO ALTERE AS HABILIDADES DA BNCC**.
+    2.  Crie uma mensagem curta e amigável para o professor, explicando a mudança que você fez.
+    
+    **RETORNE UM OBJETO JSON** com a seguinte estrutura:
+    {
+      "conteudo": "O plano de aula completo e refinado em formato markdown...",
+      "mensagemIA": "Sua resposta para o professor aqui..."
+    }`;
     try {
       const response = await this.client.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
-            content: "Você é um assistente pedagógico especialista em currículo brasileiro (BNCC) e em refinar planos de aula."
+            content: "Você é um assistente pedagógico especialista em BNCC. Retorne APENAS um objeto JSON válido com as chaves 'conteudo' e 'mensagemIA'."
           },
           { role: "user", content: prompt }
         ],
+        response_format: { type: "json_object" },
         temperature: 0.5,
         max_tokens: 4096
       })
-      return response.choices[0].message.content || "Erro ao refinar plano";
+      
+      const text = response.choices[0].message.content;
+      if (!text) {
+        throw new Error("Resposta vazia da IA");
+      }
+
+      return JSON.parse(text) as ResponseRefinamento;
 
     } catch (error: any) {
       throw new Error("Erro ao refinar plano de aula: " + error.message);
     }
   }
   
-  async refinarAtividade(atividade: string, instrucoes: string): Promise<string> {
+  async refinarAtividade(atividade: string, instrucoes: string): Promise<ResponseRefinamento> {
     if (!instrucoes || instrucoes.trim() == "") {
-      return Promise.resolve(atividade);
+      return {
+        conteudo: atividade,
+        mensagemIA: "Nenhuma instrução fornecida. A atividade não foi alterada."
+      };
     }
     
-    const prompt = `Você é um assistente pedagógico especialista em refinar atividades avaliativas.
+    const prompt = `Você é um assistente pedagógico. Sua tarefa é refinar uma atividade e gerar uma resposta para o professor.
     
     **INSTRUÇÃO DO PROFESSOR:**
     "${instrucoes}"
@@ -331,13 +345,14 @@ Seja CLARO e JUSTO.`;
     ${atividade}
     
     **SUA TAREFA:**
-    1. Leia a instrução do professor
-    2. Analise a atividade atual
-    3. Reescreva a atividade completa aplicando as melhorias solicitadas
-    4. Mantenha a estrutura e formatação do documento
-    5. Preserve as competências e habilidades BNCC originais
+    1.  Reescreva a atividade aplicando a instrução do professor. **NÃO ALTERE AS HABILIDADES DA BNCC**.
+    2.  Crie uma mensagem curta e amigável para o professor, explicando a mudança que você fez.
     
-    Retorne APENAS a atividade refinada, sem comentários adicionais.`;
+    **RETORNE UM OBJETO JSON** com a seguinte estrutura:
+    {
+      "conteudo": "A atividade completa e refinada em formato markdown...",
+      "mensagemIA": "Sua resposta para o professor aqui..."
+    }`;
     
     try {
       const response = await this.client.chat.completions.create({
@@ -345,26 +360,36 @@ Seja CLARO e JUSTO.`;
         messages: [
           {
             role: "system",
-            content: "Você é um assistente pedagógico especialista em criar e refinar atividades avaliativas."
+            content: "Você é um assistente pedagógico especialista em avaliação. Retorne APENAS um objeto JSON válido com as chaves 'conteudo' e 'mensagemIA'."
           },
           { role: "user", content: prompt }
         ],
+        response_format: { type: "json_object" },
         temperature: 0.5,
         max_tokens: 3000
       });
       
-      return response.choices[0].message.content || "Erro ao refinar atividade";
+      const text = response.choices[0].message.content;
+      if (!text) {
+        throw new Error("Resposta vazia da IA");
+      }
+
+      return JSON.parse(text) as ResponseRefinamento;
+
     } catch (error: any) {
       throw new Error("Erro ao refinar atividade: " + error.message);
     }
   }
   
-  async refinarSlide(slideMarkdown: string, instrucoes: string): Promise<string> {
+  async refinarSlide(slideMarkdown: string, instrucoes: string): Promise<ResponseRefinamento> {
     if (!instrucoes || instrucoes.trim() == "") {
-      return Promise.resolve(slideMarkdown);
+      return {
+        conteudo: slideMarkdown,
+        mensagemIA: "Nenhuma instrução fornecida. Os slides não foram alterados."
+      };
     }
     
-    const prompt = `Você é um designer educacional especialista em criar apresentações didáticas.
+    const prompt = `Você é um designer educacional. Sua tarefa é refinar o conteúdo de slides e gerar uma resposta para o professor.
     
     **INSTRUÇÃO DO PROFESSOR:**
     "${instrucoes}"
@@ -373,14 +398,14 @@ Seja CLARO e JUSTO.`;
     ${slideMarkdown}
     
     **SUA TAREFA:**
-    1. Leia a instrução do professor
-    2. Analise o conteúdo dos slides em Markdown
-    3. Ajuste o conteúdo aplicando as melhorias solicitadas
-    4. Mantenha o formato Markdown (# para títulos, - para listas)
-    5. Seja conciso e visual - slides devem ser objetivos
-    6. Use '#' para cada novo slide
+    1.  Reescreva o conteúdo dos slides aplicando a instrução do professor. Mantenha o formato Markdown.
+    2.  Crie uma mensagem curta e amigável para o professor, explicando a mudança que você fez.
     
-    Retorne APENAS o conteúdo refinado em Markdown, sem comentários.`;
+    **RETORNE UM OBJETO JSON** com a seguinte estrutura:
+    {
+      "conteudo": "O conteúdo dos slides refinado em formato markdown...",
+      "mensagemIA": "Sua resposta para o professor aqui..."
+    }`;
     
     try {
       const response = await this.client.chat.completions.create({
@@ -388,15 +413,22 @@ Seja CLARO e JUSTO.`;
         messages: [
           {
             role: "system",
-            content: "Você é um designer educacional especialista em apresentações didáticas."
+            content: "Você é um designer educacional. Retorne APENAS um objeto JSON válido com as chaves 'conteudo' e 'mensagemIA'."
           },
           { role: "user", content: prompt }
         ],
+        response_format: { type: "json_object" },
         temperature: 0.5,
         max_tokens: 2000
       });
       
-      return response.choices[0].message.content || "Erro ao refinar slides";
+      const text = response.choices[0].message.content;
+      if (!text) {
+        throw new Error("Resposta vazia da IA");
+      }
+
+      return JSON.parse(text) as ResponseRefinamento;
+
     } catch (error: any) {
       throw new Error("Erro ao refinar slides: " + error.message);
     }

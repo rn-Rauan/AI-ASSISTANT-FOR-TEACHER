@@ -1,4 +1,3 @@
-import { marked } from "marked";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
@@ -92,7 +91,7 @@ export class SlideService {
           y: 1.5,
           w: 9,
           h: 4,
-          fontSize: 18,
+          fontSize: 22,
           color: "34495E",
           valign: "top",
         });

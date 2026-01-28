@@ -12,6 +12,10 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY não configurada!");
 }
 
+if (!process.env.RAG_API_URL) {
+  throw new Error("Configure RAG_API_URL no .env");
+}
+
 const app = fastify({ logger: true });
 
 //Port
