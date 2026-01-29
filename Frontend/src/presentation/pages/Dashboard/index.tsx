@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Plus, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { SubjectCard } from "@/components/ui/SubjectCard";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { ErrorState } from "@/components/ui/ErrorState";

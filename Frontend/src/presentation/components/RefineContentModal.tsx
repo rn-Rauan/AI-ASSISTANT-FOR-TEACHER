@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/Dialog";
-import { Button } from "@/components/ui/Button";
-import { Textarea } from "@/components/ui/Textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import type { Conteudo } from "@/domain/entities/Conteudo";
 import { conteudoService } from "@/infrastructure/services/conteudo.service";
 import { Loader2, Send, Check, Sparkles, MessageSquare } from "lucide-react";

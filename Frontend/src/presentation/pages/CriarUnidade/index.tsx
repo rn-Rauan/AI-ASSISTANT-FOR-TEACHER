@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Sparkles, Loader2, BookOpen, FileText, Presentation, Check, Info } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Header } from "@/presentation/components/Header";
 import { conteudoService } from "@/infrastructure/services/conteudo.service";

@@ -3,7 +3,7 @@ import { FileText, Presentation, ClipboardList, ChevronDown, ChevronUp, Sparkles
 import ReactMarkdown from "react-markdown";
 import html2pdf from "html2pdf.js";
 import type { Conteudo, TipoConteudo } from "@/domain/entities/Conteudo";
-import { Button } from "./Button";
+import { Button } from "./button";
 import { slideService } from "@/infrastructure/services/slide.service";
 
 interface ContentCardProps {
