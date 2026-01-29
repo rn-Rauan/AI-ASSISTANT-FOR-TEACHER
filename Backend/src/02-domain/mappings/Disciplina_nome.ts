@@ -12,10 +12,10 @@ export const DISCIPLINA_NOMES: Record<disciplina_codigo, string> = {
   AR: "Arte",
   EF: "Educação Física",
   IN: "Inglês",
-  LPP: "LINGUAGENS E SUAS TECNOLOGIAS",
-  MAT: "MATEMÁTICA E SUAS TECNOLOGIAS",
-  CHS: "CIÊNCIAS HUMANAS E SOCIAIS",
-  CNT: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS"
+  LPP: "Linguagens e suas tecnologias",
+  MAT: "Matemática e suas tecnologias",
+  CHS: "Ciências Humana e Sociais",
+  CNT: "Ciências da Natureza e suas Tecnologias"
 };
 
 /**

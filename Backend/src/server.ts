@@ -29,7 +29,7 @@ app.register(cors,{
 
 //Rate Limiting
 app.register(rateLimit, {
-    max: 20,
+    max: 100,
     timeWindow: "1 minute",
 } )
 

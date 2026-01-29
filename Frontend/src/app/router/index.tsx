@@ -2,12 +2,17 @@ import { createBrowserRouter } from 'react-router-dom';
 import { PaginaDashboard } from '../../presentation/pages/PaginaDashboard';
 import { PaginaDisciplina } from '../../presentation/pages/PaginaDisciplina';
 import { PaginaCriarUnidade } from '../../presentation/pages/PaginaCriarUnidade';
+import { PaginaCriarDisciplina } from '../../presentation/pages/PaginaCriarDisciplina';
 import { PaginaUnidade } from '../../presentation/pages/PaginaUnidade';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <PaginaDashboard />,
+  },
+  {
+    path: '/disciplinas/criar',
+    element: <PaginaCriarDisciplina />,
   },
   {
     path: '/disciplinas/:id',

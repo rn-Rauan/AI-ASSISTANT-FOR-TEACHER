@@ -50,6 +50,6 @@ export const conteudoService = {
   // Sugerir temas baseados na BNCC
   async sugerirTemas(disciplinaId: string): Promise<string[]> {
     const response = await api.get(`/disciplinas/${disciplinaId}/sugerir-temas`);
-    return response.data.temas;
+    return response.data.sugestoes;
   }
 };

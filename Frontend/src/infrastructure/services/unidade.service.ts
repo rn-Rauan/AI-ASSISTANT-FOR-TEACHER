@@ -16,6 +16,12 @@ export const unidadeService = {
     return response.data;
   },
 
+  // Criar uma nova unidade
+  async criar(dados: Omit<Unidade, 'id' | 'criadoEm'>): Promise<Unidade> {
+    const response = await api.post('/unidades', dados);
+    return response.data;
+  },
+
   // Deletar uma unidade
   async delete(id: string): Promise<void> {
     await api.delete(`/unidades/${id}`);
