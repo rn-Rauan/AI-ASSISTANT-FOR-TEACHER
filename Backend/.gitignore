@@ -10,7 +10,6 @@ node_modules/
 .env.production.local
 
 # --- Build e Compilação ---
-dist/
 build/
 out/
 *.tsbuildinfo
