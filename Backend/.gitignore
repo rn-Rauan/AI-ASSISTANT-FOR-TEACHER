@@ -40,4 +40,7 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+# --- Aruivos de teste ---
+/coverage
+
 /src/generated/prisma

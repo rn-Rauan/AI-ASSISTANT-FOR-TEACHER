@@ -1,7 +1,7 @@
 import { IDisciplinaRepository } from "../../../02-domain/interfaces/IDisciplinaRepository";
 import { obterNomeDisciplina } from "../../../02-domain/mappings/Disciplina_nome";
 import { obterNomeAnoSerie } from "../../../02-domain/mappings/Ano_Serie_nome";
-import { OpenAIService } from "../../../03-infrastructure/service/AI.service";
+import { IAIService } from "../../../02-domain/interfaces/IAIService";
 
 /**
  * UseCase SIMPLIFICADO para sugerir temas
@@ -14,7 +14,7 @@ import { OpenAIService } from "../../../03-infrastructure/service/AI.service";
 export class SugerirTemasUseCase {
   constructor(
     private disciplinaRepository: IDisciplinaRepository,
-    private AIService: OpenAIService
+    private AIService: IAIService
   ) {}
 
   async execute(disciplina_id: string): Promise<{ sugestoes: string[] }> {

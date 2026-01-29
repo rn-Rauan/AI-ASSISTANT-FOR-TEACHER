@@ -40,6 +40,7 @@ export class ListarUnidadesUseCase {
       disciplinaID: unidades.DisciplinaID,
       tema: unidades.Tema,
       criadoEm: unidades.CriadoEm,
+      conteudos: [],
     }));
   }
 }
