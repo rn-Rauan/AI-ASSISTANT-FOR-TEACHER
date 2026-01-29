@@ -11,7 +11,7 @@ export const DISCIPLINA_NOMES: Record<disciplina_codigo, string> = {
   GE: "Geografia",
   AR: "Arte",
   EF: "Educação Física",
-  IN: "Inglês",
+  IN: "Lingua Inglesa",
   LPP: "Linguagens e suas tecnologias",
   MAT: "Matemática e suas tecnologias",
   CHS: "Ciências Humana e Sociais",

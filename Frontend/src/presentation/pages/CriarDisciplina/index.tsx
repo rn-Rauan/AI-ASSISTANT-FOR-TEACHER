@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/Button";
+import { Label } from "@/components/ui/Label";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { disciplinaService } from "@/infrastructure/services/disciplina.service";
 import {
@@ -11,10 +11,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/Select";
 import { DISCIPLINA_NOMES, ANO_SERIE_MAP } from "@/constants/domain-options";
 
-export const PaginaCriarDisciplina = () => {
+export const CriarDisciplina = () => {
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
