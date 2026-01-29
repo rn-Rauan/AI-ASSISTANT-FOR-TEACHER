@@ -1,12 +1,8 @@
 import path from "node:path";
 import fs from "node:fs";
-import { fileURLToPath } from "node:url";
 import { disciplina_codigo } from "../../02-domain/types/Disciplina_codigo";
 import { ano_serie } from "../../02-domain/types/Ano_Serie";
 import { DisciplinaBnccSimples, IBnccService } from "../../02-domain/interfaces/IBnccService";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export class BnccService implements IBnccService {
   private bnccJson: DisciplinaBnccSimples[];

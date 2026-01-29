@@ -1,7 +1,4 @@
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-const PptxGenJS = require("pptxgenjs");
+import PptxGenJS from "pptxgenjs";
 
 /**
  * Serviço para gerar apresentações de slides a partir de Markdown
