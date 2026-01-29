@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc && node copy-data.js",
+    "build": "tsc && node dist/copy-data.js",
     "start": "node dist/server.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
