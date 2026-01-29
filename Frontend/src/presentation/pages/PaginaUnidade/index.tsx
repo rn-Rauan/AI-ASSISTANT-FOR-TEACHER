@@ -9,6 +9,7 @@ import type { Unidade } from "@/domain/entities/Unidade";
 import type { Conteudo } from "@/domain/entities/Conteudo";
 import { unidadeService } from "@/infrastructure/services/unidade.service";
 import { conteudoService } from "@/infrastructure/services/conteudo.service";
+import { RefineContentModal } from "@/presentation/components/RefineContentModal";
 
 export const PaginaUnidade = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,7 @@ export const PaginaUnidade = () => {
   const [conteudos, setConteudos] = useState<Conteudo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedContent, setSelectedContent] = useState<Conteudo | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -45,6 +47,32 @@ export const PaginaUnidade = () => {
   const handleRetry = () => {
     if (id) {
       loadData(id);
+    }
+  };
+
+  const handleRefine = (content: Conteudo) => {
+    setSelectedContent(content);
+  };
+
+  const handleSaveRefinement = async (refinedContent: string) => {
+    if (!selectedContent) return;
+
+    try {
+      // Atualizar no backend
+      await conteudoService.atualizar(selectedContent.id, refinedContent);
+      
+      // Atualizar no estado local
+      setConteudos(prev => prev.map(c => 
+        c.id === selectedContent.id 
+          ? { ...c, conteudo: refinedContent } 
+          : c
+      ));
+
+      // Fechar modal
+      setSelectedContent(null);
+    } catch (err) {
+      console.error("Erro ao salvar refinamento:", err);
+      throw err; // Propagar erro para o modal exibir
     }
   };
 
@@ -108,6 +136,7 @@ export const PaginaUnidade = () => {
                       key={conteudo.id}
                       content={conteudo}
                       index={index}
+                      onRefine={handleRefine}
                     />
                   ))}
                 </div>
@@ -116,6 +145,15 @@ export const PaginaUnidade = () => {
           </>
         )}
       </main>
+
+      {selectedContent && (
+        <RefineContentModal
+          isOpen={!!selectedContent}
+          onClose={() => setSelectedContent(null)}
+          content={selectedContent}
+          onSave={handleSaveRefinement}
+        />
+      )}
     </div>
   );
 };

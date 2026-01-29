@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { FileText, Presentation, ClipboardList, ChevronDown, ChevronUp } from "lucide-react";
+import { FileText, Presentation, ClipboardList, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import type { Conteudo, TipoConteudo } from "@/domain/entities/Conteudo";
+import { Button } from "./button";
 
 interface ContentCardProps {
   content: Conteudo;
   index?: number;
+  onRefine?: (content: Conteudo) => void;
 }
 
 const typeConfig: Record<TipoConteudo, { label: string; icon: typeof FileText; variant: string }> = {
@@ -25,7 +27,7 @@ const typeConfig: Record<TipoConteudo, { label: string; icon: typeof FileText; v
   },
 };
 
-export function ContentCard({ content, index = 0 }: ContentCardProps) {
+export function ContentCard({ content, index = 0, onRefine }: ContentCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const config = typeConfig[content.tipo];
   const Icon = config.icon;
@@ -38,7 +40,7 @@ export function ContentCard({ content, index = 0 }: ContentCardProps) {
       className={`animate-slide-up opacity-0 stagger-${Math.min(index + 1, 4)}`}
       style={{ animationFillMode: "forwards" }}
     >
-      <div className="bg-card rounded-lg border border-border p-5 card-hover">
+      <div className="bg-card rounded-lg border border-border p-5 card-hover relative group">
         {/* Header */}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${config.variant}`}>
@@ -46,11 +48,25 @@ export function ContentCard({ content, index = 0 }: ContentCardProps) {
             {config.label}
           </div>
 
-          {content.criadoEm && (
-            <span className="text-xs text-muted-foreground">
-              {new Date(content.criadoEm).toLocaleDateString("pt-BR")}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {content.criadoEm && (
+                <span className="text-xs text-muted-foreground">
+                {new Date(content.criadoEm).toLocaleDateString("pt-BR")}
+                </span>
+            )}
+            {onRefine && (
+                <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-7 px-2 text-xs gap-1.5 text-muted-foreground hover:text-primary"
+                    onClick={() => onRefine(content)}
+                    title="Refinar com IA"
+                >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Refinar
+                </Button>
+            )}
+          </div>
         </div>
 
         {/* Content preview */}

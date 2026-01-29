@@ -25,6 +25,7 @@ import { SlideService } from "../03-infrastructure/service/Slide.service";
 import { GerarPPTXUseCase } from "../01-application/usecases/SlideUseCase/GerarPPTXUseCase";
 import { BuscarPreviewSlideUseCase } from "../01-application/usecases/SlideUseCase/BuscarPreviewSlideUseCase";
 import { SlideController } from "../03-infrastructure/http/controllers/Slide.controller";
+import { RefinarConteudoPreviewUseCase } from "../01-application/usecases/ConteudoUseCase/RefinarConteudoPreviewUseCase";
 
 //Container de Injeção de Dependências
 
@@ -110,6 +111,7 @@ const refinarConteudoUseCase = new RefinarConteudoUseCase(
   unidadeRepository,
   openAIService
 );
+const refinarConteudoPreviewUseCase = new RefinarConteudoPreviewUseCase(conteudoGeradoRepository,openAIService)
 
 //Slide Use Cases
 const gerarPPTXUseCase = new GerarPPTXUseCase(
@@ -147,7 +149,8 @@ export const gerarController = new GerarController(
   gerarUnidadeEConteudosUseCase,
   listarConteudosUseCase,
   atualizarConteudoUseCase,
-  refinarConteudoUseCase
+  refinarConteudoUseCase,
+  refinarConteudoPreviewUseCase
 );
 //Slide Controller
 export const slideController = new SlideController(

@@ -47,6 +47,12 @@ export const conteudoService = {
     return response.data;
   },
 
+  // Refinar um conteúdo específico gerando prévia (sem salvar)
+  async refinarPreview(conteudoId: string, instrucao: string): Promise<ConteudoRefinado> {
+    const response = await api.post(`/conteudos/${conteudoId}/refinar-preview`, { instrucao });
+    return response.data;
+  },
+
   // Sugerir temas baseados na BNCC
   async sugerirTemas(disciplinaId: string): Promise<string[]> {
     const response = await api.get(`/disciplinas/${disciplinaId}/sugerir-temas`);

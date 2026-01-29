@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { BookOpen, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SubjectCard } from "@/components/ui/SubjectCard";

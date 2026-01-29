@@ -3,6 +3,7 @@ import { GerarUnidadeEConteudosUseCase } from "../../../01-application/usecases/
 import { ListarConteudosUseCase } from "../../../01-application/usecases/ConteudoUseCase/ListarConteudosUseCase";
 import { AtualizarConteudoUseCase } from "../../../01-application/usecases/ConteudoUseCase/AtualizarConteudoUseCase";
 import { RefinarConteudoUseCase } from "../../../01-application/usecases/ConteudoUseCase/RefinarConteudoUseCase";
+import { RefinarConteudoPreviewUseCase } from "../../../01-application/usecases/ConteudoUseCase/RefinarConteudoPreviewUseCase";
 
 export class GerarController {
   /**
@@ -17,6 +18,7 @@ export class GerarController {
     private listarConteudosUseCase: ListarConteudosUseCase,
     private atualizarConteudoUseCase: AtualizarConteudoUseCase,
     private refinarConteudoUseCase: RefinarConteudoUseCase,
+    private refinarPreviewUseCase: RefinarConteudoPreviewUseCase,
   ) {}
 
   /**
@@ -138,8 +140,46 @@ export class GerarController {
   }
 
   /**
-   * Refina múltiplos conteúdos de uma unidade com base em instrução
-   * @param req Requisição HTTP contendo unidade_id, conteudos_ids e instrucao
+   * Refina um conteúdo específico e retorna a prévia sem salvar
+   * @param req Requisição HTTP
+   * @param reply Resposta HTTP
+   */
+  async refinarConteudoPreview(req: FastifyRequest, reply: FastifyReply) {
+    try {
+      const { id } = req.params as { id: string };
+      const { instrucao } = req.body as { instrucao: string };
+
+      if (!id) {
+        return reply.status(400).send({
+          message: "Campo obrigatório: id (param)",
+        });
+      }
+
+      if (!instrucao || instrucao.trim().length < 2) {
+        return reply.status(400).send({
+          message: "Campo obrigatório: instrucao (body, min 2 chars)",
+        });
+      }
+
+      const conteudoRefinado = await this.refinarPreviewUseCase.execute(
+        id,
+        instrucao
+      );
+
+      return reply.status(200).send(conteudoRefinado);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Erro desconhecido";
+      return reply.status(500).send({
+        message: "Erro ao gerar prévia de refinamento",
+        error: message,
+      });
+    }
+  }
+
+  /**
+   * Refina múltiplos conteúdos de uma unidade (Salva no banco)
+   * @param req Requisição HTTP contendo unidadeID, conteudosIDs e instrucao
    * @param reply Resposta HTTP com os conteúdos refinados
    */
   async refinarConteudo(req: FastifyRequest, reply: FastifyReply) {

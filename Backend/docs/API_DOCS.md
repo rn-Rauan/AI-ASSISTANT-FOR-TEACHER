@@ -309,6 +309,42 @@ Atualiza o conteúdo de um conteúdo gerado específico.
 
 ---
 
+### 9. Refinar Conteúdo (Preview)
+**POST** `/conteudos/:id/refinar-preview`
+
+Solicita uma prévia de refinamento de um conteúdo existente usando IA. O conteúdo refinado NÃO é salvo no banco de dados automaticamente.
+
+**Parâmetros de URL:**
+- `id` (string, obrigatório): ID do conteúdo
+
+**Body (JSON):**
+```json
+{
+  "instrucao": "Simplificar a linguagem para alunos do 6º ano"
+}
+```
+
+**Campos:**
+- `instrucao` (string, obrigatório): Instrução para a IA refinar o conteúdo
+
+**Resposta de Sucesso (200):**
+```json
+{
+  "id": "uuid",
+  "unidadeID": "uuid",
+  "tipo": "plano_de_aula",
+  "conteudo": "# PLANO DE AULA (Refinado): ...",
+  "criadoEm": "2026-01-20T00:00:00.000Z",
+  "mensagemIA": "O conteúdo foi simplificado conforme solicitado."
+}
+```
+
+**Erros:**
+- `400`: Campos obrigatórios não fornecidos
+- `500`: Erro ao processar refinamento
+
+---
+
 ##  Unidades
 
 ### 9. Listar Unidades

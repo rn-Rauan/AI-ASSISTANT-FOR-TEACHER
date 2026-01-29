@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_CENTRAL_URL;
+if (!apiUrl) {
+  throw new Error('API_CENTRAL_URL não está definida nas variáveis de ambiente.');
+}
+
 const api = axios.create({
-  baseURL: 'http://localhost:3131',
+  baseURL: apiUrl,
 
   headers: {
     'Content-Type': 'application/json',

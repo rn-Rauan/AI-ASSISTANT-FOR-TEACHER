@@ -23,8 +23,9 @@ const PORT = 3131;
 
 //CORS
 app.register(cors,{
-    origin: true, // Permite todas as origens - use em desenvolvimento
-    credentials: true
+    origin: "*", // Permite todas as origens
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 });
 
 //Rate Limiting
