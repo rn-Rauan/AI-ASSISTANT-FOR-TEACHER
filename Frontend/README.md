@@ -1,6 +1,6 @@
 # Frontend — AI Assistant for Teacher
 
-Este projeto representa o **frontend** da plataforma **AI Assistant for Teacher**, responsável por fornecer a interface para professores criarem e visualizarem conteúdos didáticos alinhados à BNCC, consumindo uma API já existente construída com Clean Architecture.
+Este projeto representa o **frontend** da plataforma **PedagogIA**, responsável por fornecer a interface para professores criarem e visualizarem conteúdos didáticos alinhados à BNCC, consumindo uma API já existente construída com Clean Architecture.
 
 O frontend foi desenvolvido com foco em:
 - Tipagem forte com TypeScript
@@ -38,7 +38,12 @@ O frontend é responsável por:
 - **React** — Biblioteca para construção de interfaces
 - **Vite** — Bundler e ambiente de desenvolvimento
 - **TypeScript (strict)** — Tipagem forte e segura
+- **Tailwind CSS** — Framework de estilização utilitário
+- **Shadcn/ui** — Componentes reutilizáveis (Radix UI + Tailwind)
+- **Lucide React** — Biblioteca de ícones
 - **Axios** — Comunicação HTTP com o backend
+- **React Markdown** — Renderização de conteúdo em Markdown
+- **html2pdf.js** — Exportação de conteúdo para PDF
 - **ESLint** — Padronização e qualidade de código
 
 ---
@@ -50,46 +55,57 @@ A estrutura do projeto segue uma adaptação da **Clean Architecture para fronte
 ```txt
 src/
 ├─ app/
-│  ├─ router/
-│  │  └─ index.tsx
-│  │
-│  └─ providers/
-│     └─ index.tsx
+│  └─ router/
+│     └─ index.tsx          # Configuração de rotas
 │
-├─ domain/
+├─ components/
+│  └─ ui/                   # Componentes reutilizáveis (Shadcn/ui)
+│     ├─ Button.tsx
+│     ├─ Input.tsx
+│     ├─ Card.tsx
+│     ├─ Dialog.tsx
+│     └─ ...
+│
+├─ constants/               # Constantes globais
+│  └─ domain-options.ts
+│
+├─ domain/                  # Camada de Domínio (Tipos e Interfaces)
 │  ├─ entities/
-│  │  ├─ Discipline.ts
-│  │  ├─ Unit.ts
-│  │  └─ Content.ts
+│  │  ├─ Disciplina.ts
+│  │  ├─ Unidade.ts
+│  │  └─ Conteudo.ts
 │  │
-│  └─ dtos/
-│     ├─ CreateDisciplineDTO.ts
-│     ├─ CreateUnitDTO.ts
-│     └─ GenerateContentDTO.ts
+│  └─ dtos/                 # Data Transfer Objects
+│     ├─ CriarDisciplinaDTO.ts
+│     ├─ CriarUnidadeDTO.ts
+│     └─ GerarConteudoDTO.ts
 │
-├─ infrastructure/
+├─ infrastructure/          # Camada de Infraestrutura (Comunicação externa)
 │  ├─ http/
-│  │  └─ api.ts
+│  │  └─ api.ts             # Configuração do Axios
 │  │
-│  └─ services/
-│     ├─ discipline.service.ts
-│     ├─ unit.service.ts
-│     └─ content.service.ts
+│  └─ services/             # Serviços de integração com API
+│     ├─ disciplina.service.ts
+│     ├─ unidade.service.ts
+│     ├─ conteudo.service.ts
+│     └─ slide.service.ts
 │
-├─ presentation/
-│  ├─ pages/
-│  │  ├─ DashboardPage/
-│  │  ├─ DisciplinePage/
-│  │  ├─ CreateUnitPage/
-│  │  └─ UnitViewPage/
+├─ lib/                     # Utilitários gerais
+│  └─ utils.ts
+│
+├─ presentation/            # Camada de Apresentação (Telas e Componentes de Negócio)
+│  ├─ components/           # Componentes específicos de negócio
+│  │  ├─ Header.tsx
+│  │  ├─ ModalCriarDisciplina.tsx
+│  │  └─ RefineContentModal.tsx
 │  │
-│  └─ components/
-│     ├─ Button/
-│     ├─ Select/
-│     └─ Card/
-│
-├─ styles/
-│  └─ theme.css
+│  └─ pages/                # Páginas da aplicação
+│     ├─ Dashboard/
+│     ├─ Disciplina/
+│     ├─ Unidade/
+│     ├─ CriarDisciplina/
+│     └─ CriarUnidade/
 │
 ├─ App.tsx
 └─ main.tsx
+```

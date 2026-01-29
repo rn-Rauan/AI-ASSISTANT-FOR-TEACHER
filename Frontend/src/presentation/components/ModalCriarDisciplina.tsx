@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/Button";
+import { Label } from "@/components/ui/Label";
 import { disciplinaService } from "@/infrastructure/services/disciplina.service";
 import {
   Dialog,
@@ -10,15 +10,23 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/ui/Dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/Select";
 import { DISCIPLINA_NOMES, ANO_SERIE_MAP } from "@/constants/domain-options";
+
+// Grupos de disciplinas por nível de ensino
+const DISCIPLINAS_FUNDAMENTAL = ["LP", "MA", "CI", "HI", "GE", "AR", "EF", "IN"];
+const DISCIPLINAS_MEDIO = ["LPP", "MAT", "CHS", "CNT"];
+
+// Grupos de séries por nível de ensino
+const SERIES_FUNDAMENTAL = ["6_ANO", "7_ANO", "8_ANO", "9_ANO"];
+const SERIES_MEDIO = ["1_SERIE", "2_SERIE", "3_SERIE"];
 
 interface ModalCriarDisciplinaProps {
   isOpen: boolean;
@@ -35,6 +43,42 @@ export const ModalCriarDisciplina = ({
   const [anoSerie, setAnoSerie] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Filtrar opções de Ano/Série baseado na disciplina selecionada
+  const filteredAnoOptions = useMemo(() => {
+    if (!nome) return Object.entries(ANO_SERIE_MAP);
+
+    if (DISCIPLINAS_FUNDAMENTAL.includes(nome)) {
+      return Object.entries(ANO_SERIE_MAP).filter(([codigo]) => 
+        SERIES_FUNDAMENTAL.includes(codigo)
+      );
+    }
+
+    if (DISCIPLINAS_MEDIO.includes(nome)) {
+      return Object.entries(ANO_SERIE_MAP).filter(([codigo]) => 
+        SERIES_MEDIO.includes(codigo)
+      );
+    }
+
+    return Object.entries(ANO_SERIE_MAP);
+  }, [nome]);
+
+  // Limpar seleção incompatível quando o nível de ensino mudar
+  useEffect(() => {
+    if (nome && anoSerie) {
+      const isFundamentalDisciplina = DISCIPLINAS_FUNDAMENTAL.includes(nome);
+      const isMedioDisciplina = DISCIPLINAS_MEDIO.includes(nome);
+      
+      const isFundamentalSerie = SERIES_FUNDAMENTAL.includes(anoSerie);
+      const isMedioSerie = SERIES_MEDIO.includes(anoSerie);
+
+      if (isFundamentalDisciplina && !isFundamentalSerie) {
+        setAnoSerie("");
+      } else if (isMedioDisciplina && !isMedioSerie) {
+        setAnoSerie("");
+      }
+    }
+  }, [nome, anoSerie]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,12 +142,16 @@ export const ModalCriarDisciplina = ({
             <Label htmlFor="anoSerie" className="text-base font-medium">
               Ano / Série
             </Label>
-            <Select value={anoSerie} onValueChange={setAnoSerie} disabled={isSaving}>
+            <Select 
+              value={anoSerie} 
+              onValueChange={setAnoSerie} 
+              disabled={isSaving || !nome}
+            >
               <SelectTrigger id="anoSerie" className="w-full text-lg py-6">
-                <SelectValue placeholder="Selecione o ano/série" />
+                <SelectValue placeholder={!nome ? "Selecione primeiro a disciplina" : "Selecione o ano/série"} />
               </SelectTrigger>
               <SelectContent>
-                {Object.entries(ANO_SERIE_MAP).map(([codigo, label]) => (
+                {filteredAnoOptions.map(([codigo, label]) => (
                   <SelectItem key={codigo} value={codigo}>
                     {label}
                   </SelectItem>

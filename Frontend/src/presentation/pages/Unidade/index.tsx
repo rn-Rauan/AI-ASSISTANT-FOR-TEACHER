@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ContentCard } from "@/components/ui/ContentCard";
 import { LoadingState } from "@/components/ui/LoadingState";
@@ -10,15 +12,22 @@ import type { Conteudo } from "@/domain/entities/Conteudo";
 import { unidadeService } from "@/infrastructure/services/unidade.service";
 import { conteudoService } from "@/infrastructure/services/conteudo.service";
 import { RefineContentModal } from "@/presentation/components/RefineContentModal";
+import { Header } from "@/presentation/components/Header";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { AlertModal } from "@/components/ui/AlertModal";
 
-export const PaginaUnidade = () => {
+export const DetalhesUnidade = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   
   const [unidade, setUnidade] = useState<Unidade | null>(null);
   const [conteudos, setConteudos] = useState<Conteudo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedContent, setSelectedContent] = useState<Conteudo | null>(null);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -47,6 +56,27 @@ export const PaginaUnidade = () => {
   const handleRetry = () => {
     if (id) {
       loadData(id);
+    }
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!unidade) return;
+
+    try {
+      await unidadeService.delete(unidade.id);
+      // Redireciona para a página da disciplina
+      if (unidade.disciplinaID) {
+        navigate(`/disciplinas/${unidade.disciplinaID}`);
+      } else {
+        navigate('/');
+      }
+    } catch (err) {
+      console.error('Erro ao deletar unidade:', err);
+      setAlertMessage("Não foi possível excluir a unidade. Tente novamente.");
     }
   };
 
@@ -91,6 +121,7 @@ export const PaginaUnidade = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-4xl">
         {isLoading ? (
           <>
@@ -114,6 +145,35 @@ export const PaginaUnidade = () => {
               }
               backTo={unidade?.disciplinaID ? `/disciplinas/${unidade.disciplinaID}` : "/"}
               backLabel="Voltar à Disciplina"
+              action={
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-destructive border-destructive/20 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
+                  onClick={handleDeleteClick}
+                  title="Excluir Unidade"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Excluir Unidade
+                </Button>
+              }
+            />
+
+            <AlertModal 
+              isOpen={!!alertMessage}
+              onClose={() => setAlertMessage(null)}
+              title="Erro na Exclusão"
+              message={alertMessage || ""}
+            />
+
+            <ConfirmModal
+              isOpen={showDeleteModal}
+              onClose={() => setShowDeleteModal(false)}
+              onConfirm={handleConfirmDelete}
+              title="Excluir Unidade"
+              description={`Tem certeza que deseja excluir a unidade "${unidade?.tema}"? Todos os conteúdos gerados serão perdidos. Esta ação não pode ser desfeita.`}
+              variant="destructive"
+              confirmText="Excluir"
             />
 
             {/* Contents section */}

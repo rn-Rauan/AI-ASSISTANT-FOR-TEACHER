@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Sparkles, Loader2, BookOpen, FileText, Presentation, Check, Info } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { Textarea } from "@/components/ui/Textarea";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { Header } from "@/presentation/components/Header";
 import { conteudoService } from "@/infrastructure/services/conteudo.service";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { cn } from "@/lib/utils";
 
-export const PaginaCriarUnidade = () => {
+export const CriarUnidade = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const disciplinaId = location.state?.disciplinaId as string;
@@ -63,14 +64,14 @@ export const PaginaCriarUnidade = () => {
     setIsSaving(true);
     setError(null);
     try {
-      await conteudoService.gerar({
+      const response = await conteudoService.gerar({
         disciplina_id: disciplinaId,
         tema: tema,
         tipos: selectedTypes,
         observacoes: observacoes
       });
-      // Navigate back to the discipline page
-      navigate(`/disciplinas/${disciplinaId}`);
+      // Navigate to the newly created unit page
+      navigate(`/unidades/${response.unidade.id}`);
     } catch (err) {
       console.error('Erro ao gerar conteúdo:', err);
       // Mensagem mais amigável para o usuário
@@ -128,6 +129,7 @@ export const PaginaCriarUnidade = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-4xl">
         <PageHeader
           title="Criar Nova Unidade"
@@ -163,19 +165,22 @@ export const PaginaCriarUnidade = () => {
                 </div>
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={handleSuggestThemes}
                   disabled={isLoadingSuggestions}
-                  className="h-8 text-xs"
+                  className="h-9 px-4 text-xs font-medium border-primary/30 text-primary hover:bg-primary/5 hover:border-primary transition-all shadow-sm"
                 >
                   {isLoadingSuggestions ? (
                     <>
-                      <Loader2 className="w-3 h-3 mr-2 animate-spin" />
-                      Gerando...
+                      <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" />
+                      Gerando sugestões...
                     </>
                   ) : (
-                    "Sugerir novos temas"
+                    <>
+                      <Sparkles className="w-3.5 h-3.5 mr-2" />
+                      Gerar sugestões de temas
+                    </>
                   )}
                 </Button>
               </div>
@@ -270,7 +275,6 @@ export const PaginaCriarUnidade = () => {
                 placeholder="Descreva como deseja sua aula:
 • Duração aproximada (ex: 50 minutos)
 • Nível de dificuldade (básico, intermediário, avançado)
-• Recursos visuais desejados (gráficos, imagens, vídeos)
 • Observações pedagógicas"
                 value={observacoes}
                 onChange={(e) => setObservacoes(e.target.value)}

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 interface PageHeaderProps {
   title: string;
@@ -19,13 +20,17 @@ export function PageHeader({
   return (
     <div className="mb-8 animate-fade-in">
       {backTo && (
-        <Link
-          to={backTo}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors mb-4"
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="mb-6 gap-2 pl-2 pr-4 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all group"
+          asChild
         >
-          <ArrowLeft className="w-4 h-4" />
-          {backLabel}
-        </Link>
+          <Link to={backTo}>
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            {backLabel}
+          </Link>
+        </Button>
       )}
 
       <div className="flex items-start justify-between gap-4 flex-wrap">

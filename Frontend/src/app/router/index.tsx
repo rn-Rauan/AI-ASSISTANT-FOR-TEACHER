@@ -1,29 +1,29 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { PaginaDashboard } from '../../presentation/pages/PaginaDashboard';
-import { PaginaDisciplina } from '../../presentation/pages/PaginaDisciplina';
-import { PaginaCriarUnidade } from '../../presentation/pages/PaginaCriarUnidade';
-import { PaginaCriarDisciplina } from '../../presentation/pages/PaginaCriarDisciplina';
-import { PaginaUnidade } from '../../presentation/pages/PaginaUnidade';
+import { Dashboard } from '../../presentation/pages/Dashboard';
+import { DetalhesDisciplina } from '../../presentation/pages/Disciplina';
+import { CriarUnidade } from '../../presentation/pages/CriarUnidade';
+import { CriarDisciplina } from '../../presentation/pages/CriarDisciplina';
+import { DetalhesUnidade } from '../../presentation/pages/Unidade';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <PaginaDashboard />,
+    element: <Dashboard />,
   },
   {
     path: '/disciplinas/criar',
-    element: <PaginaCriarDisciplina />,
+    element: <CriarDisciplina />,
   },
   {
     path: '/disciplinas/:id',
-    element: <PaginaDisciplina />,
+    element: <DetalhesDisciplina />,
   },
   {
     path: '/unidades/criar',
-    element: <PaginaCriarUnidade />,
+    element: <CriarUnidade />,
   },
   {
     path: '/unidades/:id',
-    element: <PaginaUnidade />,
+    element: <DetalhesUnidade />,
   },
 ]);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { Plus, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { UnitCard } from "@/components/ui/UnitCard";
 import { LoadingState } from "@/components/ui/LoadingState";
@@ -11,14 +11,21 @@ import type { Disciplina } from "@/domain/entities/Disciplina";
 import type { Unidade } from "@/domain/entities/Unidade";
 import { disciplinaService } from "@/infrastructure/services/disciplina.service";
 import { unidadeService } from "@/infrastructure/services/unidade.service";
+import { Header } from "@/presentation/components/Header";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { AlertModal } from "@/components/ui/AlertModal";
 
-export const PaginaDisciplina = () => {
+export const DetalhesDisciplina = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const [disciplina, setDisciplina] = useState<Disciplina | null>(null);
   const [unidades, setUnidades] = useState<Unidade[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -52,11 +59,55 @@ export const PaginaDisciplina = () => {
     }
   };
 
+  const handleDeleteDisciplina = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!disciplina) return;
+
+    try {
+      await disciplinaService.delete(disciplina.id);
+      navigate('/');
+    } catch (err) {
+      console.error('Erro ao deletar disciplina:', err);
+      setAlertMessage("Não foi possível excluir a disciplina. Tente novamente.");
+    }
+  };
+
+  const handleDeleteUnidade = async (unidadeId: string) => {
+    try {
+      await unidadeService.delete(unidadeId);
+      setUnidades(unidades.filter(u => u.id !== unidadeId));
+    } catch (err) {
+      console.error('Erro ao deletar unidade:', err);
+      setAlertMessage("Não foi possível excluir a unidade. Tente novamente.");
+    }
+  };
+
   const displayName = disciplina?.nome || disciplina?.disciplina_codigo || "";
   const displayGrade = disciplina?.anoSerieNome || disciplina?.ano_serie || "";
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      <AlertModal 
+        isOpen={!!alertMessage}
+        onClose={() => setAlertMessage(null)}
+        title="Erro na Exclusão"
+        message={alertMessage || ""}
+      />
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleConfirmDelete}
+        title="Excluir Disciplina"
+        description={`Tem certeza que deseja excluir a disciplina "${disciplina?.nome}"? Todas as unidades e conteúdos associados serão perdidos. Esta ação não pode ser desfeita.`}
+        variant="destructive"
+        confirmText="Excluir"
+      />
+
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {isLoading ? (
           <>
@@ -83,12 +134,23 @@ export const PaginaDisciplina = () => {
               backTo="/"
               backLabel="Voltar ao Dashboard"
               action={
-                <Link to="/unidades/criar" state={{ disciplinaId: disciplina?.id }}>
-                  <Button>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Nova Unidade
+                <div className="flex items-center gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    className="text-destructive border-destructive/20 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
+                    onClick={handleDeleteDisciplina}
+                    title="Excluir Disciplina"
+                  >
+                    <Trash2 className="w-4 h-4" />
                   </Button>
-                </Link>
+                  <Link to="/unidades/criar" state={{ disciplinaId: disciplina?.id }}>
+                    <Button>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Nova Unidade
+                    </Button>
+                  </Link>
+                </div>
               }
             />
 
@@ -113,9 +175,14 @@ export const PaginaDisciplina = () => {
                   }
                 />
               ) : (
-                <div className="space-y-3">
+                <div className="grid grid-cols-1 gap-4">
                   {unidades.map((unidade, index) => (
-                    <UnitCard key={unidade.id} unit={unidade} index={index} />
+                    <UnitCard 
+                      key={unidade.id} 
+                      unit={unidade} 
+                      index={index}
+                      onDelete={() => handleDeleteUnidade(unidade.id)}
+                    />
                   ))}
                 </div>
               )}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { BookOpen, Plus, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Plus, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { SubjectCard } from "@/components/ui/SubjectCard";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -8,12 +8,15 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import type { Disciplina } from "@/domain/entities/Disciplina";
 import { disciplinaService } from "@/infrastructure/services/disciplina.service";
 import { ModalCriarDisciplina } from "@/presentation/components/ModalCriarDisciplina";
+import { Header } from "@/presentation/components/Header";
+import { AlertModal } from "@/components/ui/AlertModal";
 
-export const PaginaDashboard = () => {
+export const Dashboard = () => {
   const [disciplinas, setDisciplinas] = useState<Disciplina[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   useEffect(() => {
     loadDisciplinas();
@@ -41,26 +44,27 @@ export const PaginaDashboard = () => {
     loadDisciplinas();
   };
 
+  const handleDeleteDisciplina = async (id: string) => {
+    try {
+      await disciplinaService.delete(id);
+      setDisciplinas(disciplinas.filter(d => d.id !== id));
+    } catch (err) {
+      console.error('Erro ao deletar disciplina:', err);
+      // Aqui poderíamos usar um toast ou estado de erro mais elegante
+      setAlertMessage("Não foi possível excluir a disciplina. Tente novamente mais tarde ou verifique sua conexão.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Header Estilo Cultura Digital */}
-      <header className="bg-[#0f766e] border-b border-[#115e59] sticky top-0 z-10 shadow-md">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-inner">
-              <BookOpen className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xl tracking-tight text-white leading-tight">
-                PedagogIA
-              </span>
-              <span className="text-xs font-medium text-emerald-50 opacity-90">
-                Plataforma de Ensino Inteligente
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
+      
+      <AlertModal 
+        isOpen={!!alertMessage}
+        onClose={() => setAlertMessage(null)}
+        title="Erro na Exclusão"
+        message={alertMessage || ""}
+      />
 
       {/* Main content */}
       <main className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -132,10 +136,11 @@ export const PaginaDashboard = () => {
         {!isLoading && !error && disciplinas.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 animate-fade-in stagger-2">
             {disciplinas.map((disciplina, index) => (
-              <SubjectCard
-                key={disciplina.id}
-                subject={disciplina}
+              <SubjectCard 
+                key={disciplina.id} 
+                subject={disciplina} 
                 index={index}
+                onDelete={() => handleDeleteDisciplina(disciplina.id)}
               />
             ))}
           </div>
