@@ -11,7 +11,7 @@ O frontend foi desenvolvido com foco em:
 
 ---
 
-## 🧠 Responsabilidades do Frontend
+## Responsabilidades do Frontend
 
 O frontend é responsável por:
 
@@ -22,7 +22,7 @@ O frontend é responsável por:
 - Controlar navegação entre telas
 - Gerenciar estado de interface (loading, erro, sucesso)
 
-### ❌ O frontend NÃO é responsável por:
+### O frontend NÃO é responsável por:
 - Regras de negócio complexas
 - Lógica de IA
 - Validações pedagógicas
@@ -33,7 +33,7 @@ O frontend é responsável por:
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **React** — Biblioteca para construção de interfaces
 - **Vite** — Bundler e ambiente de desenvolvimento
@@ -48,7 +48,32 @@ O frontend é responsável por:
 
 ---
 
-## 📁 Estrutura de Pastas
+## Justificativa das Tecnologias
+
+A escolha da stack tecnológica foi guiada pelos princípios de **manutenibilidade, escalabilidade e produtividade**:
+
+- **React + Vite**: Escolhidos pela velocidade de desenvolvimento (HMR instantâneo), vasto ecossistema e facilidade em criar interfaces reativas baseadas em componentes.
+- **TypeScript**: Adotado para garantir robustez ao código, prevenindo erros em tempo de desenvolvimento e facilitando a refatoração segura através de tipagem estática.
+- **Clean Architecture**: Implementada para desacoplar a interface (React) das regras de negócio e chamadas de API, permitindo que o frontend evolua independentemente de mudanças externas.
+- **Tailwind CSS + Shadcn/ui**: Combinação que acelera a construção de interfaces modernas e acessíveis sem a necessidade de escrever CSS puro complexo, mantendo consistência visual.
+
+---
+
+## Papel da IA no Desenvolvimento
+
+Conforme os requisitos do edital, a Inteligência Artificial atuou como **copiloto estratégico** durante todo o ciclo de desenvolvimento desta solução.
+
+**Principais contribuições da IA:**
+1. **Arquitetura e Design Patterns**: Auxílio na estruturação do projeto seguindo Clean Architecture, garantindo a separação correta entre camadas (Domain, Infrastructure, Presentation).
+2. **Geração de Código Boilerplate**: Aceleração na criação de DTOs, interfaces TypeScript e configuração inicial de componentes UI.
+3. **Refatoração e Otimização**: Sugestões para melhoria de performance, tipagem mais estrita e redução de código redundante.
+4. **Documentação**: Apoio na elaboração deste README e documentação técnica dos componentes.
+
+A IA serviu como um acelerador de produtividade, permitindo que o foco se mantivesse na experiência do usuário e na qualidade pedagógica da solução.
+
+---
+
+## Estrutura de Pastas
 
 A estrutura do projeto segue uma adaptação da **Clean Architecture para frontend**:
 
