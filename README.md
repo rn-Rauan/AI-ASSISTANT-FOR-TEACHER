@@ -25,17 +25,6 @@ A solução atende integralmente aos requisitos do edital, focando em:
 
 O sistema segue os princípios da **Clean Architecture** para garantir desacoplamento e testabilidade.
 
-```mermaid
-graph TD
-    User[Professor] --> Frontend[Frontend (React)]
-    Frontend --> API[Backend (Fastify)]
-    API --> Controller[Controllers]
-    Controller --> UseCase[Use Cases (Application)]
-    UseCase --> Domain[Domain Entities]
-    UseCase --> Repo[Repositories (Prisma)]
-    UseCase --> AIService[AI Service (OpenAI/RAG)]
-    Repo --> DB[(SQLite)]
-```
 
 - **Frontend**: React, Vite, TypeScript, Tailwind, Shadcn/ui.
 - **Backend**: Node.js, Fastify, Prisma, Clean Architecture.
@@ -118,6 +107,3 @@ src/
 Este projeto é open-source sob a licença **MIT**.
 Desenvolvido para o Hackathon Cultura Digital.
 
-Consulte a pasta `docs/` para documentação detalhada:
-- [Resumo Executivo](docs/HACKATHON.md)
-- [Documento da API](docs/API_DOCS.md)
