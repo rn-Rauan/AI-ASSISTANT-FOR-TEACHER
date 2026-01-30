@@ -102,6 +102,8 @@ src/
 └── server.ts         # Entry point
 ```
 
+**Mais documentação em Backend/docs**
+
 ## 📄 Licença e Créditos
 
 Este projeto é open-source sob a licença **MIT**.
